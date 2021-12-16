@@ -1,4 +1,4 @@
-package com.clinicapp.catchmodo;
+package com.clinicapp.catchmodo.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.clinicapp.catchmodo.R;
+import com.clinicapp.catchmodo.SoundPlayer;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private float pinkX, pinkY;
 
     //Score
-    private TextView scoreLabel, highScoreLabel, timerLabel;
+    private TextView scoreLabel, highScoreLabel, timerLabel,text_btn;
     private int score, highScore, timeScore;
 
     //Class
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     private boolean mTimerRunning;
     private boolean timerCheck = false;
-    private Button btn;
+    private LinearLayout btn;
 
 
     @Override
@@ -80,17 +83,18 @@ public class MainActivity extends AppCompatActivity {
         // pink=findViewById(R.id.pink);
         scoreLabel = findViewById(R.id.scoreLevel);
         timerLabel = findViewById(R.id.timer);
-        highScoreLabel = findViewById(R.id.highScoreLabel);
+      //  highScoreLabel = findViewById(R.id.highScoreLabel);
 
         imageBoxLeft = getResources().getDrawable(R.drawable.ic_games);
         imageBoxRight = getResources().getDrawable(R.drawable.ic_games);
         //High Score
 
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
+       // mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
 
-        mediaPlayer.start();
+        //mediaPlayer.start();
         timerLabel.setVisibility(View.GONE);
         btn=findViewById(R.id.btn);
+        text_btn=findViewById(R.id.text_btn);
 
 
  /*       play.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mTimerRunning){
                     onPauseGame();
-                    btn.setText("Play");
+
                 }else {
                     onStartGame();
-                    btn.setText("Pause");
+
                 }
             }
         });
@@ -236,7 +240,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gameOver() {
+//amany
+        timerLabel.setVisibility(View.INVISIBLE);
+
+
         //stop timer
+        countDownTimer.cancel();
         timer.cancel();
         timer = null;
         start_flg = false;
@@ -277,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startGame(View view) {
         timerCheck = true;
+        millisUntilFinished1=60000;
         setTimer();
 
 
@@ -321,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+
                             changePos();
                         }
                     });
@@ -364,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        onStartGame();
+
     }
 
     @Override
@@ -374,7 +385,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onPauseGame() {
-        mediaPlayer.pause();
+        text_btn.setText("Play");
+       // mediaPlayer.pause();
         start_flg = false;
         mTimerRunning = false;
         countDownTimer.cancel();
@@ -383,8 +395,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStartGame() {
+        text_btn.setText("Pause");
         start_flg = true;
-        mediaPlayer.start();
+      // mediaPlayer.start();
         if (timerCheck)
             setTimer();
 

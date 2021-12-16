@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8F8E8E"
+    android:background="#D5CECE"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivity">
+    tools:context=".ui.activities.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,31 +21,94 @@
             android:layout_gravity="start"
 
             android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
 
             android:text="Score :"
-            android:textColor="#DFE4E4"
+            android:textColor="#D6840B"
             android:textSize="26sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn"
+
+            app:layout_constraintEnd_toStartOf="@+id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <androidx.cardview.widget.CardView
+
+
+            android:id="@+id/cardView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:onClick="startGame"
+            app:cardCornerRadius="23dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/btn"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/stroke_button_bink_r23_w2"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+
+
+                android:orientation="horizontal"
+
+
+                android:textColor="#EB839D">
+
+                <TextView
+                    android:id="@+id/text_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="Pause"
+                    android:textColor="#D6840B"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+      <!--  <LinearLayout
             android:id="@+id/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/stroke_button_bink_r23_w2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+
+
+            android:orientation="horizontal"
+
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:text="pause"
-            android:textColor="#DFE4E4"
-            android:textSize="15sp"
-            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="#EB839D">
+
+            <TextView
+                android:id="@+id/text_btn"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Pause"
+                android:textStyle="italic"
+                android:textColor="#D6840B"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
         android:id="@+id/timer"
@@ -56,7 +119,7 @@
         android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="Timer 1:00"
-        android:textColor="#DFE4E4"
+        android:textColor="#D6840B"
         android:textSize="26sp"
         android:textStyle="italic"
         android:visibility="gone" />
@@ -67,7 +130,7 @@
         android:layout_height="550dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:background="#DFE4E4">
+        android:background="#955900">
 
         <ImageView
             android:id="@+id/box"
@@ -103,19 +166,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="5dp"
+                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="Catch The ball"
+                android:text="Catch MoDo "
+                android:textColor="#E38905"
                 android:textSize="25sp" />
 
 
-            <TextView
+<!--            <TextView
                 android:id="@+id/highScoreLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,9 +189,73 @@
                 android:text="High Score: 300"
                 android:textColor="#100F0F"
                 android:textSize="23sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
+<!--            <LinearLayout
 
-            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/stroke_button_bink_r23_w2"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:onClick="startGame"
+                android:textColor="#EB839D">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Start"
+                    android:textColor="#D6840B"
+                    android:textSize="26sp" />
+
+
+            </LinearLayout>-->
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="23dp"
+                app:cardElevation="0dp"
+                android:onClick="startGame"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardView3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_carts">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/stroke_button_bink_r23_w2"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+
+                    android:textColor="#EB839D">
+
+                    <TextView
+
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Start"
+                        android:textColor="#D6840B"
+                        android:textSize="26sp" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+       <!--     <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -134,19 +263,82 @@
                 android:background="#10EA40"
                 android:onClick="startGame"
                 android:text="Start"
-                android:textSize="24sp" />
+                android:textSize="24sp" />-->
 
 
-            <Button
+    <!--        <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="#ff22"
+                android:backgroundTint="#420C0C"
                 android:onClick="quitGame"
                 android:text="Exit"
                 android:textColor="#fff"
-                android:textSize="26sp" />
+                android:textSize="26sp" />-->
+
+<!--            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/stroke_button_bink_r23_w2"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:onClick="quitGame"
+                android:textColor="#EB839D">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                  android:gravity="center"
+                    android:text="Exit"
+                    android:textColor="#D6840B"
+                    android:textSize="26sp" />
+
+
+            </LinearLayout>-->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="23dp"
+                app:cardElevation="0dp"
+                android:onClick="quitGame"
+                android:layout_gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cardView3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/total_carts">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/stroke_button_bink_r23_w2"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+
+                    android:textColor="#EB839D">
+
+                    <TextView
+
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Exit"
+                        android:textColor="#D6840B"
+                        android:textSize="26sp" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
 
 
         </LinearLayout>
