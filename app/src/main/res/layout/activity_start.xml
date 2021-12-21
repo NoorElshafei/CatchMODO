@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".ui.activities.StartActivity"
+android:orientation="vertical"
+android:gravity="center">
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/app_name"
+    android:textSize="32sp"/>
+
+<TableLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="80dp">
+
+    <TableRow
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/pink"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30 points"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+    </TableRow>
+
+    <TableRow
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/moodo"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 points"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
+    </TableRow>
+
+    <TableRow
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/bom"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game Over"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"/>
+    </TableRow>
+
+</TableLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="23dp"
+        app:cardElevation="0dp"
+
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/total_carts">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/stroke_button_bink_r23_w2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:onClick="startGameFirst"
+            android:textColor="#EB839D">
+
+            <TextView
+
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Start"
+                android:textColor="#D6840B"
+                android:textSize="26sp" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
