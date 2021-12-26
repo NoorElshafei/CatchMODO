@@ -1,4 +1,4 @@
-package com.clinicapp.catchmodo;
+package com.bbi.catchmodo;
 
 import org.junit.Test;
 

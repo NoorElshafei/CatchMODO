@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "898536207310",
+    "firebase_url": "https://catchmodo-default-rtdb.firebaseio.com",
+    "project_id": "catchmodo",
+    "storage_bucket": "catchmodo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898536207310:android:d43bf448ef9c903adcf19f",
+        "android_client_info": {
+          "package_name": "com.bbi.catchmodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3B_alrRd1a29qdjCS7rykFQavzZMjU1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

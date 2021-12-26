@@ -1,4 +1,4 @@
-package com.clinicapp.catchmodo;
+package com.bbi.catchmodo;
 
 import android.content.Context;
 import android.media.AudioAttributes;
@@ -32,7 +32,7 @@ public class SoundPlayer {
             soundPool=new SoundPool(SOUND_POOL_MAX, AudioManager.STREAM_MUSIC,0);
         }
         hitOrangeSound=soundPool.load(context,R.raw.hit,1);
-        hitPinkSound=soundPool.load(context,R.drawable.pink,1);
+        hitPinkSound=soundPool.load(context,R.raw.hit,1);
         hitBlackSound=soundPool.load(context,R.raw.over,1);
       //  sound=soundPool.load(context,R.raw.over,1);
 
@@ -50,5 +50,8 @@ public class SoundPlayer {
 
     public  void  playHitBlackSound(){
         soundPool.play(hitBlackSound,1.0f,1.0f,1,0,1.0f);
+    }
+    public  void  playHitPinkSound(){
+        soundPool.play(hitPinkSound,1.0f,1.0f,1,0,1.0f);
     }
 }
