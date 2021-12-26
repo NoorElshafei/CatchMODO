@@ -61,45 +61,19 @@ android:gravity="center">
         app:layout_constraintTop_toBottomOf="@+id/scoreLabel" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView6"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        app:cardCornerRadius="23dp"
-        app:cardElevation="0dp"
+        android:backgroundTint="#FF9800"
+        android:onClick="tryAgain"
+        android:text="Try Again"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/highScoreLabel">
-
-        <LinearLayout
-            android:id="@+id/restart"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@drawable/stroke_button_bink_r23_w2"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:onClick="tryAgain"
-            android:orientation="horizontal"
-            android:textColor="#EB839D">
-
-            <TextView
-                android:id="@+id/text_restart"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Try Again"
-                android:textColor="#D6840B"
-                android:textSize="15sp"
-                android:textStyle="italic"
-                tools:layout_editor_absoluteX="186dp"
-                tools:layout_editor_absoluteY="14dp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-
+        app:layout_constraintTop_toBottomOf="@+id/highScoreLabel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

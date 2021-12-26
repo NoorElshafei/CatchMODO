@@ -2,6 +2,7 @@ package com.bbi.catchmodo.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class FirstActivity extends AppCompatActivity {
     LinearLayout login;
     FirebaseDatabase database;
     DatabaseReference reference;
+    String score="0";
     UsersModel usersModel;
     ArrayList<UsersModel> usersModelArrayList;
 
@@ -34,7 +36,7 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
        userName = findViewById(R.id.userName);
         phoneNumber = findViewById(R.id.phone);
@@ -51,7 +53,7 @@ public class FirstActivity extends AppCompatActivity {
                 if (!name.isEmpty() && !phone.isEmpty()) {
 
                     reference = database.getReference("UserInfo").push();
-                    UsersModel usersModel=new UsersModel(reference.getKey(),name,phone);
+                    UsersModel usersModel=new UsersModel(reference.getKey(),name,phone,score);
                     reference.setValue(usersModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

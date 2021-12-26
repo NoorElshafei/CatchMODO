@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean timerCheck = false;
     private LinearLayout btn, restart;
     private AlertDialog.Builder dialog;
-    boolean hardLevel, mLevel;
+    boolean mLevel,hardLevel;
     private LinearLayout right, left;
 
 
@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
         right = findViewById(R.id.right);
         left = findViewById(R.id.left);
         //High Score
-        // mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
-        //mediaPlayer.start();
+         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sound3);
+        mediaPlayer.start();
         timerLabel.setVisibility(View.GONE);
         // btn = findViewById(R.id.btn);
         //text_btn = findViewById(R.id.text_btn);
@@ -163,54 +163,42 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });*/
-        right.setOnTouchListener(new View.OnTouchListener()
-        {
+        right.setOnTouchListener((v, event) -> {
+            if (start_flg) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (start_flg) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    action_flg_right=true;
+                    action_flg_left=false;
+                    action_flg_stop=false;
+                   // box.setImageDrawable(imageBoxRight);
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    action_flg_right=false;
+                    action_flg_left=false;
+                    action_flg_stop=true;
 
-                        action_flg_right=true;
-                        action_flg_left=false;
-                        action_flg_stop=false;
-                       // box.setImageDrawable(imageBoxRight);
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        action_flg_right=false;
-                        action_flg_left=false;
-                        action_flg_stop=true;
-
-                    }
                 }
-                return false;
             }
+            return false;
         });
 
-        left.setOnTouchListener(new View.OnTouchListener()
-        {
+        left.setOnTouchListener((v, event) -> {
+            if (start_flg) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if (start_flg) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    action_flg_right=false;
+                    action_flg_left=true;
+                    action_flg_stop=false;
 
-                        action_flg_right=false;
-                        action_flg_left=true;
-                        action_flg_stop=false;
-
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        action_flg_right=false;
-                        action_flg_left=false;
-                        action_flg_stop=true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    action_flg_right=false;
+                    action_flg_left=false;
+                    action_flg_stop=true;
 
 
 
-                    }
                 }
-                return false;
             }
+            return false;
         });
     }
 
@@ -224,23 +212,21 @@ public class MainActivity extends AppCompatActivity {
                 blackY += 5;
 
 
-
-
-
             }
             if (hardLevel) {
-                orangeY += 10;
-                pinkY += 10;
+                orangeY += 5;
+                pinkY += 5;
                 blackY += 10;
 
             }
+
             orangeY += 20;
 
             //why this code
             float orangeCenterX = orangeX + orange.getWidth() / 2;
             float orangeCenterY = orangeY + orange.getWidth() / 2;
 
-            if (hitCheck(orangeCenterX, orangeCenterY + 200)) {
+            if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
                 orangeY = frameHeight + 100;
                 score += 10;
                 soundPlayer.playHitOrangeSound();
@@ -262,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 float pinkCenterX = pinkX + pink.getWidth() / 2;
                 float pinkCenterY = pinkY + pink.getWidth() / 2;
 
-                if (hitCheck(pinkCenterX, pinkCenterY + 200)) {
+                if (hitCheck(pinkCenterX, pinkCenterY + 185)) {
                     pinkY = frameHeight + 30;
                     score += 30;
 /*
@@ -279,17 +265,19 @@ public class MainActivity extends AppCompatActivity {
                 pink.setY(pinkY);
             }
 //black
-            blackY += 25;
+
+            blackY += 20;
             float blackCenterX = blackX + black.getWidth() / 2;
             float blackCenterY = blackY + black.getHeight() / 2;
 
 
-            if (hitCheck(blackCenterX, blackCenterY + 185)) {
+            if (hitCheck(blackCenterX, blackCenterY + 165)) {
                 blackY = frameHeight + 100;
                 //change Frame
                 // frameWidth = frameWidth * 80 / 100;
                 //  changeFrameWidth(frameWidth);
                 soundPlayer.playHitBlackSound();
+
 
           /*  if (frameWidth <= boxSize) {
                 //game over
@@ -389,6 +377,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean hitCheck ( float x, float y){
             if (boxX <= x && x <= boxX + boxSize &&
                     boxY <= y && y <= frameHeight) {
+
                 return true;
             }
             return false;
@@ -425,17 +414,14 @@ public class MainActivity extends AppCompatActivity {
             //   changeFrameWidth(initialFrameWidth);
 
             //startLayout.setVisibility(View.VISIBLE);
-            tabToStart.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            intent.putExtra("SCORE", score);
+            startActivity(intent);
+            tabToStart.setVisibility(View.GONE);
             box.setVisibility(View.INVISIBLE);
             black.setVisibility(View.INVISIBLE);
             orange.setVisibility(View.INVISIBLE);
             pink.setVisibility(View.INVISIBLE);
-            //Update High score
-            startActivity(new Intent(getApplicationContext(), ResultActivity.class));
-            // Show ResultActivity
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("SCORE", score);
-            startActivity(intent);
 
 
         }
@@ -527,22 +513,12 @@ public class MainActivity extends AppCompatActivity {
 
                 public void onTick(long millisUntilFinished) {
                     millisUntilFinished1 = millisUntilFinished;
-                    timerLabel.setText("Timer 0:" + millisUntilFinished / 1000);
+                    int sec=(int)millisUntilFinished / 1000;
+                    int min=sec /60;
+                    sec=sec%60;
 
+                    timerLabel.setText(String.format("Timer "+"%d:%02d" ,min,sec));
 
-             /*   if (countDownTimer.wait(3000);) {
-
-                }*/
-
-
-           /*     if (millisUntilFinished < 3000)
-                    text = String.format(Locale.getDefault(), "%02d min: %02d sec",
-                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) % 60, TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) % 60);
-                tvTime.setText( text);*/
-
-     /*      if(countDownTimer.onTick(millisUntilFinished/1000)==5000){
-
-           }*/
                     int e = (int) millisUntilFinished / 1000;
 
                     if (e == 30) {
@@ -601,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
         public void onPauseGame () {
 
             //  text_btn.setText("Play");
-            // mediaPlayer.pause();
+             mediaPlayer.pause();
             start_flg = false;
             mTimerRunning = false;
             if (countDownTimer != null) {
@@ -617,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
             //   play.setVisibility(View.INVISIBLE);
             //  pause.setVisibility(View.VISIBLE);
             start_flg = true;
-            // mediaPlayer.start();
+             mediaPlayer.start();
             if (timerCheck)
                 setTimer();
 
