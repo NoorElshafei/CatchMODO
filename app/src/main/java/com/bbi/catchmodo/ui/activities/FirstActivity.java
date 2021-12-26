@@ -27,7 +27,7 @@ public class FirstActivity extends AppCompatActivity {
     LinearLayout login;
     FirebaseDatabase database;
     DatabaseReference reference;
-    String score="0";
+
     UsersModel usersModel;
     ArrayList<UsersModel> usersModelArrayList;
 
@@ -53,13 +53,14 @@ public class FirstActivity extends AppCompatActivity {
                 if (!name.isEmpty() && !phone.isEmpty()) {
 
                     reference = database.getReference("UserInfo").push();
-                    UsersModel usersModel=new UsersModel(reference.getKey(),name,phone,score);
+
+                    UsersModel usersModel=new UsersModel(reference.getKey(),name,phone);
                     reference.setValue(usersModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful())
                             {
-                                Intent intent= new Intent(FirstActivity.this,MainActivity.class);
+                                Intent intent= new Intent(FirstActivity.this,StartActivity.class);
                                 intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
 

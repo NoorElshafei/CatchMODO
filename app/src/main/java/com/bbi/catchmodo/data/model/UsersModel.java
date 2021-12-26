@@ -12,24 +12,23 @@ public class UsersModel implements Parcelable {
     private String name;
     @SerializedName("phone")
     private String phone;
-    @SerializedName("score")
-    private String score;
+
 
     public UsersModel(){
     }
 
-    public UsersModel(String id, String name, String phone,String score) {
+    public UsersModel(String id, String name, String phone) {
         this.id = id;
         this.name = name;
         this.phone = phone;
-        this.score = score;
+
     }
 
     protected UsersModel(Parcel in) {
         id = in.readString();
         name = in.readString();
         phone = in.readString();
-        score = in.readString();
+
     }
     public static final Creator<UsersModel> CREATOR = new Creator<UsersModel>() {
         @Override
@@ -60,8 +59,7 @@ public class UsersModel implements Parcelable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public String getScore() { return score; }
-    public void setScore(String score) { this.score = score; }
+
 
     @Override
     public int describeContents() { return 0; }
@@ -71,6 +69,6 @@ public class UsersModel implements Parcelable {
         parcel.writeString(id);
         parcel.writeString(name);
         parcel.writeString(phone);
-        parcel.writeString(score);
+
     }
 }
