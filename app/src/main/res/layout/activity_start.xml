@@ -17,14 +17,14 @@ android:gravity="center">
 <TableLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="80dp">
+    android:layout_marginTop="40dp">
 
     <TableRow
         android:gravity="center_vertical">
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/pink"
+            android:src="@drawable/point"
             tools:ignore="ContentDescription" />
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@ android:gravity="center">
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/moodo"
+            android:src="@drawable/circle"
             tools:ignore="ContentDescription" />
         <TextView
             android:layout_width="wrap_content"
@@ -58,12 +58,44 @@ android:gravity="center">
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/bom"
+            android:src="@drawable/bomb"
             tools:ignore="ContentDescription" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Game Over"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"/>
+    </TableRow>
+    <TableRow
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/slow"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop Time for 10s"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"/>
+    </TableRow>
+    <TableRow
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/speed"
+            tools:ignore="ContentDescription" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed Up"
             android:textSize="18sp"
             android:paddingLeft="10dp"
             tools:ignore="RtlHardcoded,RtlSymmetry"/>

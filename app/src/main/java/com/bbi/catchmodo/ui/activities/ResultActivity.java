@@ -13,18 +13,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ResultActivity extends AppCompatActivity {
     private AlertDialog.Builder dialog;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         TextView scoreLabel = findViewById(R.id.scoreLabel);
         TextView highScoreLabel = findViewById(R.id.highScoreLabel);
-        ImageView exit=findViewById(R.id.imageView);
+        ImageView exit = findViewById(R.id.imageView);
         int score = getIntent().getIntExtra("SCORE", 0);
         scoreLabel.setText("YourScore: " + score);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
 
 
         // High Score
@@ -39,28 +50,41 @@ public class ResultActivity extends AppCompatActivity {
 
             highScoreLabel.setText("High Score : " + score);
             //   highScoreLabel.setText(getString(R.string.high_score, score));
+            reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(firebaseUser.getUid()).child("score");
+            reference.setValue(score+"");
 
         } else {
             highScoreLabel.setText("High Score : " + highScore);
             //  highScoreLabel.setText(getString(R.string.high_score, highScore));
+
         }
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                exitAppCLICK(null);
-            }
+
+
+
+        exit.setOnClickListener(view -> {
+            firebaseAuth.signOut();
+            Intent intent = new Intent(ResultActivity.this, WelcomeActivity.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
         });
     }
 
     public void tryAgain(View view) {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
-    public void exitAppCLICK (View view) {
+    public void topScore(View view) {
+        startActivity(new Intent(getApplicationContext(), TopUser.class));
+    }
+
+
+    public void exitAppCLICK(View view) {
 
         finishAffinity();
         System.exit(0);
 
     }
+
     @Override
     public void onBackPressed() {
 

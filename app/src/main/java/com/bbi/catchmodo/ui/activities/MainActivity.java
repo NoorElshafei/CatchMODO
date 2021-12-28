@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout startLayout;
 
     //Image
-    private ImageView box, black, orange, play, pause, pink;
+    private ImageView box, black, orange, play, pause, pink,scoreLabel;
     private Drawable imageBoxRight, imageBoxLeft;
 
     //Size
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private float pinkX, pinkY;
 
     //Score
-    private TextView scoreLabel, highScoreLabel, timerLabel, text_btn, tabToStart;
+    private TextView  highScoreLabel, timerLabel, text_btn, tabToStart,scoreText;
     private int score, highScore, timeScore;
 
     //Class
@@ -92,9 +92,10 @@ public class MainActivity extends AppCompatActivity {
         pink = findViewById(R.id.pink);
         scoreLabel = findViewById(R.id.scoreLevel);
         timerLabel = findViewById(R.id.timer);
+        scoreText=findViewById(R.id.score_text);
         //  highScoreLabel = findViewById(R.id.highScoreLabel);
-        imageBoxLeft = getResources().getDrawable(R.drawable.cup);
-        imageBoxRight = getResources().getDrawable(R.drawable.cup);
+        imageBoxLeft = getResources().getDrawable(R.drawable.cup2);
+        imageBoxRight = getResources().getDrawable(R.drawable.cup2);
         right = findViewById(R.id.right);
         left = findViewById(R.id.left);
         //High Score
@@ -370,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             // scoreLabel.setText("Score:"+ score);
-            scoreLabel.setText("Score:" + score);
+            scoreText.setText(score+"");
         }
 
 
@@ -478,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
 
             timeCount = 0;
             score = 0;
-            scoreLabel.setText("Score : 0");
+            scoreText.setText("");
 
             timer = new Timer();
             timer.schedule(new TimerTask() {

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgraound"
+    android:background="@drawable/background2"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".ui.activities.MainActivity">
@@ -15,22 +15,26 @@
 
         >
 
-        <TextView
+        <ImageView
             android:id="@+id/scoreLevel"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
 
-            android:layout_marginStart="10dp"
 
-            android:text="Score :"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:textStyle="italic"
+            android:src="@drawable/score"
             app:layout_constraintBottom_toBottomOf="parent"
-
-            app:layout_constraintEnd_toStartOf="@+id/pause"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/scoreLevel"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -204,26 +208,26 @@
             android:layout_width="70dp"
             android:layout_height="80dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/cup"
+            android:src="@drawable/cup2"
             android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/balck"
             android:layout_width="70dp"
             android:layout_height="80dp"
-            android:src="@drawable/bom"
+            android:src="@drawable/bomb"
             android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/orange"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/moodo"
+            android:src="@drawable/circle"
             android:visibility="invisible" />
              <ImageView
                    android:layout_width="50dp"
                    android:layout_height="50dp"
-                   android:src="@drawable/pink"
+                   android:src="@drawable/point"
                    android:id="@+id/pink"
                    android:visibility="invisible"/>
         <TextView
