@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
-        cloud1X = screenWidth + 30;
-        cloud2X = screenWidth + 300;
-        cloud3X = screenWidth + 40;
-        cloud4X = screenWidth + 200;
+        cloud1X = -500;
+        cloud2X = -300;
+        cloud3X = -400;
+        cloud4X = -200;
         cloud1Y = 20;
         cloud2Y = 250;
         cloud3Y = 40;
@@ -205,35 +205,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void changePos() {
         //move clouds
-        cloud1X -= 3;
-        if (cloud1X < -500) {
-            cloud1X = screenWidth + 200;
+        cloud1X += 3;
+        if (cloud1X > screenWidth + 30) {
+            cloud1X = -500;
         }
         cloud1.setX(cloud1X);
         cloud1.setY(cloud1Y);
 
-        cloud2X -= 2;
-        if (cloud2X < -200) {
-            cloud2X = screenWidth + 100;
+        cloud2X += 2;
+        if (cloud2X > screenWidth + 300) {
+            cloud2X = -200;
         }
         cloud2.setX(cloud2X);
         cloud2.setY(cloud2Y);
 
-        cloud3X -= 1.5;
-        if (cloud3X < -400) {
-            cloud3X = screenWidth + 150;
+        cloud3X += 1.5;
+        if (cloud3X > screenWidth + 40) {
+            cloud3X = -400;
         }
         cloud3.setX(cloud3X);
         cloud3.setY(cloud3Y);
 
-        cloud4X -= 2.5;
-        if (cloud4X < -250) {
-            cloud4X = screenWidth + 300;
+        cloud4X += 2.5;
+        if (cloud4X > screenWidth + 200) {
+            cloud4X = -250;
         }
         cloud4.setX(cloud4X);
         cloud4.setY(cloud4Y);
-
-
         //Add timerCount
         timeCount += 20;
 
