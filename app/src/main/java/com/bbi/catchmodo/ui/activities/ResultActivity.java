@@ -23,6 +23,7 @@ public class ResultActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+   private String game="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,12 @@ public class ResultActivity extends AppCompatActivity {
         TextView scoreLabel = findViewById(R.id.scoreLabel);
         TextView highScoreLabel = findViewById(R.id.highScoreLabel);
         ImageView exit = findViewById(R.id.imageView);
+        TextView gameOver=findViewById(R.id.textView);
         int score = getIntent().getIntExtra("SCORE", 0);
+        game=getIntent().getStringExtra("GAME");
         scoreLabel.setText("YourScore: " + score);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
-
 
         // High Score
         SharedPreferences sharedPreferences = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
@@ -59,6 +60,12 @@ public class ResultActivity extends AppCompatActivity {
 
         }
 
+        if(game != null && game.equalsIgnoreCase("timeOut")){
+            gameOver.setText("TimeOut");
+        }else
+        {
+            gameOver.setText("GameOver");
+        }
 
 
         exit.setOnClickListener(view -> {

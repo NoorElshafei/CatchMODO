@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bbi.catchmodo.R;
@@ -21,14 +24,38 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     String email_pattern = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     FirebaseAuth firebaseAuth;
+    ProgressDialog progressDialog;
+    private boolean passIsVisible = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
         binding.btnLogin.setOnClickListener(view -> {
             login();
+        });
+        binding.forgetPassword.setOnClickListener(view -> {
+            Intent intent2= new Intent(LoginActivity.this,ForgetPassword.class);
+            startActivity(intent2);
+
+        });
+        binding.eyePassImage.setOnClickListener(view -> {
+            if (passIsVisible) {
+                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                //binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                binding.password.setTransformationMethod(new PasswordTransformationMethod());
+                passIsVisible = false;
+            } else {
+                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                //binding.passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                binding.password.setTransformationMethod(null);
+                passIsVisible = true;
+            }
+            binding.password.setSelection(binding.password.length());
+
         });
     }
 
@@ -40,16 +67,22 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.isEmpty() || password.length() < 6) {
             binding.password.setError("please,Enter the password correctly");
         } else {
+            progressDialog.setMessage("please,wait while Login..");
+            progressDialog.setTitle("Login");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-
+                        progressDialog.dismiss();
                         sendUserToNextActivity();
 
 
                     } else {
-
+                        progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                     }

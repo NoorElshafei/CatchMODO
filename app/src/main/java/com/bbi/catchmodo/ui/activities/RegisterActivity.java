@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,17 +31,36 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     String score = "0";
+    ProgressDialog progressDialog;
+    private boolean passIsVisible = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        progressDialog = new ProgressDialog(this);
         binding.btnRegister.setOnClickListener(view -> {
             register();
         });
+        binding.eyePassImage.setOnClickListener(view -> {
+            if (passIsVisible) {
+                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                //binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                binding.password.setTransformationMethod(new PasswordTransformationMethod());
+                passIsVisible = false;
+            } else {
+                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
+                //binding.passwordEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                binding.password.setTransformationMethod(null);
+                passIsVisible = true;
+            }
+            binding.password.setSelection(binding.password.length());
 
+        });
     }
+
+
 
     public void register() {
         String email = binding.email.getText().toString();
@@ -57,6 +78,10 @@ public class RegisterActivity extends AppCompatActivity {
         } else if (password.isEmpty() || password.length() < 6) {
             binding.password.setError("please,Enter the password correctly");
         } else {
+            progressDialog.setMessage("please,wait while Registration..");
+            progressDialog.setTitle("Registration");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
             firebaseAuth = FirebaseAuth.getInstance();
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -64,10 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         firebaseUser = firebaseAuth.getCurrentUser();
                         String userid = firebaseUser.getUid();
-
-
-
-
                         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
                         RegisterModel registerModel = new RegisterModel(userid, name, email,phone,score);
                         reference.setValue(registerModel).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -78,14 +99,14 @@ public class RegisterActivity extends AppCompatActivity {
                                     finish();
 
                                 } else {
-
+                                    progressDialog.dismiss();
                                     Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
 
                     } else {
-
+                        progressDialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                     }

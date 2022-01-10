@@ -1,6 +1,7 @@
 package com.bbi.catchmodo.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ TextView login;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
         register=findViewById(R.id.button2);
         login=findViewById(R.id.text_login);
         register.setOnClickListener(view -> {

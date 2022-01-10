@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="93dp"
         android:text="Register"
+        android:fontFamily="@font/soft_marshmallow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -41,6 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Do you have a Account?"
+            android:fontFamily="@font/soft_marshmallow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="Login"
+            android:fontFamily="@font/soft_marshmallow"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"

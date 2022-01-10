@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,8 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
 
     private Context context;
     private ArrayList<RegisterModel> registerModels;
+    FirebaseUser firebaseUser;
+
 
     public TopUserAdapter(Context context, ArrayList<RegisterModel> registerModels) {
         this.context = context;
@@ -36,8 +40,15 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
 
     @Override
     public void onBindViewHolder(@NonNull TopUserAdapter.viewHolder holder, int position) {
-        holder.name.setText(registerModels.get(position).getUser_name());
+        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser.getUid().equals(registerModels.get(position).getId()))
+        {
+            holder.name.setText("You");
+        }else {
+            holder.name.setText(registerModels.get(position).getUser_name());
+        }
         holder.score.setText(registerModels.get(position).getScore());
+
 
     }
 

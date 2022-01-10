@@ -17,6 +17,7 @@
         android:layout_marginTop="75dp"
         android:text="Top Score"
         android:textSize="30sp"
+        android:fontFamily="@font/soft_marshmallow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

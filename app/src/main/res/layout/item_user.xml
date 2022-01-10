@@ -20,6 +20,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Mohamed Ahmed"
+            android:fontFamily="@font/soft_marshmallow"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +35,7 @@
             android:layout_marginBottom="10dp"
             android:text="400"
             android:textSize="30dp"
+            android:fontFamily="@font/soft_marshmallow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

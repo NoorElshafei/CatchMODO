@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import com.bbi.catchmodo.R;
@@ -33,6 +34,7 @@ public class TopUser extends AppCompatActivity {
 
     DatabaseReference reference;
     RegisterModel registerModel;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,10 @@ public class TopUser extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_top_user);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         registerModelArrayList = new ArrayList<>();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
         reference = FirebaseDatabase.getInstance().getReference("UserRegister");
         reference.addValueEventListener(new ValueEventListener() {
@@ -48,7 +54,7 @@ public class TopUser extends AppCompatActivity {
                 registerModelArrayList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     registerModel = snapshot1.getValue(RegisterModel.class);
-
+                    progressDialog.dismiss();
                     registerModelArrayList.add(registerModel);
 
                     adapter = new TopUserAdapter(TopUser.this, registerModelArrayList);
@@ -57,6 +63,8 @@ public class TopUser extends AppCompatActivity {
                         @Override
                         public int compare(RegisterModel lhs, RegisterModel rhs) {
                             return Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore());
+
+
                         }});
 
                 }
