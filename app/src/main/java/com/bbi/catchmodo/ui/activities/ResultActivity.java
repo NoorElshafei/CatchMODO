@@ -1,5 +1,6 @@
 package com.bbi.catchmodo.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.model.UsersModel;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -70,6 +75,7 @@ public class ResultActivity extends AppCompatActivity {
 
         exit.setOnClickListener(view -> {
             firebaseAuth.signOut();
+            LoginManager.getInstance().logOut();
             Intent intent = new Intent(ResultActivity.this, WelcomeActivity.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -116,4 +122,5 @@ public class ResultActivity extends AppCompatActivity {
         dialog2.show();
 
     }
+
 }

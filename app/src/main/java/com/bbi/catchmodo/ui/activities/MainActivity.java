@@ -4,14 +4,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +29,8 @@ import android.widget.TextView;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -95,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     private float cloud4X, cloud4Y;
 
     int n;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -540,6 +549,7 @@ public class MainActivity extends AppCompatActivity {
         pause.setVisibility(View.VISIBLE);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.moodo_music);
         mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(.3f,.3f);
         mediaPlayer.start();
 
         start_flg = true;
@@ -660,7 +670,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPauseGame() {
         check_play_pause = false;
-        mediaPlayer.pause();
+        if(mediaPlayer != null){
+            mediaPlayer.pause();
+        }
         start_flg = false;
         if (countDownTimer != null) {
             countDownTimer.cancel();
@@ -673,6 +685,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStartGame() {
         start_flg = true;
         mediaPlayer.start();
+
         if (timerCheck)
             setTimer();
 
@@ -740,4 +753,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-}
+
+
+    }
+
+

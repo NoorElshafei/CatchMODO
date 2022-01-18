@@ -23,4 +23,17 @@
     </style>
  <!--   <style name="Theme.CatchMODO.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
     <style name="Theme.CatchMODO.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="FacebookLoginButton">
+        <item name="android:textSize">10sp</item>
+        <item name="android:paddingTop">21dp</item>
+        <item name="android:paddingBottom">22dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+
 </resources>
