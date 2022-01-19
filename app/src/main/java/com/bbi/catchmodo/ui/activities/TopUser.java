@@ -35,6 +35,7 @@ public class TopUser extends AppCompatActivity {
     DatabaseReference reference;
     RegisterModel registerModel;
     ProgressDialog progressDialog;
+    ArrayList TopUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class TopUser extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        TopUser  =new ArrayList();
         binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
         reference = FirebaseDatabase.getInstance().getReference("UserRegister");
         reference.addValueEventListener(new ValueEventListener() {
@@ -57,17 +59,16 @@ public class TopUser extends AppCompatActivity {
                     progressDialog.dismiss();
                     registerModelArrayList.add(registerModel);
 
-                    adapter = new TopUserAdapter(TopUser.this, registerModelArrayList);
-                    binding.recycle.setAdapter(adapter);
-                    Collections.sort(registerModelArrayList, new Comparator<RegisterModel>() {
-                        @Override
-                        public int compare(RegisterModel lhs, RegisterModel rhs) {
-                            return Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore());
-
-
-                        }});
 
                 }
+                Collections.sort(registerModelArrayList, (lhs, rhs) -> Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore()));
+                for(int i=0;i<=4;i++){
+
+                    TopUser.add(registerModelArrayList.get(i));
+                }
+                adapter = new TopUserAdapter(TopUser.this, TopUser);
+                binding.recycle.setAdapter(adapter);
+
             }
 
             @Override

@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.data.model.UsersModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,35 +20,35 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignUpByGoogle extends AppCompatActivity {
+public class SignUpByFacebook extends AppCompatActivity {
     private Button continueBtn;
-    EditText name,phoneNumber;
+    EditText phoneNumber;
     private FirebaseAuth mAuth;
+    ProgressDialog progressDialog;
     private FirebaseUser mUser;
     DatabaseReference reference;
-    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_by_google);
-        continueBtn=findViewById(R.id.button5);
-
-        phoneNumber=findViewById(R.id.editText5);
-
+        setContentView(R.layout.activity_sign_up_by_facebook);
+        continueBtn = findViewById(R.id.button4);
+        phoneNumber = findViewById(R.id.editText5);
         progressDialog = new ProgressDialog(this);
+        mAuth = FirebaseAuth.getInstance();
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (!phoneNumber .getText().toString().equals("")) {
+                if (!phoneNumber.getText().toString().equals("")) {
 
                     PerforAuth();
                 } else {
-                    Toast.makeText(SignUpByGoogle.this, "Please, Enter Your Number phone " , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpByFacebook.this, "Please, Enter Your Number phone " , Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
             }
         });
+
 
     }
 
@@ -67,15 +66,15 @@ public class SignUpByGoogle extends AppCompatActivity {
         //init database && search from users
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         // insert user information
-        RegisterModel userModel =new RegisterModel(userid,userName,email,userPhone,"0");
+        RegisterModel userModel = new RegisterModel(userid, userName, email, userPhone, "0");
         reference.setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                {
+
+                if (task.isSuccessful()) {
                     sendUserToNextActivity();
                     finish();
-                }else {
+                } else {
                     progressDialog.dismiss();
                 }
 
@@ -85,13 +84,11 @@ public class SignUpByGoogle extends AppCompatActivity {
     }
 
 
-
-
-
     private void sendUserToNextActivity() {
-        Intent intent = new Intent(SignUpByGoogle.this, StartActivity.class);
+        Intent intent = new Intent(SignUpByFacebook.this, StartActivity.class);
         intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
 
 
     }

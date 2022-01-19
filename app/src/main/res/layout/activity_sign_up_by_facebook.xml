@@ -4,16 +4,18 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".ui.activities.SignUpByGoogle">
+tools:context=".ui.activities.SignUpByFacebook">
+
+
 <ImageView
-    android:id="@+id/imageView23"
-    android:layout_width="106dp"
-    android:layout_height="122dp"
+    android:id="@+id/imageView27"
+    android:layout_width="170dp"
+    android:layout_height="115dp"
     android:layout_marginTop="100dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:srcCompat="@drawable/ic_google" />
+    app:srcCompat="@drawable/ic_facebook" />
 
 
     <EditText
@@ -21,8 +23,9 @@ tools:context=".ui.activities.SignUpByGoogle">
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
+
         android:ems="10"
         android:hint="Phone Number"
         android:textSize="17dp"
@@ -30,28 +33,26 @@ tools:context=".ui.activities.SignUpByGoogle">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-
-
 <TextView
     android:id="@+id/textView22"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="50dp"
+    android:layout_marginTop="30dp"
     android:text="Please Enter Your Phone "
-    android:textColor="#34A853"
+    android:textColor="	#6495ED"
     android:textSize="20dp"
-    android:textStyle="bold"
 
+    android:textStyle="bold"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+    app:layout_constraintTop_toBottomOf="@+id/imageView27" />
 
 <Button
-    android:id="@+id/button5"
+    android:id="@+id/button4"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="30dp"
-    android:background="#34A853"
+    android:layout_marginTop="50dp"
+    android:background="#6495ED"
     android:text="continue"
     android:textColor="@color/white"
     app:layout_constraintEnd_toEndOf="parent"

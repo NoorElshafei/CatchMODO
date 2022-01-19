@@ -474,20 +474,13 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean hitCheck(float x, float y) {
         if (characterX <= x && x <= characterX + characterSize &&
-                characterY <= y + 50 && y + 50 <= frameHeight) {
+                characterY <= y && y <= frameHeight) {
 
             return true;
         }
         return false;
     }
-/*    public boolean hitCheck(float x, float y) {
-        if (boxX <= x && x <= boxX + boxSize &&
-                boxY <= y && y <= frameHeight) {
 
-            return true;
-        }
-        return false;
-    }*/
 
 
     public void gameOver(String game) {

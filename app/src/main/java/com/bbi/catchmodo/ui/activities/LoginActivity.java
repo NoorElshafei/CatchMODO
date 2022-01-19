@@ -160,9 +160,13 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
             Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
         }
     }
     private void handleFacebookAccessToken(AccessToken token) {
+        progressDialog.setMessage("please,waiting  while SignIn.");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -177,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             Toast.makeText(LoginActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                             updateUI2(null);
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -205,6 +210,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        progressDialog.setMessage("please,waiting  while SignIn.");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -213,8 +221,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
                             Intent intent= new Intent(LoginActivity.this, StartActivity.class);
                             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -222,7 +228,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                            progressDialog.dismiss();
                         }
                     }
                 });
