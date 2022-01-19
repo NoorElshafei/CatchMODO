@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/android_projects/CatchMODO/app/src/main/res/layout/activity_main.xml" value="0.340625" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable-xhdpi/ic_facebook.xml" value="0.2703125" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable-xhdpi/ic_google.xml" value="0.2546875" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/bg_button_facebook.xml" value="0.12708333333333333" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/custom_button.xml" value="0.15052083333333333" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/custom_button_2.xml" value="0.15052083333333333" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/ic_arrow_left.xml" value="0.14635416666666667" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/ic_baseline_visibility_off_24.xml" value="0.2703125" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/ic_exit.xml" value="0.26615384615384613" />
@@ -13,16 +18,18 @@
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/ic_play.xml" value="0.26615384615384613" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/stroke_button_bink_r23_w2.xml" value="0.26615384615384613" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/drawable/stroke_edittext_bink.xml" value="0.26615384615384613" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_facebook_auth.xml" value="0.21770833333333334" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_first.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_forget_password.xml" value="0.24010416666666667" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_item_user.xml" value="0.25025641025641027" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_loading_dialog.xml" value="0.25416666666666665" />
-        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_main2.xml" value="0.25416666666666665" />
-        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_register.xml" value="0.24537037037037038" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_resigter.xml" value="0.24010416666666667" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_result.xml" value="0.15208333333333332" />
+        <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_sign_up_by_google.xml" value="0.23854166666666668" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_splash.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_start.xml" value="0.16614583333333333" />
         <entry key="..\:/projects/CatchMODO/app/src/main/res/layout/activity_top_user.xml" value="0.25025641025641027" />
