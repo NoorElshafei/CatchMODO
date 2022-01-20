@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         soundPlayer = new SoundPlayer(this);
+
         gameFrame = findViewById(R.id.gameFrame);
         tabToStart = findViewById(R.id.startLabel);
         // box = findViewById(R.id.box);
