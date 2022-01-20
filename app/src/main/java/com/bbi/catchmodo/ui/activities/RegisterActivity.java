@@ -99,8 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 progressDialog.setMessage("please,waiting while SignUp ..");
                 progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
+               ;
                 handleFacebookAccessToken(loginResult.getAccessToken());
+                Log.d(TAG, "onSuccess: "+loginResult.getAccessToken().getUserId());
 
             }
 
@@ -221,6 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
@@ -258,6 +260,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI2(FirebaseUser user) {
         if (user != null) {
+            progressDialog.dismiss();
             Intent intent= new Intent(RegisterActivity.this, SignUpByFacebook.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -270,6 +273,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
     private void handleFacebookAccessToken(AccessToken token) {
+        progressDialog.show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

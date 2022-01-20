@@ -118,8 +118,10 @@ public class LoginActivity extends AppCompatActivity {
         String password = binding.password.getText().toString();
         if (!email.matches(email_pattern)) {
             binding.email.setError("please,enter email context right");
+            Toast.makeText(LoginActivity.this, "please,Enter your Email", Toast.LENGTH_SHORT).show();
         } else if (password.isEmpty() || password.length() < 6) {
             binding.password.setError("please,Enter the password correctly");
+            Toast.makeText(LoginActivity.this, "please,Enter your Password", Toast.LENGTH_SHORT).show();
         } else {
             progressDialog.setMessage("please,wait while Login..");
             progressDialog.setTitle("Login");

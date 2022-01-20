@@ -177,8 +177,6 @@
         android:id="@+id/move"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:paddingEnd="10dp"
-        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/hero2" />

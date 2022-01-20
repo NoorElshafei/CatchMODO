@@ -59,6 +59,7 @@ public class SignUpByGoogle extends AppCompatActivity {
         progressDialog.show();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+
         String email = mUser.getEmail();
         String userName = mUser.getDisplayName();
         String userPhone = phoneNumber.getText().toString();

@@ -48,12 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Image
     private ImageView black, orange, play, pause, pink, speed, stop_time, left_arrow, right_arrow, scoreImage, time1, speed1;
-    private LinearLayout box;
+
     //Size
-    private int characterSize, boxSize;
+    private int characterSize;
     //Position
 
-    private float boxX, boxY;
+
 
     private float characterX, characterY;
     private float blackX, blackY;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     //Score
     private TextView timerLabel, tabToStart, scoreText;
     private int score;
-    private String game;
+
     private boolean check_play_pause = true;
     private boolean gameStatus = true;
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean stopTimeIcon = true;
     private boolean stopSpeedIcon = true;
     private AlertDialog.Builder dialog;
-    boolean mLevel, hardLevel;
+    boolean mLevel;
     private ConstraintLayout right, left;
     private ImageView cloud1, cloud2, cloud3, cloud4;
     private int screenWidth;
@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         gameFrame = findViewById(R.id.gameFrame);
         tabToStart = findViewById(R.id.startLabel);
-        // box = findViewById(R.id.box);
         black = findViewById(R.id.balck);
         orange = findViewById(R.id.orange);
         pink = findViewById(R.id.pink);
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         scoreImage = findViewById(R.id.scoreLevel);
         speed1 = findViewById(R.id.speed1);
         time1 = findViewById(R.id.time2);
-
 
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
@@ -161,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 play.setVisibility(View.INVISIBLE);
                 pause.setVisibility(View.VISIBLE);
                 check_play_pause = true;
-                //4/1/2022
-                // mediaPlayer.start();
+
             }
         });
         pause.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 play.setVisibility(View.VISIBLE);
                 pause.setVisibility(View.INVISIBLE);
                 check_play_pause = false;
-                //4/1/2022
-                // mediaPlayer.pause();
+
             }
         });
         pause.setVisibility(View.INVISIBLE);
@@ -186,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
                     action_flg_right = true;
                     action_flg_left = false;
-                    // box.setImageDrawable(imageBoxRight);
+
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     action_flg_right = false;
                     action_flg_left = false;
@@ -242,6 +238,9 @@ public class MainActivity extends AppCompatActivity {
         }
         cloud4.setX(cloud4X);
         cloud4.setY(cloud4Y);
+
+
+
         //Add timerCount
         timeCount += 20;
 
@@ -263,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             if (speed_flg) {
                 speedY += 20;
                 float speedCenterX = speedX + stop_time.getWidth() / 2;
-                float speedCenterY = speedY + stop_time.getWidth() / 2;
+                float speedCenterY = speedY + stop_time.getHeight();
 
                 if (hitCheck(speedCenterX, speedCenterY + 185)) {
                     speedY = frameHeight + 30;
@@ -292,9 +291,9 @@ public class MainActivity extends AppCompatActivity {
             if (time_stop_flg) {
                 timeY += 35;
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
-                float timeCenterY = timeY + stop_time.getWidth() / 2;
+                float timeCenterY = timeY + stop_time.getHeight() ;
 
-                if (hitCheck(timeCenterX, timeCenterY + 185)) {
+                if (hitCheck (timeCenterX, timeCenterY + 165)) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -319,11 +318,11 @@ public class MainActivity extends AppCompatActivity {
         orangeY += 20;
 
         //why this code
-        float orangeCenterX = orangeX + orange.getWidth();
-        float orangeCenterY = orangeY + orange.getWidth() / 2;
+        float orangeCenterX = orangeX + orange.getWidth()/2;
+        float orangeCenterY = orangeY + orange.getHeight();
 
-        //hide
-        if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
+        //EAT
+        if (hitCheck(orangeCenterX, orangeCenterY+185)) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -346,13 +345,14 @@ public class MainActivity extends AppCompatActivity {
                 orange.setImageResource(R.drawable.nuts5);
 
             }
-            orange.setX(orangeX);
-            orange.setY(orangeY);
+   /*         orange.setX(orangeX);
+            orange.setY(orangeY);*/
 
         }
-        //eat
+        //HIDE
         if (orangeY > frameHeight) {
             orangeY = -100;
+
             orangeX = (float) Math.floor(Math.random() * (frameWidth - orange.getWidth()));
             if (n == 0) {
                 orange.setImageResource(R.drawable.moodo);
@@ -388,9 +388,9 @@ public class MainActivity extends AppCompatActivity {
         if (pink_flg) {
             pinkY += 35;
             float pinkCenterX = pinkX + pink.getWidth() / 2;
-            float pinkCenterY = pinkY + pink.getWidth() / 2;
+            float pinkCenterY = pinkY + pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + 185)) {
+            if (hitCheck(pinkCenterX, pinkCenterY + 165)) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
 
         blackY += 20;
         float blackCenterX = blackX + black.getWidth() / 2;
-        float blackCenterY = blackY + black.getHeight() / 2;
+        float blackCenterY = blackY + black.getHeight() ;
 
 
         if (hitCheck(blackCenterX, blackCenterY + 165)) {
@@ -425,22 +425,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (action_flg_right) {
             //touching
-
-            //  boxX += 14;
             characterX += 14;
 
             if (mLevel) {
-                //  boxX += 5;
-
                 characterX += 5;
             }
         }
         if (action_flg_left) {
             characterX -= 14;
-            //  boxX -= 14;
+
             if (mLevel) {
                 characterX -= 5;
-                //  boxX -= 5;
             }
         }
 
@@ -473,14 +468,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public boolean hitCheck(float x, float y) {
-        if (characterX <= x && x <= characterX + characterSize &&
-                characterY <= y && y <= frameHeight) {
+        if (characterX<= x && x <= (characterX + characterSize+10)  &&
+                characterY <= y && y <= frameHeight+characterSize) {
 
             return true;
         }
         return false;
     }
+
 
 
 
@@ -539,25 +536,18 @@ public class MainActivity extends AppCompatActivity {
         pause.setVisibility(View.VISIBLE);
         scoreText.setVisibility(View.VISIBLE);
         scoreImage.setVisibility(View.VISIBLE);
-
         pause.setVisibility(View.VISIBLE);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.moodo_music);
         mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(.3f,.3f);
+        mediaPlayer.setVolume(.08f,.08f);
         mediaPlayer.start();
-
         start_flg = true;
         //  startLayout.setVisibility(View.INVISIBLE);
         tabToStart.setVisibility(View.INVISIBLE);
         if (frameHeight == 0) {
             frameHeight = gameFrame.getHeight();
             frameWidth = gameFrame.getWidth();
-
-            //  boxSize = box.getHeight();
             characterSize = character.getHeight();
-        /*    boxX = box.getX();
-            boxY = box.getY();*/
-
             characterX = character.getX();
             characterY = character.getY();
 
@@ -574,10 +564,10 @@ public class MainActivity extends AppCompatActivity {
         // why this code
 
         blackY = black.getY();
-        orangeX = orange.getY();
-        pinkY = pink.getY();
+        orangeY = orange.getY();
+        pinkY =  pink.getY();
         speedY = speed.getY();
-        timeY = stop_time.getY();
+        timeY =  stop_time.getY();
 
         character.setVisibility(View.VISIBLE);
         black.setVisibility(View.VISIBLE);
