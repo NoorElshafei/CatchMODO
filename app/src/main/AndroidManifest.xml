@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatchMODO.NoActionBar">
         <activity
+            android:name=".ui.activities.ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.SignUpByFacebook"
             android:exported="true" />
         <!--

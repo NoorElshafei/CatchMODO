@@ -28,6 +28,8 @@ public class SignUpByGoogle extends AppCompatActivity {
     private FirebaseUser mUser;
     DatabaseReference reference;
     ProgressDialog progressDialog;
+    String image_google;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +66,14 @@ public class SignUpByGoogle extends AppCompatActivity {
         String userName = mUser.getDisplayName();
         String userPhone = phoneNumber.getText().toString();
 
+
         String userid = mUser.getUid();
+
+        image_google = getIntent().getExtras().getString("image_google");
         //init database && search from users
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         // insert user information
-        RegisterModel userModel =new RegisterModel(userid,userName,email,userPhone,"0");
+        RegisterModel userModel =new RegisterModel(userid,userName,email,userPhone,"0",image_google);
         reference.setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

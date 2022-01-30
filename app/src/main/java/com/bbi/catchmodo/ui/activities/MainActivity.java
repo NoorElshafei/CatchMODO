@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     //Position
 
 
-
     private float characterX, characterY;
     private float blackX, blackY;
     private float orangeX, orangeY;
@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
     private float speedX, speedY;
     private float timeX, timeY;
     //Score
-    private TextView timerLabel, tabToStart, scoreText;
+    private TextView timerLabel, scoreText;
     private int score;
-
+    ImageView tabToStart;
     private boolean check_play_pause = true;
     private boolean gameStatus = true;
 
@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
     private float cloud2X, cloud2Y;
     private float cloud3X, cloud3Y;
     private float cloud4X, cloud4Y;
+    private TableLayout instructions;
+    private ConstraintLayout constraint_start;
 
     int n;
 
@@ -135,7 +137,8 @@ public class MainActivity extends AppCompatActivity {
         scoreImage = findViewById(R.id.scoreLevel);
         speed1 = findViewById(R.id.speed1);
         time1 = findViewById(R.id.time2);
-
+        instructions = findViewById(R.id.instructions);
+        constraint_start = findViewById(R.id.constraint_start);
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
@@ -240,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
         cloud4.setY(cloud4Y);
 
 
-
         //Add timerCount
         timeCount += 20;
 
@@ -291,9 +293,9 @@ public class MainActivity extends AppCompatActivity {
             if (time_stop_flg) {
                 timeY += 35;
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
-                float timeCenterY = timeY + stop_time.getHeight() ;
+                float timeCenterY = timeY + stop_time.getHeight();
 
-                if (hitCheck (timeCenterX, timeCenterY + 165)) {
+                if (hitCheck(timeCenterX, timeCenterY + 165)) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -318,11 +320,11 @@ public class MainActivity extends AppCompatActivity {
         orangeY += 20;
 
         //why this code
-        float orangeCenterX = orangeX + orange.getWidth()/2;
+        float orangeCenterX = orangeX + orange.getWidth() / 2;
         float orangeCenterY = orangeY + orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY+185)) {
+        if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -403,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
 
         blackY += 20;
         float blackCenterX = blackX + black.getWidth() / 2;
-        float blackCenterY = blackY + black.getHeight() ;
+        float blackCenterY = blackY + black.getHeight();
 
 
         if (hitCheck(blackCenterX, blackCenterY + 165)) {
@@ -468,17 +470,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public boolean hitCheck(float x, float y) {
-        if (characterX<= x && x <= (characterX + characterSize+10)  &&
-                characterY <= y && y <= frameHeight+characterSize) {
+        if (characterX <= x && x <= (characterX + characterSize + 10) &&
+                characterY <= y && y <= frameHeight + characterSize) {
 
             return true;
         }
         return false;
     }
-
-
 
 
     public void gameOver(String game) {
@@ -511,6 +510,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
         tabToStart.setVisibility(View.GONE);
+        constraint_start.setVisibility(View.INVISIBLE);
         character.setVisibility(View.INVISIBLE);
         black.setVisibility(View.INVISIBLE);
         orange.setVisibility(View.INVISIBLE);
@@ -539,11 +539,13 @@ public class MainActivity extends AppCompatActivity {
         pause.setVisibility(View.VISIBLE);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.moodo_music);
         mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(.08f,.08f);
+        mediaPlayer.setVolume(.08f, .08f);
         mediaPlayer.start();
         start_flg = true;
         //  startLayout.setVisibility(View.INVISIBLE);
         tabToStart.setVisibility(View.INVISIBLE);
+        constraint_start.setVisibility(View.INVISIBLE);
+        instructions.setVisibility(View.INVISIBLE);
         if (frameHeight == 0) {
             frameHeight = gameFrame.getHeight();
             frameWidth = gameFrame.getWidth();
@@ -565,9 +567,9 @@ public class MainActivity extends AppCompatActivity {
 
         blackY = black.getY();
         orangeY = orange.getY();
-        pinkY =  pink.getY();
+        pinkY = pink.getY();
         speedY = speed.getY();
-        timeY =  stop_time.getY();
+        timeY = stop_time.getY();
 
         character.setVisibility(View.VISIBLE);
         black.setVisibility(View.VISIBLE);
@@ -654,7 +656,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPauseGame() {
         check_play_pause = false;
-        if(mediaPlayer != null){
+        if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
         start_flg = false;
@@ -739,6 +741,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    }
+}
 
 

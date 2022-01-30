@@ -1,11 +1,14 @@
 package com.bbi.catchmodo.ui.activities;
 
+import static androidx.constraintlayout.widget.ConstraintLayoutStates.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,8 @@ public class SignUpByFacebook extends AppCompatActivity {
     ProgressDialog progressDialog;
     private FirebaseUser mUser;
     DatabaseReference reference;
+    private Intent intent;
+    String image_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,15 @@ public class SignUpByFacebook extends AppCompatActivity {
         String userName = mUser.getDisplayName();
         String userPhone = phoneNumber.getText().toString();
 
+
+        image_url = getIntent().getExtras().getString("image");
+        Log.d(TAG, "PerforAuth: "+image_url);
+
         String userid = mUser.getUid();
         //init database && search from users
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         // insert user information
-        RegisterModel userModel = new RegisterModel(userid, userName, email, userPhone, "0");
+        RegisterModel userModel = new RegisterModel(userid, userName, email, userPhone, "0",image_url);
         reference.setValue(userModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

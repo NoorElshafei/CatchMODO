@@ -16,16 +16,18 @@ public class RegisterModel implements Parcelable {
     private String phone;
     @SerializedName("score")
     private String score;
-
+    @SerializedName("image_url")
+    private String image_url;
     public RegisterModel() {
     }
 
-    public RegisterModel(String id, String user_name, String email, String phone, String score) {
+    public RegisterModel(String id, String user_name, String email, String phone, String score,String image_url) {
         this.id = id;
         this.user_name = user_name;
         this.email = email;
         this.phone = phone;
         this.score=score;
+        this.image_url=image_url;
 
     }
 
@@ -35,6 +37,7 @@ public class RegisterModel implements Parcelable {
         email = in.readString();
         phone = in.readString();
         score=in.readString();
+        image_url=in.readString();
 
     }
 
@@ -90,6 +93,14 @@ public class RegisterModel implements Parcelable {
         this.score = score;
     }
 
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -102,6 +113,7 @@ public class RegisterModel implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(phone);
         parcel.writeString(score);
+        parcel.writeString(image_url);
 
     }
 }

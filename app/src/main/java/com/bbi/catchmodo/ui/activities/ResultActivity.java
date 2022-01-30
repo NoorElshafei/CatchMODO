@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.UsersModel;
+import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,19 +29,21 @@ public class ResultActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference reference;
-   private String game="";
+    private String game = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        TextView scoreLabel = findViewById(R.id.scoreLabel);
+        TextView scoreLabel = findViewById(R.id.scoreLabel3);
         TextView highScoreLabel = findViewById(R.id.highScoreLabel);
-        ImageView exit = findViewById(R.id.imageView);
-        TextView gameOver=findViewById(R.id.textView);
+        ImageView exit = findViewById(R.id.exit_btn);
+        ImageView gameOver = findViewById(R.id.game_over_text);
+
         int score = getIntent().getIntExtra("SCORE", 0);
-        game=getIntent().getStringExtra("GAME");
-        scoreLabel.setText("YourScore: " + score);
+        game = getIntent().getExtras().getString("GAME");
+        scoreLabel.setText(score + "");
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -54,31 +57,27 @@ public class ResultActivity extends AppCompatActivity {
             editor.putInt("HIGH_SCORE", score);
             editor.apply();
 
-            highScoreLabel.setText("High Score : " + score);
+            highScoreLabel.setText(score+"");
             //   highScoreLabel.setText(getString(R.string.high_score, score));
             reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(firebaseUser.getUid()).child("score");
-            reference.setValue(score+"");
+            reference.setValue(score + "");
 
         } else {
-            highScoreLabel.setText("High Score : " + highScore);
+            highScoreLabel.setText(highScore + "");
             //  highScoreLabel.setText(getString(R.string.high_score, highScore));
 
         }
 
-        if(game != null && game.equalsIgnoreCase("timeOut")){
-            gameOver.setText("TimeOut");
-        }else
-        {
-            gameOver.setText("GameOver");
+
+        if (game.equals("timeOut")) {
+            Glide.with(ResultActivity.this).load(R.drawable.time_out).into(gameOver);
+        } else {
+            Glide.with(ResultActivity.this).load(R.drawable.game_over_text).into(gameOver);
         }
 
 
         exit.setOnClickListener(view -> {
-            firebaseAuth.signOut();
-            LoginManager.getInstance().logOut();
-            Intent intent = new Intent(ResultActivity.this, WelcomeActivity.class);
-            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), StartActivity.class));
 
         });
     }
@@ -86,6 +85,7 @@ public class ResultActivity extends AppCompatActivity {
     public void tryAgain(View view) {
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
+
     public void topScore(View view) {
         startActivity(new Intent(getApplicationContext(), TopUser.class));
     }

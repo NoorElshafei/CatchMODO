@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
+import com.bbi.catchmodo.ui.activities.ProfileActivity;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -43,11 +46,12 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if(firebaseUser.getUid().equals(registerModels.get(position).getId()))
         {
-            holder.name.setText("You");
+            holder.name.setText(registerModels.get(position).getUser_name()+'('+"You"+')');
         }else {
             holder.name.setText(registerModels.get(position).getUser_name());
         }
         holder.score.setText(registerModels.get(position).getScore());
+        Glide.with(context).load(registerModels.get(position).getImage_url()).placeholder(R.drawable.girl).into(holder.imageView);
 
 
     }
@@ -64,10 +68,13 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView name,score;
+        ImageView imageView;
+
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.textView4);
             score=itemView.findViewById(R.id.textView5);
+            imageView=itemView.findViewById(R.id.cart_image1);
         }
     }
 }

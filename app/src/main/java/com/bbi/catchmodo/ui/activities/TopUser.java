@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityTopUserBinding;
 import com.bbi.catchmodo.ui.adapters.TopUserAdapter;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -47,7 +49,11 @@ public class TopUser extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+     //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
         TopUser  =new ArrayList();
+        binding.backIcon.setOnClickListener(view -> {
+            onBackPressed();
+        });
         binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
         reference = FirebaseDatabase.getInstance().getReference("UserRegister");
         reference.addValueEventListener(new ValueEventListener() {
@@ -62,7 +68,7 @@ public class TopUser extends AppCompatActivity {
 
                 }
                 Collections.sort(registerModelArrayList, (lhs, rhs) -> Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore()));
-                for(int i=0;i<=4;i++){
+                for(int i=0;i<=9;i++){
 
                     TopUser.add(registerModelArrayList.get(i));
                 }

@@ -1,119 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ui.activities.StartActivity"
-android:orientation="vertical"
-android:gravity="center">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/app_name"
-    android:textSize="32sp"/>
+    <data></data>
 
-<TableLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="40dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    <TableRow
-        android:gravity="center_vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activities.StartActivity">
+
+
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/point"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30 points"
-            android:textSize="18sp"
-            android:paddingLeft="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
-    </TableRow>
+            android:id="@+id/background9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-    <TableRow
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp">
+        </ImageView>
+
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/circle"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10 points"
-            android:textSize="18sp"
-            android:paddingLeft="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
-    </TableRow>
+            android:id="@+id/sticker_gif"
+            android:layout_width="400dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/sticker_gif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <TableRow
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp">
+        </ImageView>
+
+
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/bomb"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Game Over"
-            android:textSize="18sp"
-            android:paddingLeft="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry"/>
-    </TableRow>
-    <TableRow
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp">
+            android:id="@+id/m_logo_gif"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="15dp"
+
+            android:src="@drawable/moodo_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/slow"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop Time for 10s"
-            android:textSize="18sp"
-            android:paddingLeft="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry"/>
-    </TableRow>
-    <TableRow
-        android:gravity="center_vertical"
-        android:layout_marginTop="20dp">
+            android:id="@+id/profile_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/profile"
+          />
+
+
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/speed"
-            tools:ignore="ContentDescription" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Speed Up"
-            android:textSize="18sp"
-            android:paddingLeft="10dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry"/>
-    </TableRow>
+            android:id="@+id/start_btn"
+            android:layout_width="170dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="120dp"
 
-</TableLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
+            app:srcCompat="@drawable/start" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:backgroundTint="#FF9800"
-        android:textColor="@color/black"
-        android:text="Start "
-        android:fontFamily="@font/soft_marshmallow"
-      android:gravity="center"
-        android:onClick="startGameFirst"/>
+        <ImageView
+            android:id="@+id/score_btn"
+            android:layout_width="170dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
 
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/start_btn"
+            app:srcCompat="@drawable/score_btn" />
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/exit_btn"
+            android:layout_width="170dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="10dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/score_btn"
+            app:srcCompat="@drawable/exit_btn" />
+
+        <ImageView
+            android:id="@+id/fly1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/fly_nuts1" />
+
+        <ImageView
+            android:id="@+id/fly2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="210dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/fly_nuts2" />
+
+        <ImageView
+            android:id="@+id/fly3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/background9"
+            app:srcCompat="@drawable/fly_nuts3" />
+
+        <ImageView
+            android:id="@+id/fly4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="280dp"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/background9"
+            app:srcCompat="@drawable/fly_nuts3" />
+
+        <ImageView
+            android:id="@+id/fly5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="220dp"
+            android:layout_marginEnd="75dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/fly_nuts4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

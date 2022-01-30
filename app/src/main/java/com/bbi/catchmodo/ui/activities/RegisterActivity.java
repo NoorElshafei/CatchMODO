@@ -72,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
+    String image_url;
+    String image_google;
 
 
     @Override
@@ -79,6 +81,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         progressDialog = new ProgressDialog(this);
+        Log.d(TAG, "onSuccess: "+ image_url );
+
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 // Configure Google Sign In
@@ -88,6 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Initialize Facebook Login button
@@ -99,9 +104,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 progressDialog.setMessage("please,waiting while SignUp ..");
                 progressDialog.setCanceledOnTouchOutside(false);
-               ;
+                image_url = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?type=large";
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                Log.d(TAG, "onSuccess: "+loginResult.getAccessToken().getUserId());
+
+
 
             }
 
@@ -154,11 +160,11 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             if (!email.matches(email_pattern)) {
                 binding.email.setError("please,enter email context right");
-            }  if (password.isEmpty() || password.length() < 6) {
+            }
+            if (password.isEmpty() || password.length() < 6) {
                 binding.password.setError("please,Enter the password correctly");
             }
-        }
-        else {
+        } else {
             progressDialog.setMessage("please,wait while Registration..");
             progressDialog.setTitle("Registration");
             progressDialog.setCanceledOnTouchOutside(false);
@@ -171,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
                         firebaseUser = firebaseAuth.getCurrentUser();
                         String userid = firebaseUser.getUid();
                         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
-                        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, score);
+                        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, score, "");
                         reference.setValue(registerModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -222,6 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+               image_google = account.getPhotoUrl().toString();
 
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
@@ -244,14 +251,14 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            Intent intent= new Intent(RegisterActivity.this, SignUpByGoogle.class);
+                            Intent intent = new Intent(RegisterActivity.this, SignUpByGoogle.class);
                             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("image_google",image_google);
                             startActivity(intent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-
                             progressDialog.dismiss();
                         }
                     }
@@ -261,8 +268,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void updateUI2(FirebaseUser user) {
         if (user != null) {
             progressDialog.dismiss();
-            Intent intent= new Intent(RegisterActivity.this, SignUpByFacebook.class);
+            Intent intent = new Intent(RegisterActivity.this, SignUpByFacebook.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("image" ,image_url);
+            Log.d(TAG, "onSuccess: "+ image_url );
             startActivity(intent);
             finish();
 
@@ -272,6 +281,7 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         progressDialog.show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
@@ -287,7 +297,7 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();
-                            Toast.makeText(RegisterActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             updateUI2(null);
                         }
                     }

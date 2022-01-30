@@ -12,6 +12,8 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="facebook_app_id">436876921405162</string>
     <string name="fb_login_protocol_scheme">fb436876921405162</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
