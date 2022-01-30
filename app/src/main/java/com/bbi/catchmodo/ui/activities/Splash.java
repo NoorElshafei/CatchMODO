@@ -49,15 +49,15 @@ public class Splash extends AppCompatActivity {
         displayGif(R.drawable.logo2,binding.mLogoGif);
         new Handler().postDelayed(() -> {
 
-                if (firebaseUser == null) {
-                    Intent intent = new Intent(Splash.this, WelcomeActivity.class);
-                    startActivity(intent);
-                }else {
-                    Intent intent= new Intent(Splash.this, StartActivity.class);
+            Intent intent;
+            if (firebaseUser == null) {
+                intent = new Intent(Splash.this, WelcomeActivity.class);
+            }else {
+                intent = new Intent(Splash.this, StartActivity.class);
                     intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK|intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
+            }
+            startActivity(intent);
+            finish();
 
         }, 3000);
 
