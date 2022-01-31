@@ -128,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
         binding.eyePassImage.setOnClickListener(view -> {
             if (passIsVisible) {
-                binding.eyePassImage.setImageResource(R.drawable.eye);
+                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_visibility_off_24);
                 //binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 binding.password.setTransformationMethod(new PasswordTransformationMethod());
                 passIsVisible = false;
