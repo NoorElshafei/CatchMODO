@@ -13,6 +13,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
@@ -21,7 +22,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class WelcomeActivity extends AppCompatActivity {
-Button register;
+ImageView register;
 TextView login;
 
     @Override

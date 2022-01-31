@@ -5,10 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_over_background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ui.activities.ResultActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_final"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BF000000"
+        ></LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -35,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/game_over_text" />
+                app:srcCompat="@drawable/game_over" />
 
             <TextView
                 android:id="@+id/scoreLabel1"
@@ -115,6 +128,7 @@
         android:layout_height="110dp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="55dp"
+        app:cardElevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,9 +138,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        app:cardCornerRadius="55dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="50dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/back_card"
         app:layout_constraintEnd_toEndOf="@+id/back_card"
@@ -138,7 +152,7 @@
             android:id="@+id/profile_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/sad_mood" />
+            android:src="@drawable/sad_moodo" />
 
     </androidx.cardview.widget.CardView>
 

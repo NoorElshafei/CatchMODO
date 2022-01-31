@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
-    String image_url;
+    private String image_url;
     String image_google;
 
 
@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
         progressDialog = new ProgressDialog(this);
-        Log.d(TAG, "onSuccess: "+ image_url );
+        Log.d(TAG, "onSuccess: " + image_url);
 
 
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -105,8 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                 progressDialog.setMessage("please,waiting while SignUp ..");
                 progressDialog.setCanceledOnTouchOutside(false);
                 image_url = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?type=large";
-                handleFacebookAccessToken(loginResult.getAccessToken());
-
+                handleFacebookAccessToken(loginResult.getAccessToken(), image_url);
 
 
             }
@@ -124,9 +123,12 @@ public class RegisterActivity extends AppCompatActivity {
         binding.btnRegister.setOnClickListener(view -> {
             register();
         });
+        binding.back.setOnClickListener(view -> {
+            onBackPressed();
+        });
         binding.eyePassImage.setOnClickListener(view -> {
             if (passIsVisible) {
-                binding.eyePassImage.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                binding.eyePassImage.setImageResource(R.drawable.eye);
                 //binding.passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 binding.password.setTransformationMethod(new PasswordTransformationMethod());
                 passIsVisible = false;
@@ -170,35 +172,16 @@ public class RegisterActivity extends AppCompatActivity {
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
             firebaseAuth = FirebaseAuth.getInstance();
-            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        firebaseUser = firebaseAuth.getCurrentUser();
-                        String userid = firebaseUser.getUid();
-                        reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
-                        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, score, "");
-                        reference.setValue(registerModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    sendNextPage();
-                                    finish();
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
 
-                                } else {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
+                    saveUserInRealtime(name, email, phone, "", "form");
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(RegisterActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
+
             });
 
         }
@@ -210,6 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
         Intent intent = new Intent(RegisterActivity.this, StartActivity.class);
         intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
 
@@ -228,7 +212,7 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-               image_google = account.getPhotoUrl().toString();
+                image_google = account.getPhotoUrl().toString();
 
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
@@ -245,44 +229,39 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Intent intent = new Intent(RegisterActivity.this, SignUpByGoogle.class);
-                            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent.putExtra("image_google",image_google);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            progressDialog.dismiss();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        String email = task.getResult().getUser().getEmail();
+                        String userName = task.getResult().getUser().getDisplayName();
+                        String imageUrl = task.getResult().getUser().getPhotoUrl().toString();
+
+                        saveUserInRealtime(userName, email, "", imageUrl, "google");
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        progressDialog.dismiss();
                     }
                 });
     }
 
-    private void updateUI2(FirebaseUser user) {
-        if (user != null) {
-            progressDialog.dismiss();
-            Intent intent = new Intent(RegisterActivity.this, SignUpByFacebook.class);
-            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("image" ,image_url);
-            Log.d(TAG, "onSuccess: "+ image_url );
-            startActivity(intent);
-            finish();
-
-
-        } else {
-            Toast.makeText(RegisterActivity.this, "please sign in to continue", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }
+    private void sendToNextFacebookPhone() {
+        progressDialog.dismiss();
+        Intent intent = new Intent(RegisterActivity.this, SignUpByFacebook.class);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
-    private void handleFacebookAccessToken(AccessToken token) {
+    private void sendToNextGooglePhone() {
+        progressDialog.dismiss();
+        Intent intent = new Intent(RegisterActivity.this, SignUpByGoogle.class);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void handleFacebookAccessToken(AccessToken token, String image_url) {
         progressDialog.show();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebaseAuth.signInWithCredential(credential)
@@ -291,18 +270,40 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI2(user);
+                            String email = task.getResult().getUser().getEmail();
+                            String userName = task.getResult().getUser().getDisplayName();
+
+                            saveUserInRealtime(userName, email, "", image_url, "facebook");
+
 
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI2(null);
+
                         }
                     }
                 });
     }
 
+    private void saveUserInRealtime(String name, String email, String phone, String imageUrl, String type) {
+        firebaseUser = firebaseAuth.getCurrentUser();
+        String userid = firebaseUser.getUid();
+        reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
+        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, "0", imageUrl);
+        reference.setValue(registerModel).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (type.equals("form"))
+                    sendNextPage();
+                else if (type.equals("google"))
+                    sendToNextGooglePhone();
+                else
+                    sendToNextFacebookPhone();
 
+            } else {
+                progressDialog.dismiss();
+                Toast.makeText(RegisterActivity.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

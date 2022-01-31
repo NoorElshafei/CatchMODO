@@ -20,6 +20,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,6 +36,12 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -46,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +64,12 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnLogin.setOnClickListener(view -> {
             login();
         });
+        binding.back.setOnClickListener(view -> {
+            onBackPressed();
+
+        });
         binding.forgetPassword.setOnClickListener(view -> {
-            Intent intent2= new Intent(LoginActivity.this,ForgetPassword.class);
+            Intent intent2 = new Intent(LoginActivity.this, ForgetPassword.class);
             startActivity(intent2);
 
         });
@@ -153,8 +165,9 @@ public class LoginActivity extends AppCompatActivity {
         intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     private void updateUI2(FirebaseUser user) {
-        if (user != null) {
+      /*  if (user != null) {
             Intent intent = new Intent(LoginActivity.this, StartActivity.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -163,8 +176,42 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
-        }
+        }*/
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
+        ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String keys = "";
+                for (DataSnapshot datas : snapshot.getChildren()) {
+                    keys = datas.getKey();
+                }
+                if (!keys.equals("") && keys.equals(user.getUid())) {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(LoginActivity.this, StartActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_LONG).show();
+                    LoginManager.getInstance().logOut();
+                    firebaseAuth.signOut();
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         progressDialog.setMessage("please,waiting  while SignIn.");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -180,18 +227,19 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI2(user);
                         } else {
                             // If sign in fails, display a message to the user.
-
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             updateUI2(null);
                             progressDialog.dismiss();
                         }
                     }
                 });
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,22 +269,53 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            Intent intent= new Intent(LoginActivity.this, StartActivity.class);
-                            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
+                            currentUserGoogle();
+
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             progressDialog.dismiss();
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+
                         }
                     }
                 });
     }
+
     private void updateUI(FirebaseUser user) {
 
     }
 
+    private void currentUserGoogle() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
+        ref.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String keys = "";
+                for (DataSnapshot datas : snapshot.getChildren()) {
+                    keys = datas.getKey();
+                }
+                if (!keys.equals("") && keys.equals(firebaseAuth.getCurrentUser().getUid())) {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(LoginActivity.this, StartActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "please Register first", Toast.LENGTH_LONG).show();
+                    firebaseAuth.signOut();
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 }

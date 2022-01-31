@@ -11,7 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ui.activities.ProfileActivity"
-        android:background="@drawable/background_profile">
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_final"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
 
 
         <androidx.cardview.widget.CardView
@@ -247,7 +257,8 @@
                 android:id="@+id/profile_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/image555" />
+                android:src="@drawable/fun_moodo"
+                 />
 
         </androidx.cardview.widget.CardView>
 
@@ -272,6 +283,7 @@
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/moodo_logo" />
 

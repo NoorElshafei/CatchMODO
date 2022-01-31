@@ -20,9 +20,14 @@ public class ForgetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forget_password);
+
         firebaseAuth = FirebaseAuth.getInstance();
         binding.btnSendEmail.setOnClickListener(view -> {
             sendEmail();
+        });
+        binding.back.setOnClickListener(view -> {
+            onBackPressed();
+
         });
 
     }

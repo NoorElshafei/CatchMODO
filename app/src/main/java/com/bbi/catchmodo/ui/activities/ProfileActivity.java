@@ -85,7 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
                     email.setText(userModel.getEmail());
                     phone.setText(userModel.getPhone());
                     score.setText(userModel.getScore());
-                    Glide.with(ProfileActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.photo1).into(profile);
+                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(profile);
 
 
 
@@ -107,7 +107,8 @@ public class ProfileActivity extends AppCompatActivity {
         edit_name.setOnClickListener(view -> {
             showEditDialog();
         });
-        back.setOnClickListener(view -> onBackPressed());
+        back.setOnClickListener(view ->
+                onBackPressed());
         change_photo.setOnClickListener(view -> {
             Intent intent = new Intent();
             intent.setType("image/*");

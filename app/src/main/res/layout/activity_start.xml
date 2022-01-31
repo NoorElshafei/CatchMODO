@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/back5"
+            android:src="@drawable/background_final"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -57,46 +57,61 @@
             android:layout_height="50dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile"
-          />
+            app:srcCompat="@drawable/profile_frame2"
 
+          />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
+            app:layout_constraintEnd_toEndOf="@+id/profile_btn"
+            app:layout_constraintStart_toStartOf="@+id/profile_btn"
+            app:layout_constraintTop_toTopOf="@+id/profile_btn">
+
+
+            <ImageView
+                android:id="@+id/profile_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fun_moodo" />
+
+        </androidx.cardview.widget.CardView>
 
         <ImageView
             android:id="@+id/start_btn"
             android:layout_width="170dp"
             android:layout_height="75dp"
             android:layout_marginTop="120dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
-            app:srcCompat="@drawable/start" />
+            app:srcCompat="@drawable/start_btn_xd" />
 
         <ImageView
             android:id="@+id/score_btn"
             android:layout_width="170dp"
             android:layout_height="75dp"
             android:layout_marginTop="10dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start_btn"
-            app:srcCompat="@drawable/score_btn" />
+            app:srcCompat="@drawable/score_btn_xd" />
 
         <ImageView
             android:id="@+id/exit_btn"
             android:layout_width="170dp"
             android:layout_height="75dp"
             android:layout_marginTop="10dp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/score_btn"
-            app:srcCompat="@drawable/exit_btn" />
+            app:srcCompat="@drawable/exit_btn_xd" />
 
         <ImageView
             android:id="@+id/fly1"

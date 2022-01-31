@@ -51,7 +51,7 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
             holder.name.setText(registerModels.get(position).getUser_name());
         }
         holder.score.setText(registerModels.get(position).getScore());
-        Glide.with(context).load(registerModels.get(position).getImage_url()).placeholder(R.drawable.girl).into(holder.imageView);
+        Glide.with(context).load(registerModels.get(position).getImage_url()).placeholder(R.drawable.moodo_icon).into(holder.imageView);
 
 
     }

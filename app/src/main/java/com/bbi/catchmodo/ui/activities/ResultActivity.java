@@ -39,6 +39,7 @@ public class ResultActivity extends AppCompatActivity {
         TextView highScoreLabel = findViewById(R.id.highScoreLabel);
         ImageView exit = findViewById(R.id.exit_btn);
         ImageView gameOver = findViewById(R.id.game_over_text);
+        ImageView moodo=findViewById(R.id.profile_photo);
 
         int score = getIntent().getIntExtra("SCORE", 0);
         game = getIntent().getExtras().getString("GAME");
@@ -71,8 +72,9 @@ public class ResultActivity extends AppCompatActivity {
 
         if (game.equals("timeOut")) {
             Glide.with(ResultActivity.this).load(R.drawable.time_out).into(gameOver);
+            Glide.with(ResultActivity.this).load(R.drawable.fun_moodo).into(moodo);
         } else {
-            Glide.with(ResultActivity.this).load(R.drawable.game_over_text).into(gameOver);
+            Glide.with(ResultActivity.this).load(R.drawable.game_over).into(gameOver);
         }
 
 

@@ -116,4 +116,6 @@ public class RegisterModel implements Parcelable {
         parcel.writeString(image_url);
 
     }
+
+
 }
