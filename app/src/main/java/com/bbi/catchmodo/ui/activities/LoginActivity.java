@@ -1,21 +1,18 @@
 package com.bbi.catchmodo.ui.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
-import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -40,8 +37,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -91,7 +89,8 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
+
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -107,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -151,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     } else {
                         progressDialog.dismiss();
+                        Log.d(TAG, "onComplete1: " + task.getException().getMessage());
                         Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                     }
@@ -167,16 +168,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI2(FirebaseUser user) {
-      /*  if (user != null) {
-            Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
 
-        } else {
-            Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }*/
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
         ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -195,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "please sign up to continue", Toast.LENGTH_LONG).show();
                     LoginManager.getInstance().logOut();
                     firebaseAuth.signOut();
 
@@ -227,8 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                             updateUI2(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI2(null);
+                            Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                         }
                     }
