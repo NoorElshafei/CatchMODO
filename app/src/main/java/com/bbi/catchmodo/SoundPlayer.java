@@ -41,7 +41,7 @@ public class SoundPlayer {
     }
 
     public  void  playHitOrangeSound(){
-        soundPool.play(hitOrangeSound,1.0f,1.0f,1,0,1.0f);
+        soundPool.play(hitOrangeSound,.1f,.1f,1,0,1.0f);
     }
 
 /*    public  void  soundAll(){
@@ -49,9 +49,9 @@ public class SoundPlayer {
     }*/
 
     public  void  playHitBlackSound(){
-        soundPool.play(hitBlackSound,1.0f,1.0f,1,0,1.0f);
+        soundPool.play(hitBlackSound,.15f,.15f,1,0,1.0f);
     }
     public  void  playHitPinkSound(){
-        soundPool.play(hitPinkSound,1.0f,1.0f,1,0,1.0f);
+        soundPool.play(hitPinkSound,.1f,.1f,1,0,1.0f);
     }
 }
