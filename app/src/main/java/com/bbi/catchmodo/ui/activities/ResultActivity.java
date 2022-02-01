@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.model.UserSharedPreference;
 import com.bbi.catchmodo.data.model.UsersModel;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
@@ -30,6 +31,7 @@ public class ResultActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     DatabaseReference reference;
     private String game = "";
+    private UserSharedPreference userSharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,23 +42,22 @@ public class ResultActivity extends AppCompatActivity {
         ImageView exit = findViewById(R.id.exit_btn);
         ImageView gameOver = findViewById(R.id.game_over_text);
         ImageView moodo=findViewById(R.id.profile_photo);
+        userSharedPreference = new UserSharedPreference(this);
+        game = getIntent().getExtras().getString("GAME");
 
         int score = getIntent().getIntExtra("SCORE", 0);
-        game = getIntent().getExtras().getString("GAME");
         scoreLabel.setText(score + "");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
         // High Score
-        SharedPreferences sharedPreferences = getSharedPreferences("GAME_DATA", Context.MODE_PRIVATE);
-        int highScore = sharedPreferences.getInt("HIGH_SCORE", 0);
+      ;
+        int highScore = userSharedPreference.getHighScore();
 
         if (score > highScore) {
             // Update HighScore
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("HIGH_SCORE", score);
-            editor.apply();
+          userSharedPreference.setHighScore(score);
 
             highScoreLabel.setText(score+"");
             //   highScoreLabel.setText(getString(R.string.high_score, score));

@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.model.RegisterModel;
+import com.bbi.catchmodo.data.model.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
 import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
 import com.facebook.AccessToken;
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
+    private UserSharedPreference userSharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-
+        userSharedPreference = new UserSharedPreference(this);
         binding.btnLogin.setOnClickListener(view -> {
             login();
         });
@@ -166,27 +169,22 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void updateUI2(FirebaseUser user) {
-      /*  if (user != null) {
-            Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+    private void nextPageInFacebook(FirebaseUser user) {
 
-        } else {
-            Toast.makeText(LoginActivity.this, "please sign in to continue", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-        }*/
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
         ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String keys = "";
+                RegisterModel userModel = null;
                 for (DataSnapshot datas : snapshot.getChildren()) {
+                    userModel = datas.getValue(RegisterModel.class);
+
                     keys = datas.getKey();
                 }
                 if (!keys.equals("") && keys.equals(user.getUid())) {
                     progressDialog.dismiss();
+                    userSharedPreference.add(userModel);
                     Intent intent = new Intent(LoginActivity.this, StartActivity.class);
                     intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -224,11 +222,11 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI2(user);
+                            nextPageInFacebook(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                            updateUI2(null);
+                            nextPageInFacebook(null);
                             progressDialog.dismiss();
                         }
                     }
@@ -269,7 +267,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            currentUserGoogle();
+                            nextPageInGoogle();
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -285,18 +283,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void currentUserGoogle() {
+    private void nextPageInGoogle() {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
         ref.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String keys = "";
+                RegisterModel userModel = null;
                 for (DataSnapshot datas : snapshot.getChildren()) {
+                    userModel = datas.getValue(RegisterModel.class);
                     keys = datas.getKey();
                 }
                 if (!keys.equals("") && keys.equals(firebaseAuth.getCurrentUser().getUid())) {
                     progressDialog.dismiss();
+                    userSharedPreference.add(userModel);
                     Intent intent = new Intent(LoginActivity.this, StartActivity.class);
                     intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
