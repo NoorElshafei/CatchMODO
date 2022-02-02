@@ -6,14 +6,6 @@ plugins {
     mavenCentral()
 }*/
 android {
-    signingConfigs {
-        debug {
-            storeFile file('C:\\android_projects\\CatchMODO\\modo.jks')
-            storePassword '123456'
-            keyAlias 'key0'
-            keyPassword '123456'
-        }
-    }
     compileSdk 31
 
     defaultConfig {
@@ -24,7 +16,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.debug
     }
 
     buildTypes {

@@ -6,7 +6,6 @@
     <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activities.StartActivity">
@@ -61,12 +60,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile_frame2"
 
-          />
+            />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardCornerRadius="20dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            app:cardCornerRadius="25dp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
             app:layout_constraintEnd_toEndOf="@+id/profile_btn"
