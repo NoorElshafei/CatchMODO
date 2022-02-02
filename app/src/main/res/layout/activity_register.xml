@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data></data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,7 +18,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/background_final"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -252,8 +257,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:textSize="13sp"
-                android:text="Login with Google" />
+                android:text="Login with Google"
+                android:textSize="13sp" />
 
 
         </LinearLayout>
@@ -263,11 +268,13 @@
             android:layout_width="120dp"
             android:layout_height="40dp"
 
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_google"
             app:srcCompat="@drawable/moodo_logo" />
         <ImageView
             android:id="@+id/back"
@@ -280,4 +287,5 @@
             app:srcCompat="@drawable/back_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

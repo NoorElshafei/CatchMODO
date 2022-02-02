@@ -65,7 +65,9 @@ LinearLayout linearLayout;
         getTopUser();
 
 
+binding.constraint1.setVisibility(View.INVISIBLE);
     }
+
 
     private void getMyData() {
 
@@ -115,7 +117,7 @@ LinearLayout linearLayout;
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
                     binding.name.setText(userModel.getUser_name()+'('+"You"+')');
                     binding.score.setText(userModel.getScore());
-                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.girl).into(binding.image);
+                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.moodo_icon).into(binding.image);
                     binding.constraint1.setVisibility(View.VISIBLE);
 
                 }else {
