@@ -111,7 +111,10 @@ public class ResultActivity extends AppCompatActivity {
         dialog.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                exitAppCLICK(null);
+
+                Intent intent=new Intent(ResultActivity.this,StartActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

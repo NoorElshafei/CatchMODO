@@ -257,7 +257,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Login with Google"
+                android:text="Register with Google"
                 android:textSize="13sp" />
 
 
