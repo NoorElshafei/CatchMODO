@@ -43,6 +43,11 @@ public class Splash extends AppCompatActivity {
 
         displayGif(R.drawable.sticker_gif, binding.stickerGif);
         displayGif(R.drawable.logo2, binding.mLogoGif);
+        Glide.with(Splash.this).load(R.drawable.fly_nuts1).into(binding.fly1);
+        Glide.with(Splash.this).load(R.drawable.fly_nuts2).into(binding.fly2);
+        Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly3);
+        Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly4);
+        Glide.with(Splash.this).load(R.drawable.fly_nuts4).into(binding.fly5);
         new Handler().postDelayed(() -> {
             Intent intent;
             if (firebaseUser == null) {

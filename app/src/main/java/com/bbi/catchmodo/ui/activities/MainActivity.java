@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     private float cloud4X, cloud4Y;
     private TableLayout instructions;
     private ConstraintLayout constraint_start;
+    private boolean flag_start_game=false;
 
     int n;
 
@@ -525,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startGame(View view) {
-
+flag_start_game=true;
         new Handler().postDelayed(() -> {
             right_arrow.setVisibility(View.INVISIBLE);
             left_arrow.setVisibility(View.INVISIBLE);
@@ -670,7 +671,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onStartGame() {
         start_flg = true;
-        mediaPlayer.start();
+        if(mediaPlayer!=null){
+            mediaPlayer.start();
+        }
+
 
         if (timerCheck)
             setTimer();
@@ -688,15 +692,20 @@ public class MainActivity extends AppCompatActivity {
         dialog.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                exitAppCLICK(null);
+
+               Intent intent=new Intent(MainActivity.this,StartActivity.class);
+               intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+               startActivity(intent);
             }
         });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                onStartGame();
+        dialog.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.cancel();
+            if(flag_start_game){
+                play.setVisibility(View.INVISIBLE);
+                pause.setVisibility(View.VISIBLE);
             }
+
+            onStartGame();
         });
         AlertDialog dialog2 = dialog.create();
         dialog2.show();

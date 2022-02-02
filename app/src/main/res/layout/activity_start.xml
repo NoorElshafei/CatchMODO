@@ -5,17 +5,22 @@
 
     <data></data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         tools:context=".ui.activities.StartActivity">
 
 
         <ImageView
             android:id="@+id/background9"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:src="@drawable/background_final"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -44,12 +49,14 @@
             android:id="@+id/m_logo_gif"
             android:layout_width="120dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="15dp"
 
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
             android:src="@drawable/moodo_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exit_btn" />
 
         <ImageView
             android:id="@+id/profile_btn"
@@ -164,4 +171,5 @@
             app:srcCompat="@drawable/fly_nuts4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

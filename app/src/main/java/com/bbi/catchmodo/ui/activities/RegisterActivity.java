@@ -180,7 +180,7 @@ public class RegisterActivity extends AppCompatActivity {
                     saveUserInRealtime(name, email, phone, "", "form");
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(RegisterActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
 
