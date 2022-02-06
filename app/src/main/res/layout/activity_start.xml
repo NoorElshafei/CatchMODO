@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data></data>
 
@@ -22,7 +21,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-        </ImageView>
+            <ImageView
+                android:id="@+id/background9"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/background_final"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            </ImageView>
 
         <ImageView
             android:id="@+id/sticker_gif"
@@ -75,77 +87,6 @@
             app:layout_constraintStart_toStartOf="@+id/profile_btn"
             app:layout_constraintTop_toTopOf="@+id/profile_btn">
 
-
-            <ImageView
-                android:id="@+id/start_btn"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="120dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
-                app:srcCompat="@drawable/start_btn_xd" />
-
-            <ImageView
-                android:id="@+id/score_btn"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/start_btn"
-                app:srcCompat="@drawable/score_btn_xd" />
-
-            <ImageView
-                android:id="@+id/exit_btn"
-                android:layout_width="170dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/score_btn"
-                app:srcCompat="@drawable/exit_btn_xd" />
-
-            <ImageView
-                android:id="@+id/fly1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="80dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/fly_nuts1" />
-
-            <ImageView
-                android:id="@+id/fly2"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="210dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/fly_nuts2" />
-
-            <ImageView
-                android:id="@+id/fly3"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/background9"
-                app:srcCompat="@drawable/fly_nuts3" />
-
-            <ImageView
-                android:id="@+id/fly4"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="280dp"
-                android:layout_marginEnd="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/background9"
-                app:srcCompat="@drawable/fly_nuts3" />
 
             <ImageView
                 android:id="@+id/profile_photo"
