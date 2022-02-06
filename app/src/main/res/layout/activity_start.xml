@@ -8,16 +8,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        >
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:context=".ui.activities.StartActivity">
+        android:fillViewport="true">
 
-
-        <ImageView
-            android:id="@+id/background9"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
@@ -82,6 +75,77 @@
             app:layout_constraintStart_toStartOf="@+id/profile_btn"
             app:layout_constraintTop_toTopOf="@+id/profile_btn">
 
+
+            <ImageView
+                android:id="@+id/start_btn"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
+                app:srcCompat="@drawable/start_btn_xd" />
+
+            <ImageView
+                android:id="@+id/score_btn"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_btn"
+                app:srcCompat="@drawable/score_btn_xd" />
+
+            <ImageView
+                android:id="@+id/exit_btn"
+                android:layout_width="170dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/score_btn"
+                app:srcCompat="@drawable/exit_btn_xd" />
+
+            <ImageView
+                android:id="@+id/fly1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fly_nuts1" />
+
+            <ImageView
+                android:id="@+id/fly2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="210dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/fly_nuts2" />
+
+            <ImageView
+                android:id="@+id/fly3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/background9"
+                app:srcCompat="@drawable/fly_nuts3" />
+
+            <ImageView
+                android:id="@+id/fly4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="280dp"
+                android:layout_marginEnd="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/background9"
+                app:srcCompat="@drawable/fly_nuts3" />
 
             <ImageView
                 android:id="@+id/profile_photo"
@@ -174,5 +238,6 @@
             app:srcCompat="@drawable/fly_nuts4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 </layout>

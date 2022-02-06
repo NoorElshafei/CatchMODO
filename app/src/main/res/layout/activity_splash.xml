@@ -40,9 +40,11 @@
 
         <ImageView
             android:id="@+id/m_logo_gif"
+
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_45sdp"
             android:layout_marginBottom="@dimen/_11sdp"
+
 
             android:src="@drawable/logo2"
             app:layout_constraintBottom_toBottomOf="parent"
