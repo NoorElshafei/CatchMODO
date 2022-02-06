@@ -1,6 +1,7 @@
 package com.bbi.catchmodo.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
@@ -44,6 +47,9 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
     @Override
     public void onBindViewHolder(@NonNull TopUserAdapter.viewHolder holder, int position) {
         firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        if(position==0){
+            holder.constraintLayoutColor.setBackgroundColor(Color.parseColor("#7e8900"));
+        }
         if(firebaseUser.getUid().equals(registerModels.get(position).getId()))
         {
             holder.name.setText(registerModels.get(position).getUser_name()+'('+"You"+')');
@@ -69,12 +75,15 @@ public class TopUserAdapter extends RecyclerView.Adapter<TopUserAdapter.viewHold
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView name,score;
         ImageView imageView;
+        ConstraintLayout constraintLayoutColor;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.textView4);
             score=itemView.findViewById(R.id.textView5);
             imageView=itemView.findViewById(R.id.cart_image1);
+            constraintLayoutColor=itemView.findViewById(R.id.constraintLayout5);
+
         }
     }
 }
