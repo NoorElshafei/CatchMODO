@@ -54,8 +54,8 @@
             android:id="@+id/fly1"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/_11sdp"
-            android:layout_marginTop="@dimen/_65sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_63sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/fly_nuts1" />

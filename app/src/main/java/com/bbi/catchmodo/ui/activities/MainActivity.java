@@ -4,9 +4,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         time1 = findViewById(R.id.time2);
         instructions = findViewById(R.id.instructions);
         constraint_start = findViewById(R.id.constraint_start);
+
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();

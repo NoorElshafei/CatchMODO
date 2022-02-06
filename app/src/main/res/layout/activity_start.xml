@@ -33,9 +33,9 @@
 
         <ImageView
             android:id="@+id/sticker_gif"
-            android:layout_width="400dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="80dp"
+            android:layout_width="@dimen/_290sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_63sdp"
             android:src="@drawable/sticker_gif"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,11 +46,12 @@
 
         <ImageView
             android:id="@+id/m_logo_gif"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginBottom="@dimen/_11sdp"
 
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginTop="@dimen/_38sdp"
+
             android:src="@drawable/moodo_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,10 +61,10 @@
 
         <ImageView
             android:id="@+id/profile_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_marginStart="@dimen/_23sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile_frame2"
@@ -72,8 +73,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/_31sdp"
+            android:layout_height="@dimen/_31sdp"
             app:cardCornerRadius="25dp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
@@ -92,8 +93,8 @@
 
         <ImageView
             android:id="@+id/start_btn"
-            android:layout_width="170dp"
-            android:layout_height="75dp"
+            android:layout_width="@dimen/_128sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_marginTop="@dimen/_80sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.483"
@@ -103,9 +104,9 @@
 
         <ImageView
             android:id="@+id/score_btn"
-            android:layout_width="170dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="@dimen/_128sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start_btn"
@@ -113,9 +114,9 @@
 
         <ImageView
             android:id="@+id/exit_btn"
-            android:layout_width="170dp"
-            android:layout_height="75dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="@dimen/_128sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/score_btn"
@@ -123,29 +124,30 @@
 
         <ImageView
             android:id="@+id/fly1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_63sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/fly_nuts1" />
 
         <ImageView
             android:id="@+id/fly2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="210dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
             app:srcCompat="@drawable/fly_nuts2" />
 
         <ImageView
             android:id="@+id/fly3"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/background9"
@@ -153,20 +155,20 @@
 
         <ImageView
             android:id="@+id/fly4"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="280dp"
-            android:layout_marginEnd="60dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_215sdp"
+            android:layout_marginEnd="@dimen/_45sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/background9"
             app:srcCompat="@drawable/fly_nuts3" />
 
         <ImageView
             android:id="@+id/fly5"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginEnd="75dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_175sdp"
+            android:layout_marginEnd="@dimen/_55sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/fly_nuts4" />

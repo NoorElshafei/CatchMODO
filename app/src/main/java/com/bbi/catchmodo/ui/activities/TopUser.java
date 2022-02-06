@@ -57,7 +57,7 @@ LinearLayout linearLayout;
         progressDialog.show();
         //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
         TopUser = new ArrayList();
-        binding.backIcon.setOnClickListener(view -> {
+        binding.back.setOnClickListener(view -> {
             onBackPressed();
         });
         binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
