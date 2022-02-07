@@ -95,15 +95,7 @@
             </androidx.cardview.widget.CardView>
 
 
-            <ImageView
-                android:id="@+id/profile_btn1"
-                android:layout_width="@dimen/_38sdp"
-                android:layout_height="@dimen/_38sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/profile_frame2" />
+
 
 
             <ImageView
