@@ -228,10 +228,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/back_card"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_width="@dimen/_86sdp"
+            android:layout_height="@dimen/_86sdp"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="55dp"
+            app:cardCornerRadius="56dp"
             app:cardElevation="4dp"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
