@@ -1,5 +1,6 @@
 package com.bbi.catchmodo.ui.fragments.room_password;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,10 +15,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.databinding.FragmentRoomPasswordDialogBinding;
+import com.bbi.catchmodo.ui.activities.room.StartRoomActivity;
 
 public class RoomPasswordDialogFragment extends DialogFragment {
 
-    private RoomPasswordDialogViewModel mViewModel;
     private FragmentRoomPasswordDialogBinding binding;
 
 
@@ -39,10 +40,12 @@ public class RoomPasswordDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(RoomPasswordDialogViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        binding.saveBtn.setOnClickListener(view1 ->{
+            startActivity(new Intent(getContext(), StartRoomActivity.class));
+            dismiss();
+        });
+    }
 }

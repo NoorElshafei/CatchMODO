@@ -79,6 +79,16 @@ dependencies {
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
 
 
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
+    // firbase storage
+    implementation 'com.google.firebase:firebase-storage'
+
+
 
 
 

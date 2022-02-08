@@ -4,67 +4,65 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
-import com.bbi.catchmodo.data.model.RegisterModel;
-import com.google.firebase.auth.FirebaseUser;
+import com.bbi.catchmodo.data.model.RoomModel;
+import com.bbi.catchmodo.ui.fragments.room_password.RoomPasswordDialogFragment;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.util.ArrayList;
 
-
-public class RoomsAdapter extends RecyclerView.Adapter<RoomsAdapter.viewHolder> {
+public class RoomsAdapter extends FirestoreRecyclerAdapter<RoomModel, RoomsAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<RegisterModel> registerModels;
-    FirebaseUser firebaseUser;
+    private FragmentActivity activity;
 
 
-    public RoomsAdapter(Context context, ArrayList<RegisterModel> registerModels) {
+    public RoomsAdapter(FragmentActivity activity, Context context, @NonNull FirestoreRecyclerOptions<RoomModel> options) {
+        super(options);
         this.context = context;
-        this.registerModels = registerModels;
+        this.activity = activity;
+    }
+
+
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull RoomModel model) {
+
+        holder.name.setText(model.getName());
+        holder.roomStatus.setText(model.getStatus());
+
+        holder.itemView.setOnClickListener(view -> {
+            RoomPasswordDialogFragment newFragment = RoomPasswordDialogFragment.newInstance();
+            newFragment.show(activity.getSupportFragmentManager(), "dialog");
+        });
+
     }
 
     @NonNull
     @Override
-    public RoomsAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room,parent,false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_room, parent, false);
 
-        return new viewHolder(view);
+        return new ViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RoomsAdapter.viewHolder holder, int position) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name, roomStatus;
 
 
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return registerModels!=null?registerModels.size():0;
-    }
-    public void setData(ArrayList<RegisterModel> registerModels) {
-        this.registerModels = registerModels;
-        notifyDataSetChanged();
-
-    }
-
-    public class viewHolder extends RecyclerView.ViewHolder {
-        TextView name,roomStatus;
-
-
-        public viewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name=itemView.findViewById(R.id.room_name);
-            roomStatus=itemView.findViewById(R.id.room_status);
+            name = itemView.findViewById(R.id.room_name);
+            roomStatus = itemView.findViewById(R.id.room_status);
 
 
         }
+
+
     }
 }
