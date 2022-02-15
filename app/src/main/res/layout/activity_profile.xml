@@ -20,7 +20,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
 
@@ -61,7 +61,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="Moodo"
+                    android:text=""
                     android:textColor="#AFA6A4"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintStart_toStartOf="@+id/textView"
@@ -101,7 +101,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="0125897416"
+                    android:text=""
                     android:textColor="#AFA6A4"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -141,7 +141,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="moodo@gamil.com"
+                    android:text=""
                     android:textColor="#AFA6A4"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView3"
@@ -181,7 +181,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_marginTop="@dimen/_3sdp"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="6000"
+                    android:text=""
                     android:textColor="#AFA6A4"
                     android:textSize="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="@+id/textView4"
@@ -197,9 +197,9 @@
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="@+id/linearLayout11"
                     app:layout_constraintStart_toStartOf="@+id/linearLayout11"
-                    app:layout_constraintTop_toBottomOf="@+id/score">
+                    app:layout_constraintTop_toBottomOf="@+id/score"/>
 
-                </LinearLayout>
+
 
                 <ImageView
                     android:id="@+id/edit_name"
