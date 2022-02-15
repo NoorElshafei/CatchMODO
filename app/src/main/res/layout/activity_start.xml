@@ -96,21 +96,10 @@
 
 
             <ImageView
-                android:id="@+id/profile_btn1"
-                android:layout_width="@dimen/_38sdp"
-                android:layout_height="@dimen/_38sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/profile_frame2" />
-
-
-            <ImageView
                 android:id="@+id/start_btn"
                 android:layout_width="@dimen/_128sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginTop="@dimen/_80sdp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.483"
                 app:layout_constraintStart_toStartOf="parent"
@@ -118,13 +107,24 @@
                 app:srcCompat="@drawable/start_btn_xd" />
 
             <ImageView
+                android:id="@+id/room_btn"
+                android:layout_width="@dimen/_128sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_btn"
+                app:srcCompat="@drawable/start_btn_xd" />
+
+            <ImageView
                 android:id="@+id/score_btn"
                 android:layout_width="@dimen/_128sdp"
                 android:layout_height="@dimen/_60sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/start_btn"
+                app:layout_constraintTop_toBottomOf="@+id/room_btn"
                 app:srcCompat="@drawable/score_btn_xd" />
 
             <ImageView

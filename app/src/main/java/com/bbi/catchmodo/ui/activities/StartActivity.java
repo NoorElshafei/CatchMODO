@@ -77,7 +77,7 @@ public class StartActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        binding.profileBtn1.setOnClickListener(view -> {
+        binding.roomBtn.setOnClickListener(view -> {
             Intent intent = new Intent(StartActivity.this, RoomActivity.class);
             startActivity(intent);
         });

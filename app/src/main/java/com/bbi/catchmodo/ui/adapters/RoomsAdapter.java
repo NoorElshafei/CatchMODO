@@ -1,6 +1,7 @@
 package com.bbi.catchmodo.ui.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RoomModel;
 import com.bbi.catchmodo.ui.fragments.room_password.RoomPasswordDialogFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -21,26 +23,14 @@ public class RoomsAdapter extends FirestoreRecyclerAdapter<RoomModel, RoomsAdapt
 
     private Context context;
     private FragmentActivity activity;
+    private UserSharedPreference sharedPreferences;
 
 
     public RoomsAdapter(FragmentActivity activity, Context context, @NonNull FirestoreRecyclerOptions<RoomModel> options) {
         super(options);
         this.context = context;
         this.activity = activity;
-    }
-
-
-    @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull RoomModel model) {
-
-        holder.name.setText(model.getName());
-        holder.roomStatus.setText(model.getStatus());
-
-        holder.itemView.setOnClickListener(view -> {
-            RoomPasswordDialogFragment newFragment = RoomPasswordDialogFragment.newInstance();
-            newFragment.show(activity.getSupportFragmentManager(), "dialog");
-        });
-
+        sharedPreferences = new UserSharedPreference(context);
     }
 
     @NonNull
@@ -50,6 +40,24 @@ public class RoomsAdapter extends FirestoreRecyclerAdapter<RoomModel, RoomsAdapt
 
         return new ViewHolder(view);
     }
+
+    @Override
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull RoomModel model) {
+
+        holder.name.setText(model.getName());
+        holder.roomStatus.setText(model.getStatus());
+
+        holder.itemView.setOnClickListener(view -> {
+            sharedPreferences.setRoomId(model.getId());
+            sharedPreferences.setRoomName(model.getName());
+
+            RoomPasswordDialogFragment newFragment = RoomPasswordDialogFragment.newInstance();
+            newFragment.show(activity.getSupportFragmentManager(), "dialog");
+        });
+
+    }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name, roomStatus;

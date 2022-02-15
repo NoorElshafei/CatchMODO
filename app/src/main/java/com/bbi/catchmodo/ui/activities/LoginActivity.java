@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.data.model.UserSharedPreference;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     String email_pattern = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     FirebaseAuth firebaseAuth;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     private boolean passIsVisible = false;
     private CallbackManager mCallbackManager;
     GoogleSignInClient mGoogleSignInClient;
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
-                        sendUserToNextActivity();
+                        sendUserToNextActivity(firebaseAuth.getCurrentUser());
 
 
                     } else {
@@ -164,14 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void sendUserToNextActivity() {
-        Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-
-    private void nextPageInFacebook(FirebaseUser user) {
+    private void sendUserToNextActivity(FirebaseUser user) {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
         ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -209,8 +202,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
+
+
 
     private void handleFacebookAccessToken(AccessToken token) {
         progressDialog.setMessage("please,waiting  while SignIn.");
@@ -224,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                            nextPageInFacebook(user);
+                            sendUserToNextActivity(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -512,6 +512,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("SCORE", score);
         intent.putExtra("GAME", game);
         startActivity(intent);
+        finish();
 
         tabToStart.setVisibility(View.GONE);
         constraint_start.setVisibility(View.INVISIBLE);

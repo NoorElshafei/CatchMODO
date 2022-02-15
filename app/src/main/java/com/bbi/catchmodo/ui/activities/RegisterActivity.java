@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.model.UsersModel;
 import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
@@ -293,8 +294,12 @@ public class RegisterActivity extends AppCompatActivity {
         String userid = firebaseUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         RegisterModel registerModel = new RegisterModel(userid, name, email, phone, "0", imageUrl);
+        UserSharedPreference userSharedPreference = new UserSharedPreference(this);
+
+
         reference.setValue(registerModel).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                userSharedPreference.add(registerModel);
                 if (type.equals("form"))
                     sendNextPage();
                 else if (type.equals("google"))

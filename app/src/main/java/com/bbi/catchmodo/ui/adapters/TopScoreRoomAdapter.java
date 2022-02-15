@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -50,7 +51,7 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserRoomModel model) {
 
-        holder.score.setText(model.getScore());
+        holder.score.setText(model.getScore()+"");
 
         reference.child(model.getUser_id()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,11 +66,14 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+
             }
         });
 
 
     }
+
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,36 +1,29 @@
 package com.bbi.catchmodo.ui.activities.room;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.ImageView;
-
 import com.bbi.catchmodo.R;
-import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.databinding.ActivityStartBinding;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityStartRoomBinding;
-import com.bbi.catchmodo.ui.activities.MainActivity;
-import com.bbi.catchmodo.ui.activities.ProfileActivity;
 import com.bbi.catchmodo.ui.activities.StartActivity;
-import com.bbi.catchmodo.ui.activities.TopUser;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class StartRoomActivity extends AppCompatActivity {
     private ActivityStartRoomBinding binding;
-
+    private AlertDialog.Builder dialog;
+    private UserSharedPreference userSharedPreference;
 
 
     @Override
@@ -47,9 +40,18 @@ public class StartRoomActivity extends AppCompatActivity {
         Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
         Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
 
-
-
+        declaration();
         onClick();
+        setUI();
+
+    }
+
+    private void declaration() {
+        userSharedPreference = new UserSharedPreference(this);
+    }
+
+    private void setUI() {
+        binding.roomNameText.setText("Room: " +userSharedPreference.getRoomName());
     }
 
 
@@ -87,5 +89,24 @@ public class StartRoomActivity extends AppCompatActivity {
                     }
                 })
                 .into(imageView);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("Exit From Room");
+        dialog.setMessage("You Are sure Exit ?");
+        dialog.setCancelable(false);
+        dialog.setPositiveButton("Exit", (dialog, which) -> {
+
+            Intent intent = new Intent(StartRoomActivity.this, StartActivity.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+        dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog2 = dialog.create();
+        dialog2.show();
+
     }
 }

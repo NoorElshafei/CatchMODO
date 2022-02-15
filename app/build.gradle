@@ -88,12 +88,4 @@ dependencies {
     // firbase storage
     implementation 'com.google.firebase:firebase-storage'
 
-
-
-
-
-
-
-
-
 }

@@ -28,9 +28,7 @@ public class RoomActivity extends AppCompatActivity {
         declaration();
         retrieveLeads();
 
-
     }
-
 
 
     private void declaration() {
@@ -40,7 +38,8 @@ public class RoomActivity extends AppCompatActivity {
     private void retrieveLeads() {
 
         Query query = db
-                .collection("rooms");
+                .collection("rooms")
+                .whereEqualTo("status", "open");
         // .whereArrayContains("teams", sharedPreference!!.getUserDetails()!!.id!!)
 
         FirestoreRecyclerOptions<RoomModel> options =
@@ -48,7 +47,7 @@ public class RoomActivity extends AppCompatActivity {
                         .setQuery(query, RoomModel.class)
                         .build();
 
-        roomsAdapter = new RoomsAdapter(this,this,options);
+        roomsAdapter = new RoomsAdapter(this, this, options);
         binding.roomsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         binding.roomsRecycler.setAdapter(roomsAdapter);
 
