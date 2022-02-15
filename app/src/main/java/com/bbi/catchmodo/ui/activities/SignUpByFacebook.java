@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpByFacebook extends AppCompatActivity {
-    private ImageView continueBtn,back;
+    private ImageView continueBtn,back,skip;
     EditText phoneNumber;
     private FirebaseAuth mAuth;
     ProgressDialog progressDialog;
@@ -41,6 +41,7 @@ public class SignUpByFacebook extends AppCompatActivity {
         back=findViewById(R.id.back);
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
+        skip=findViewById(R.id.skip);
         continueBtn.setOnClickListener(v -> {
             if (!phoneNumber.getText().toString().equals("")) {
 
@@ -55,7 +56,11 @@ public class SignUpByFacebook extends AppCompatActivity {
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
-
+        skip.setOnClickListener(view -> {
+            Intent intent = new Intent(SignUpByFacebook.this, StartActivity.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
 
     }
 

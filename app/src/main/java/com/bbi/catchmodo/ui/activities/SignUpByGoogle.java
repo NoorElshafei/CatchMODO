@@ -23,7 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpByGoogle extends AppCompatActivity {
-    private ImageView continueBtn, back;
+    private ImageView continueBtn, back,skip;
     EditText name, phoneNumber;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
@@ -40,6 +40,7 @@ public class SignUpByGoogle extends AppCompatActivity {
 
         phoneNumber = findViewById(R.id.editText5);
         back = findViewById(R.id.back);
+        skip=findViewById(R.id.skip);
         progressDialog = new ProgressDialog(this);
         continueBtn.setOnClickListener(v -> {
 
@@ -54,6 +55,11 @@ public class SignUpByGoogle extends AppCompatActivity {
         });
         back.setOnClickListener(view -> {
             Intent intent = new Intent(SignUpByGoogle.this, Splash.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+        skip.setOnClickListener(view -> {
+            Intent intent = new Intent(SignUpByGoogle.this, StartActivity.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
