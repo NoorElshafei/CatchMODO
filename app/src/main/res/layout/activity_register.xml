@@ -237,11 +237,11 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="@dimen/_1sdp"
+                    android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_45sdp"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_weight="1"
+
                     app:srcCompat="@drawable/ic_google">
 
 
@@ -252,12 +252,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_7sdp"
                     android:layout_weight="1"
-                    android:text="Register with Google" />
+                    android:text="Login with Google"
+                    android:textSize="@dimen/_10ssp" />
 
 
             </LinearLayout>
+
 
             <ImageView
                 android:id="@+id/logo"

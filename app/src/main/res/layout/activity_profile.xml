@@ -228,10 +228,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/back_card"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_90sdp"
+            android:layout_width="@dimen/_86sdp"
+            android:layout_height="@dimen/_86sdp"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="55dp"
+            app:cardCornerRadius="@dimen/_43sdp"
             app:cardElevation="4dp"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -245,7 +245,7 @@
             android:id="@+id/cardView2"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
-            app:cardCornerRadius="50dp"
+            app:cardCornerRadius="@dimen/_40sdp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/back_card"
             app:layout_constraintEnd_toEndOf="@+id/back_card"
@@ -255,8 +255,9 @@
 
             <ImageView
                 android:id="@+id/profile_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
                 android:src="@drawable/fun_moodo"
                  />
 

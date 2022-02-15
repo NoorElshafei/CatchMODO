@@ -39,8 +39,8 @@
         <ImageView
             android:id="@+id/sticker_gif"
             android:layout_width="@dimen/_290sdp"
-            android:layout_height="@dimen/_100sdp"
-            android:layout_marginTop="@dimen/_63sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_marginTop="@dimen/_55sdp"
             android:src="@drawable/sticker_gif"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,9 +78,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_width="@dimen/_31sdp"
-            android:layout_height="@dimen/_31sdp"
-            app:cardCornerRadius="25dp"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            app:cardCornerRadius="20dp"
             app:cardElevation="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
             app:layout_constraintEnd_toEndOf="@+id/profile_btn"
@@ -92,6 +92,7 @@
                 android:id="@+id/profile_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 android:src="@drawable/fun_moodo" />
 
         </androidx.cardview.widget.CardView>

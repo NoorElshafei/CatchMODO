@@ -141,7 +141,7 @@
                     android:id="@+id/cart_image"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    app:cardCornerRadius="18dp"
+                    app:cardCornerRadius="@dimen/_15sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/cardView3"
                     app:layout_constraintEnd_toEndOf="@+id/cardView3"
                     app:layout_constraintStart_toStartOf="@+id/cardView3"

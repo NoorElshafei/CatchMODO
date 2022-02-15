@@ -543,7 +543,7 @@ flag_start_game=true;
         pause.setVisibility(View.VISIBLE);
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.moodo_music);
         mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(.08f, .08f);
+        mediaPlayer.setVolume(.5f, .5f);
         mediaPlayer.start();
         start_flg = true;
         //  startLayout.setVisibility(View.INVISIBLE);
