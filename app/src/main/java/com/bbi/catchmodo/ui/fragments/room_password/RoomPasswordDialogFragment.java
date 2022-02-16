@@ -34,7 +34,6 @@ public class RoomPasswordDialogFragment extends DialogFragment {
     private ProgressDialog progressDialog;
 
 
-
     public static RoomPasswordDialogFragment newInstance() {
         return new RoomPasswordDialogFragment();
     }
@@ -76,9 +75,9 @@ public class RoomPasswordDialogFragment extends DialogFragment {
             RoomModel roomModel = task.getResult().toObject(RoomModel.class);
             if (roomModel.getPassword().equals(binding.editTextPassword.getText().toString())) {
                 checkExisting();
-            }else{
+            } else {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(),"password Not Correct",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "password Not Correct", Toast.LENGTH_SHORT).show();
             }
         });
         //checkExisting();

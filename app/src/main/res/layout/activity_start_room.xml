@@ -93,7 +93,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/score_btn"
-                app:srcCompat="@drawable/exit_btn_xd" />
+                app:srcCompat="@drawable/home_btn" />
 
             <ImageView
                 android:id="@+id/fly1"

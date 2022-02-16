@@ -4,13 +4,16 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RoomModel;
 import com.bbi.catchmodo.databinding.ActivityRoomBinding;
 import com.bbi.catchmodo.ui.adapters.RoomsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexWrap;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -27,7 +30,14 @@ public class RoomActivity extends AppCompatActivity {
 
         declaration();
         retrieveLeads();
+        onClick();
 
+    }
+
+    private void onClick() {
+        binding.back.setOnClickListener(view -> {
+            onBackPressed();
+        });
     }
 
 
@@ -48,7 +58,10 @@ public class RoomActivity extends AppCompatActivity {
                         .build();
 
         roomsAdapter = new RoomsAdapter(this, this, options);
-        binding.roomsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this, FlexDirection.ROW, FlexWrap.WRAP);
+        layoutManager.setJustifyContent(JustifyContent.CENTER);
+        binding.roomsRecycler.setLayoutManager(layoutManager);
         binding.roomsRecycler.setAdapter(roomsAdapter);
 
         roomsAdapter.startListening();

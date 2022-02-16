@@ -45,7 +45,6 @@ public class RoomsAdapter extends FirestoreRecyclerAdapter<RoomModel, RoomsAdapt
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull RoomModel model) {
 
         holder.name.setText(model.getName());
-        holder.roomStatus.setText(model.getStatus());
 
         holder.itemView.setOnClickListener(view -> {
             sharedPreferences.setRoomId(model.getId());
@@ -66,7 +65,6 @@ public class RoomsAdapter extends FirestoreRecyclerAdapter<RoomModel, RoomsAdapt
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.room_name);
-            roomStatus = itemView.findViewById(R.id.room_status);
 
 
         }

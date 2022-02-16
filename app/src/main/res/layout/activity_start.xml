@@ -115,7 +115,7 @@
                 app:layout_constraintHorizontal_bias="0.483"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/start_btn"
-                app:srcCompat="@drawable/start_btn_xd" />
+                app:srcCompat="@drawable/room_btn" />
 
             <ImageView
                 android:id="@+id/score_btn"
