@@ -15,6 +15,10 @@
     <string name="facebook_client_token">f9cd26e421cc206939843f409cc48e16</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update_app">Update App</string>
+    <string name="you_should_update_app">You should update app before continue</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

@@ -1,6 +1,8 @@
 package com.bbi.catchmodo.ui.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -23,6 +25,12 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,9 +38,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Splash extends AppCompatActivity {
-    FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
 
-    ActivitySplashBinding binding;
+    private ActivitySplashBinding binding;
+    private int MY_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +59,68 @@ public class Splash extends AppCompatActivity {
         Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly4);
         Glide.with(Splash.this).load(R.drawable.fly_nuts4).into(binding.fly5);
         new Handler().postDelayed(() -> {
-            Intent intent;
-            if (firebaseUser == null) {
-                intent = new Intent(Splash.this, WelcomeActivity.class);
-            } else {
-                intent = new Intent(Splash.this, StartActivity.class);
-                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-            startActivity(intent);
-            finish();
+            checkAppUpdate();
 
         }, 3000);
 
         getReleaseHashKey();
+    }
+
+    private void checkAppUpdate() {
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
+
+        // Returns an intent object that you use to check for an update.
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    // This example applies an immediate update. To apply a flexible update
+                    // instead, pass in AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.update_app))
+                        .setMessage(getString(R.string.you_should_update_app))
+                        .setIcon(getDrawable(R.drawable.ic_baseline_update_24))
+                        .setPositiveButton(getString(R.string.update), (dialog, whichButton) -> {
+                            try {
+                                appUpdateManager.startUpdateFlowForResult(
+                                        // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                                        appUpdateInfo,
+                                        // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                                        AppUpdateType.FLEXIBLE,
+                                        // The current activity making the update request.
+                                        this,
+                                        // Include a request code to later monitor this update request.
+                                        MY_REQUEST_CODE);
+                            } catch (IntentSender.SendIntentException e) {
+                                e.printStackTrace();
+                            }
+
+                        })
+                        .setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                            nextCheck();
+                            dialog.dismiss();
+                        }).show();
+            } else {
+                nextCheck();
+            }
+        }).addOnFailureListener(command -> {
+            Log.d("sadsadsadas", "onActivityCreated: " + command.getMessage());
+            nextCheck();
+        });
+    }
+
+    private void nextCheck() {
+        Intent intent;
+        if (firebaseUser == null) {
+            intent = new Intent(Splash.this, WelcomeActivity.class);
+        } else {
+            intent = new Intent(Splash.this, StartActivity.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        startActivity(intent);
+        finish();
     }
 
     private void displayGif(Integer drawable, ImageView imageView) {
@@ -90,7 +149,7 @@ public class Splash extends AppCompatActivity {
             for (Signature signature : info.signatures) {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA");
                 messageDigest.update(signature.toByteArray());
-                Log.d("releaseHashKey", Base64.encodeToString(messageDigest.digest(),Base64.DEFAULT));
+                Log.d("releaseHashKey", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
