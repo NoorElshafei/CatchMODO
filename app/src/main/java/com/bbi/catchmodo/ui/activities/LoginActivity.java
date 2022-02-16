@@ -44,6 +44,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
+
+    //TODO  17/2
     ActivityLoginBinding binding;
     String email_pattern = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     FirebaseAuth firebaseAuth;
@@ -187,6 +189,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (!keys.equals("") && keys.equals(user.getUid())) {
                     progressDialog.dismiss();
                     userSharedPreference.add(userModel);
+                    int score = Integer.parseInt(userModel.getScore());
+                    userSharedPreference.setHighScore(score);
                     Intent intent = new Intent(LoginActivity.this, StartActivity.class);
                     intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -300,6 +304,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (!keys.equals("") && keys.equals(firebaseAuth.getCurrentUser().getUid())) {
                     progressDialog.dismiss();
                     userSharedPreference.add(userModel);
+                    int score = Integer.parseInt(userModel.getScore());
+                    userSharedPreference.setHighScore(score);
                     Intent intent = new Intent(LoginActivity.this, StartActivity.class);
                     intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
