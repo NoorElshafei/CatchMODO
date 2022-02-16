@@ -15,6 +15,9 @@ public class RoomModel {
     private String status;
     @SerializedName("duration")
     private Date duration;
+    @SerializedName("image")
+    private String image;
+
 
     public RoomModel() {
     }
@@ -57,5 +60,13 @@ public class RoomModel {
 
     public void setDuration(Date duration) {
         this.duration = duration;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
