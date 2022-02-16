@@ -254,7 +254,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/_7sdp"
                     android:layout_weight="1"
-                    android:text="Login with Google"
+                    android:text="SingUp with Google"
                     android:textSize="@dimen/_10ssp" />
 
 
