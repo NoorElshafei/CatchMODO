@@ -1,25 +1,18 @@
 package com.bbi.catchmodo.ui.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.databinding.ActivityLoginBinding;
 import com.bbi.catchmodo.databinding.ActivityStartBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -27,7 +20,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,13 +29,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class StartActivity extends AppCompatActivity {
-    ActivityStartBinding binding;
+    private ActivityStartBinding binding;
     private AlertDialog.Builder dialog;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    FirebaseAuth firebaseAuth;
-    String userid;
-    RegisterModel userModel;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private FirebaseAuth firebaseAuth;
+    private String userid;
+    private RegisterModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
 
         displayGif(R.drawable.sticker_gif, binding.stickerGif);
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser=firebaseAuth.getCurrentUser();
+        firebaseUser = firebaseAuth.getCurrentUser();
         userid = firebaseUser.getUid();
 
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);
@@ -107,21 +99,12 @@ public class StartActivity extends AppCompatActivity {
         dialog.setTitle("Exit From Game");
         dialog.setMessage("You Are sure Exit ?");
         dialog.setCancelable(false);
-        dialog.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        dialog.setPositiveButton("Exit", (dialog, which) -> {
 
-                finishAffinity();
-                System.exit(0);
-            }
+            finishAffinity();
+            System.exit(0);
         });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
+        dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         AlertDialog dialog2 = dialog.create();
         dialog2.show();
 
@@ -134,10 +117,9 @@ public class StartActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 userModel = snapshot.getValue(RegisterModel.class);
-              Log.d("amany", "onCreate: "+userModel);
-                Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
-
-
+                Log.d("amany", "onCreate: " + userModel);
+                Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
+                
             }
 
             @Override

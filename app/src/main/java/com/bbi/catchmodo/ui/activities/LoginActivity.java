@@ -33,7 +33,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -100,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                handleFacebookAccessToken(loginResult.getAccessToken());
+                firebaseAuthWithGoogleAndFacebook(loginResult.getAccessToken().getToken(),"facebook");
 
             }
 
@@ -134,10 +133,10 @@ public class LoginActivity extends AppCompatActivity {
         String email = binding.email.getText().toString();
         String password = binding.password.getText().toString();
         if (!email.matches(email_pattern)) {
-            //binding.email.setError("please,enter email context right");
+
             Toast.makeText(LoginActivity.this, "please,Enter your Email", Toast.LENGTH_SHORT).show();
         } else if (password.isEmpty() || password.length() < 6) {
-            //binding.password.setError("please,Enter the password correctly");
+
             Toast.makeText(LoginActivity.this, "please,Enter your Password", Toast.LENGTH_SHORT).show();
         } else {
             progressDialog.setMessage("please,wait while Login..");
@@ -146,75 +145,76 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.show();
 
 
-            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        sendUserToNextActivity();
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    progressDialog.dismiss();
+                    nextPage();
+                } else {
+                    progressDialog.dismiss();
+                    Log.d(TAG, "onComplete1: " + task.getException().getMessage());
+                    Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
-
-                    } else {
-                        progressDialog.dismiss();
-                        Log.d(TAG, "onComplete1: " + task.getException().getMessage());
-                        Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
                 }
             });
         }
 
     }
 
-    private void sendUserToNextActivity() {
-        Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                firebaseAuthWithGoogleAndFacebook(account.getIdToken(),"google");
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
     }
 
 
- /*   private void nextPageInFacebook(FirebaseUser user) {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
-        ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String keys = "";
-                RegisterModel userModel = null;
-                for (DataSnapshot datas : snapshot.getChildren()) {
-                    userModel = datas.getValue(RegisterModel.class);
-
-                    keys = datas.getKey();
-                }
-                if (!keys.equals("") && keys.equals(user.getUid())) {
-                    progressDialog.dismiss();
-                    userSharedPreference.add(userModel);
-                    int score = Integer.parseInt(userModel.getScore());
-                    userSharedPreference.setHighScore(score);
-                    Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
 
 
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "please sign up to continue", Toast.LENGTH_LONG).show();
-                    LoginManager.getInstance().logOut();
-                    firebaseAuth.signOut();
+    private void firebaseAuthWithGoogleAndFacebook(String idToken, String platform) {
+        progressDialog.setMessage("please,waiting  while SignIn.");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        AuthCredential credential;
+        if (platform.equals("google"))
+            credential = GoogleAuthProvider.getCredential(idToken, null);
+        else
+            credential = FacebookAuthProvider.getCredential(idToken);
 
-                }
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        nextPage();
 
-            }
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        progressDialog.dismiss();
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+
+                    }
+                });
+    }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
 
-    }*/
 
     private void nextPage() {
 
@@ -246,123 +246,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "please sign up to continue", Toast.LENGTH_LONG).show();
                     LoginManager.getInstance().logOut();
                     firebaseAuth.signOut();
-
                 }
 
             }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void handleFacebookAccessToken(AccessToken token) {
-        progressDialog.setMessage("please,waiting  while SignIn.");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            nextPage();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                            progressDialog.dismiss();
-                        }
-                    }
-                });
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
-    }
-
-
-    private void firebaseAuthWithGoogle(String idToken) {
-        progressDialog.setMessage("please,waiting  while SignIn.");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            nextPageInGoogle();
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            progressDialog.dismiss();
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-
-                        }
-                    }
-                });
-    }
-
-    private void updateUI(FirebaseUser user) {
-
-    }
-
-    private void nextPageInGoogle() {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
-        ref.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String keys = "";
-                RegisterModel userModel = null;
-                for (DataSnapshot datas : snapshot.getChildren()) {
-                    userModel = datas.getValue(RegisterModel.class);
-                    keys = datas.getKey();
-                }
-                if (!keys.equals("") && keys.equals(firebaseAuth.getCurrentUser().getUid())) {
-                    progressDialog.dismiss();
-                    userSharedPreference.add(userModel);
-                    int score = Integer.parseInt(userModel.getScore());
-                    userSharedPreference.setHighScore(score);
-                    Intent intent = new Intent(LoginActivity.this, StartActivity.class);
-                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "please Register first", Toast.LENGTH_LONG).show();
-                    firebaseAuth.signOut();
-                }
-
-            }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
