@@ -147,15 +147,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-            if (!email.matches(email_pattern)) {
-                //  binding.email.setError("please,enter email context right");
-                Toast.makeText(this, "please,enter email context right", Toast.LENGTH_LONG).show();
-            }
-            if (password.isEmpty() || password.length() < 6) {
-                // binding.password.setError("please,Enter the password correctly");
-                Toast.makeText(this, "please,Enter the password correctly", Toast.LENGTH_LONG).show();
-            }
-        } else {
+
+        }
+        else if (!email.matches(email_pattern)) {
+            //  binding.email.setError("please,enter email context right");
+            Toast.makeText(this, "please,enter email context right", Toast.LENGTH_LONG).show();
+        }
+        else if (password.isEmpty() || password.length() < 6) {
+            // binding.password.setError("please,Enter the password correctly");
+            Toast.makeText(this, "please,Enter the password correctly", Toast.LENGTH_LONG).show();
+        }
+        else {
             progressDialog.setMessage("please,wait while Registration..");
             progressDialog.setTitle("Registration");
             progressDialog.setCanceledOnTouchOutside(false);
