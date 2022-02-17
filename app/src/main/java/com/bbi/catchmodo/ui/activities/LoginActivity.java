@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void nextPageInFacebook(FirebaseUser user) {
+ /*   private void nextPageInFacebook(FirebaseUser user) {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
         ref.orderByKey().equalTo(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -214,6 +214,50 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }*/
+
+    private void nextPage() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("UserRegister");
+        ref.orderByKey().equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String keys = "";
+                RegisterModel userModel = null;
+                for (DataSnapshot datas : snapshot.getChildren()) {
+                    userModel = datas.getValue(RegisterModel.class);
+
+                    keys = datas.getKey();
+                }
+                if (!keys.equals("") && keys.equals(firebaseAuth.getCurrentUser().getUid())) {
+                    progressDialog.dismiss();
+                    userSharedPreference.add(userModel);
+                    int score = Integer.parseInt(userModel.getScore());
+                    userSharedPreference.setHighScore(score);
+
+                    Intent intent = new Intent(LoginActivity.this, StartActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "please sign up to continue", Toast.LENGTH_LONG).show();
+                    LoginManager.getInstance().logOut();
+                    firebaseAuth.signOut();
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
@@ -227,8 +271,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            nextPageInFacebook(user);
+                            nextPage();
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -262,6 +305,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private void firebaseAuthWithGoogle(String idToken) {
         progressDialog.setMessage("please,waiting  while SignIn.");
