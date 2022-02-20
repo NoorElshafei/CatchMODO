@@ -351,8 +351,6 @@ public class MainActivity extends AppCompatActivity {
                 orange.setImageResource(R.drawable.nuts5);
 
             }
-   /*         orange.setX(orangeX);
-            orange.setY(orangeY);*/
 
         }
         //HIDE
@@ -529,7 +527,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startGame(View view) {
-flag_start_game=true;
+        flag_start_game=true;
         new Handler().postDelayed(() -> {
             right_arrow.setVisibility(View.INVISIBLE);
             left_arrow.setVisibility(View.INVISIBLE);
