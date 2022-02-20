@@ -52,6 +52,7 @@ public class StartActivity extends AppCompatActivity {
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+
         getImageProfile();
 
 
@@ -119,7 +120,7 @@ public class StartActivity extends AppCompatActivity {
                 userModel = snapshot.getValue(RegisterModel.class);
                 Log.d("amany", "onCreate: " + userModel);
                 Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
-                
+
             }
 
             @Override
