@@ -1,39 +1,28 @@
 package com.bbi.catchmodo.ui.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -66,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
     //Score
     private TextView timerLabel, scoreText;
     private int score;
-    ImageView tabToStart;
+    private ImageView tabToStart;
     private boolean check_play_pause = true;
     private boolean gameStatus = true;
 
-
     //Class
     private Timer timer;
-    private Handler handler = new Handler();
+    private Handler handler;
+    private Runnable mStatusChecker;
     private SoundPlayer soundPlayer;
 
     //Status
@@ -105,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
     private float cloud4X, cloud4Y;
     private TableLayout instructions;
     private ConstraintLayout constraint_start;
-    private boolean flag_start_game=false;
+    private boolean flag_start_game = false;
 
-    int n;
+    private int n;
 
 
     @Override
@@ -158,26 +147,22 @@ public class MainActivity extends AppCompatActivity {
         cloud3Y = 40;
         cloud4Y = 500;
 
+        handler = new Handler();
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStartGame();
-                play.setVisibility(View.INVISIBLE);
-                pause.setVisibility(View.VISIBLE);
-                check_play_pause = true;
 
-            }
+        play.setOnClickListener(v -> {
+            onStartGame();
+            play.setVisibility(View.INVISIBLE);
+            pause.setVisibility(View.VISIBLE);
+            check_play_pause = true;
+
         });
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPauseGame();
-                play.setVisibility(View.VISIBLE);
-                pause.setVisibility(View.INVISIBLE);
-                check_play_pause = false;
+        pause.setOnClickListener(v -> {
+            onPauseGame();
+            play.setVisibility(View.VISIBLE);
+            pause.setVisibility(View.INVISIBLE);
+            check_play_pause = false;
 
-            }
         });
         pause.setVisibility(View.INVISIBLE);
         play.setVisibility(View.INVISIBLE);
@@ -208,12 +193,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     action_flg_right = false;
                     action_flg_left = false;
-
-
                 }
             }
             return false;
         });
+
     }
 
     public void changePos() {
@@ -280,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (speedY > frameHeight)
                     speed_flg = false;
+
                 speed.setX(speedX);
                 speed.setY(speedY);
             }
@@ -403,8 +388,8 @@ public class MainActivity extends AppCompatActivity {
             pink.setX(pinkX);
             pink.setY(pinkY);
         }
-//black
 
+        //black
         blackY += 20;
         float blackCenterX = blackX + black.getWidth() / 2;
         float blackCenterY = blackY + black.getHeight();
@@ -489,7 +474,10 @@ public class MainActivity extends AppCompatActivity {
         timerLabel.setVisibility(View.INVISIBLE);
         //stop timer
         countDownTimer.cancel();
-        timer.cancel();
+        handler.removeCallbacks(mStatusChecker);
+
+
+        // timer.cancel();
         // timer = null;
         if (timer != null) {
             timer.cancel();
@@ -527,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startGame(View view) {
-        flag_start_game=true;
+        flag_start_game = true;
         new Handler().postDelayed(() -> {
             right_arrow.setVisibility(View.INVISIBLE);
             left_arrow.setVisibility(View.INVISIBLE);
@@ -588,25 +576,47 @@ public class MainActivity extends AppCompatActivity {
         score = 0;
         scoreText.setText("");
 
-        timer = new Timer();
+
+       /* new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (start_flg) {
+                changePos();
+            }
+        }, 10);*/
+
+      /*  timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (start_flg) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            changePos();
-
-                        }
-                    });
+                    handler.post(() -> changePos());
                 }
             }
-        }, 10, 15);
+        }, 30, 20);*/
 
+
+        mStatusChecker = new Runnable() {
+            @Override
+            public void run() {
+                if (start_flg) {
+                    changePos();
+                    handler.postDelayed(this, 15);
+                }
+            }
+        };
+        mStatusChecker.run();
+
+       /* handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (start_flg) {
+                    changePos();
+                    handler.postDelayed(this, 15);
+                }
+            }
+        },15);*/
 
     }
+
 
     public void setTimer() {
 
@@ -672,7 +682,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onStartGame() {
         start_flg = true;
-        if(mediaPlayer!=null){
+        if (mediaPlayer != null) {
             mediaPlayer.start();
         }
 
@@ -694,14 +704,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-               Intent intent=new Intent(MainActivity.this,StartActivity.class);
-               intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         dialog.setNegativeButton("Cancel", (dialog, which) -> {
             dialog.cancel();
-            if(flag_start_game){
+            if (flag_start_game) {
                 play.setVisibility(View.INVISIBLE);
                 pause.setVisibility(View.VISIBLE);
             }
