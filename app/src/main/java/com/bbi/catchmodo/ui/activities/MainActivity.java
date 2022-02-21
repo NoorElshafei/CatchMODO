@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     boolean mLevel;
     private ConstraintLayout right, left;
     private ImageView cloud1, cloud2, cloud3, cloud4;
-    private int screenWidth;
+    private int screenWidth,yBonus=0;
     private float cloud1X, cloud1Y;
     private float cloud2X, cloud2Y;
     private float cloud3X, cloud3Y;
@@ -231,13 +233,16 @@ public class MainActivity extends AppCompatActivity {
         cloud4.setY(cloud4Y);
 
 
+        if(getAndroidVersion().equals("12")){
+            yBonus=40;
+        }
         //Add timerCount
         timeCount += 20;
 
         if (mLevel) {
-            orangeY += 5;
-            pinkY += 5;
-            blackY += 5;
+            orangeY += 7;
+            pinkY +=7;
+            blackY += 7;
         }
 
 
@@ -254,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 float speedCenterX = speedX + stop_time.getWidth() / 2;
                 float speedCenterY = speedY + stop_time.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + 185)) {
+                if (hitCheck(speedCenterX, speedCenterY + (185-yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     speed1.setVisibility(View.VISIBLE);
@@ -280,11 +285,11 @@ public class MainActivity extends AppCompatActivity {
                 timeX = (float) Math.floor(Math.random() * (frameWidth - stop_time.getWidth()));
             }
             if (time_stop_flg) {
-                timeY += 35;
+                timeY += 30;
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
                 float timeCenterY = timeY + stop_time.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + 165)) {
+                if (hitCheck(timeCenterX, timeCenterY + (165-yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -306,14 +311,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Orange
-        orangeY += 20;
+        orangeY += 14;
 
         //why this code
         float orangeCenterX = orangeX + orange.getWidth() / 2;
         float orangeCenterY = orangeY + orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (185-yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -375,11 +380,11 @@ public class MainActivity extends AppCompatActivity {
             pinkX = (float) Math.floor(Math.random() * (frameWidth - pink.getWidth()));
         }
         if (pink_flg) {
-            pinkY += 35;
+            pinkY += 17;
             float pinkCenterX = pinkX + pink.getWidth() / 2;
             float pinkCenterY = pinkY + pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + 165)) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (165-yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
@@ -390,12 +395,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //black
-        blackY += 20;
+        blackY += 14;
         float blackCenterX = blackX + black.getWidth() / 2;
         float blackCenterY = blackY + black.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + 165)) {
+        if (hitCheck(blackCenterX, blackCenterY + (165-yBonus))) {
             blackY = frameHeight + 100;
 
             soundPlayer.playHitBlackSound();
@@ -414,17 +419,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (action_flg_right) {
             //touching
-            characterX += 14;
+            characterX += 12;
 
             if (mLevel) {
-                characterX += 5;
+                characterX += 8;
             }
         }
         if (action_flg_left) {
-            characterX -= 14;
+            characterX -= 12;
 
             if (mLevel) {
-                characterX -= 5;
+                characterX -= 8;
             }
         }
 
@@ -577,44 +582,60 @@ public class MainActivity extends AppCompatActivity {
         scoreText.setText("");
 
 
-       /* new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (start_flg) {
-                changePos();
-            }
-        }, 10);*/
+        playMove();
+    }
 
-      /*  timer = new Timer();
-        timer.schedule(new TimerTask() {
+    private void playMove(){
+
+    /*  // Create the Handler object (on the main thread by default)
+        Handler handler = new Handler();
+        // Define the code block to be executed
+        private Runnable runnableCode = new Runnable() {
             @Override
             public void run() {
+                // Do something here on the main thread
+                //Log.d("Handlers", "Called on main thread");
+                // Repeat this the same runnable code block again another 2 seconds
+                handler.postDelayed(runnableCode, 2000);
+            }
+        };
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode);*/
+
+
+       /* new CountDownTimer(600000, 15) {
+
+            public void onTick(long millisUntilFinished) {
                 if (start_flg) {
-                    handler.post(() -> changePos());
+                    changePos();
                 }
             }
-        }, 30, 20);*/
 
+            public void onFinish() {
+
+            }
+        }.start();
+*/
 
         mStatusChecker = new Runnable() {
             @Override
             public void run() {
-                if (start_flg) {
+               // if (start_flg) {
                     changePos();
-                    handler.postDelayed(this, 15);
-                }
+                    handler.post(this);
+               // }
             }
         };
-        mStatusChecker.run();
+        try {
+            // code runs in a thread
+            runOnUiThread(mStatusChecker);
+        } catch (final Exception ex) {
+            Log.i("---","Exception in thread");
+        }
+    }
 
-       /* handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (start_flg) {
-                    changePos();
-                    handler.postDelayed(this, 15);
-                }
-            }
-        },15);*/
-
+    private void stopMove(){
+        handler.removeCallbacks(mStatusChecker);
     }
 
 
@@ -671,7 +692,8 @@ public class MainActivity extends AppCompatActivity {
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
-        start_flg = false;
+        stopMove();
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
             play.setVisibility(View.VISIBLE);
@@ -681,7 +703,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onStartGame() {
-        start_flg = true;
+        //start_flg = true;
+        playMove();
         if (mediaPlayer != null) {
             mediaPlayer.start();
         }
@@ -759,7 +782,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    public String getAndroidVersion() {
+        String release = Build.VERSION.RELEASE;
+        //int sdkVersion = Build.VERSION.SDK_INT;
+        return release;
+    }
 
 }
 

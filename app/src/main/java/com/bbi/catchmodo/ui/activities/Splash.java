@@ -6,11 +6,13 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,7 +65,10 @@ public class Splash extends AppCompatActivity {
 
         }, 3000);
 
-        getReleaseHashKey();
+        //getReleaseHashKey();
+
+
+
     }
 
     private void checkAppUpdate() {
