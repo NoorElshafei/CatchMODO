@@ -136,8 +136,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/back_card"
-        android:layout_width="@dimen/_90sdp"
-        android:layout_height="@dimen/_90sdp"
+        android:layout_width="@dimen/_85sdp"
+        android:layout_height="@dimen/_85sdp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="55dp"
         app:cardElevation="10dp"
@@ -150,9 +150,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="@dimen/_83sdp"
-        android:layout_height="@dimen/_83sdp"
-        app:cardCornerRadius="50dp"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        app:cardCornerRadius="@dimen/_40sdp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/back_card"
         app:layout_constraintEnd_toEndOf="@+id/back_card"

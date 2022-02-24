@@ -1,6 +1,7 @@
 package com.bbi.catchmodo.ui.activities;
 
-import android.content.DialogInterface;
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,13 +32,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class StartActivity extends AppCompatActivity {
-    ActivityStartBinding binding;
+    private ActivityStartBinding binding;
     private AlertDialog.Builder dialog;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    FirebaseAuth firebaseAuth;
-    String userid;
-    RegisterModel userModel;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private FirebaseAuth firebaseAuth;
+    private String userid;
+    private RegisterModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,21 +110,12 @@ public class StartActivity extends AppCompatActivity {
         dialog.setTitle("Exit From Game");
         dialog.setMessage("You Are sure Exit ?");
         dialog.setCancelable(false);
-        dialog.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        dialog.setPositiveButton("Exit", (dialog, which) -> {
 
-                finishAffinity();
-                System.exit(0);
-            }
+            finishAffinity();
+            System.exit(0);
         });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
+        dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         AlertDialog dialog2 = dialog.create();
         dialog2.show();
 
@@ -137,8 +129,8 @@ public class StartActivity extends AppCompatActivity {
 
                 userModel = snapshot.getValue(RegisterModel.class);
                 Log.d("amany", "onCreate: " + userModel);
-                Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
 
+                Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
 
             }
 

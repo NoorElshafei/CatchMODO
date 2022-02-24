@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 
+import android.widget.LinearLayout;
+
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -27,17 +30,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TopUser extends AppCompatActivity {
-    ActivityTopUserBinding binding;
-    TopUserAdapter adapter;
-    ArrayList<RegisterModel> allUser;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    RegisterModel registerModel;
-    ProgressDialog progressDialog;
-    ArrayList<RegisterModel> TopUser;
-    RegisterModel userModel;
-    ArrayList<String> TopTenStrings;
-    int i;
+
+    private ActivityTopUserBinding binding;
+    private TopUserAdapter adapter;
+    private ArrayList<RegisterModel> allUser;
+    private FirebaseUser firebaseUser;
+    private LinearLayout linearLayout;
+    private DatabaseReference reference;
+    private RegisterModel registerModel;
+    private ProgressDialog progressDialog;
+    private ArrayList<RegisterModel> topUser;
+    private RegisterModel userModel;
+    private ArrayList<String> TopTenStrings;
+    private int i;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +55,16 @@ public class TopUser extends AppCompatActivity {
 
         allUser = new ArrayList<>();
         TopTenStrings = new ArrayList<>();
-        TopUser = new ArrayList();
 
+        linearLayout = findViewById(R.id.linearLayout6);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
+        //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
+        topUser = new ArrayList();
 
         binding.back.setOnClickListener(view -> {
             onBackPressed();
@@ -64,6 +73,10 @@ public class TopUser extends AppCompatActivity {
 
         getMyData();
         getTopUser();
+
+
+
+        binding.constraint1.setVisibility(View.INVISIBLE);
 
     }
 
@@ -75,9 +88,7 @@ public class TopUser extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 userModel = snapshot.getValue(RegisterModel.class);
-
 
             }
 
@@ -101,17 +112,17 @@ public class TopUser extends AppCompatActivity {
                     progressDialog.dismiss();
                     allUser.add(registerModel);
                 }
-
+                topUser.clear();
                 Collections.sort(allUser, (lhs, rhs) -> Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore()));
                 for (i = 0; i <= 9; i++) {
 
-                    TopUser.add(allUser.get(i));
+                    topUser.add(allUser.get(i));
 
                     TopTenStrings.add(allUser.get(i).getId());
                 }
 
-                binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
-                adapter = new TopUserAdapter(TopUser.this, TopUser);
+                adapter = new TopUserAdapter(TopUser.this, topUser);
+
                 binding.recycle.setAdapter(adapter);
 
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
