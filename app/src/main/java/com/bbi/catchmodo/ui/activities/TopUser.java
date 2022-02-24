@@ -3,7 +3,9 @@ package com.bbi.catchmodo.ui.activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+
 import android.widget.LinearLayout;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TopUser extends AppCompatActivity {
+
     private ActivityTopUserBinding binding;
     private TopUserAdapter adapter;
     private ArrayList<RegisterModel> allUser;
@@ -41,29 +44,40 @@ public class TopUser extends AppCompatActivity {
     private ArrayList<String> TopTenStrings;
     private int i;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_top_user);
+
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         allUser = new ArrayList<>();
         TopTenStrings = new ArrayList<>();
+
         linearLayout = findViewById(R.id.linearLayout6);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+
         //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
         topUser = new ArrayList();
+
         binding.back.setOnClickListener(view -> {
             onBackPressed();
         });
-        binding.recycle.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+
+
         getMyData();
         getTopUser();
 
 
+
         binding.constraint1.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -106,8 +120,11 @@ public class TopUser extends AppCompatActivity {
 
                     TopTenStrings.add(allUser.get(i).getId());
                 }
+
                 adapter = new TopUserAdapter(TopUser.this, topUser);
+
                 binding.recycle.setAdapter(adapter);
+
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
                     binding.name.setText(userModel.getUser_name() + '(' + "You" + ')');
                     binding.score.setText(userModel.getScore());

@@ -1,7 +1,9 @@
-package com.bbi.catchmodo.data.model;
+package com.bbi.catchmodo.data.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.bbi.catchmodo.data.model.RegisterModel;
 
 public class UserSharedPreference {
     private SharedPreferences sharedPreferences;
@@ -18,18 +20,14 @@ public class UserSharedPreference {
     public static String HIGH_SCORE = "highScore";
 
 
-
-
-
-
-
     public UserSharedPreference(Context context) {
         this.context = context;
         sharedPreferences = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
+
     public void add(RegisterModel userModel) {
-        editor.putString(USER_EMAIL,userModel.getEmail());
+        editor.putString(USER_EMAIL, userModel.getEmail());
         editor.putString(USER_NAME, userModel.getUser_name());
         editor.putString(USER_ID, userModel.getId());
         editor.putString(USER_SCORE, userModel.getScore());
@@ -39,8 +37,8 @@ public class UserSharedPreference {
 
 
     }
-    public RegisterModel getUserDetails() {
 
+    public RegisterModel getUserDetails() {
 
         RegisterModel userModel = new RegisterModel(
                 sharedPreferences.getString(USER_ID, ""),
@@ -49,7 +47,6 @@ public class UserSharedPreference {
                 sharedPreferences.getString(USER_SCORE, ""),
                 sharedPreferences.getString(USER_IMAGE_URL, ""),
                 sharedPreferences.getString(USER_PHONE, ""));
-
 
         return userModel;
     }
@@ -60,9 +57,34 @@ public class UserSharedPreference {
 
     }
 
-    public int  getHighScore() {
+    public int getHighScore() {
         return sharedPreferences.getInt(HIGH_SCORE, getUserScore());
     }
+
+
+    public void setRoomId(String roomId) {
+        editor.putString("Room_ID", roomId);
+        editor.apply();
+
+    }
+
+    public String getRoomId() {
+        return sharedPreferences.getString("Room_ID", "0");
+    }
+
+
+    //ROOM NAME
+    public void setRoomName(String roomName) {
+        editor.putString("ROOM_NAME", roomName);
+        editor.apply();
+
+    }
+
+    public String getRoomName() {
+        return sharedPreferences.getString("ROOM_NAME", "");
+    }
+
+    //
 
 
     public void setUserScore(int score) {
@@ -71,32 +93,15 @@ public class UserSharedPreference {
 
     }
 
-    public int  getUserScore() {
+    public int getUserScore() {
 
         return Integer.parseInt(sharedPreferences.getString(USER_SCORE, "0"));
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void removeData() {
         sharedPreferences.edit().clear().apply();
     }
-
 
 
 }

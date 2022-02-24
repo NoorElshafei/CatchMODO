@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.data.model.UserSharedPreference;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     String email_pattern = "^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     FirebaseAuth firebaseAuth;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     private boolean passIsVisible = false;
     private CallbackManager mCallbackManager;
     GoogleSignInClient mGoogleSignInClient;
@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             progressDialog.show();
 
 
+
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     progressDialog.dismiss();
@@ -155,6 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
+
             });
         }
 
