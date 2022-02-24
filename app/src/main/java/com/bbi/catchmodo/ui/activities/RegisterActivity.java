@@ -21,7 +21,6 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -74,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-// Configure Google Sign In
+        // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com")
                 .requestEmail()
@@ -95,7 +94,6 @@ public class RegisterActivity extends AppCompatActivity {
                 progressDialog.setCanceledOnTouchOutside(false);
                 image_url = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?type=large";
                 signUpWithGoogleAndFacebook(loginResult.getAccessToken().getToken(), image_url, "facebook");
-
 
             }
 
@@ -149,16 +147,13 @@ public class RegisterActivity extends AppCompatActivity {
         if (email.isEmpty() || name.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
 
-        }
-        else if (!email.matches(email_pattern)) {
+        } else if (!email.matches(email_pattern)) {
             //  binding.email.setError("please,enter email context right");
             Toast.makeText(this, "please,enter email context right", Toast.LENGTH_LONG).show();
-        }
-        else if (password.isEmpty() || password.length() < 6) {
+        } else if (password.isEmpty() || password.length() < 6) {
             // binding.password.setError("please,Enter the password correctly");
             Toast.makeText(this, "please,Enter the password correctly", Toast.LENGTH_LONG).show();
-        }
-        else {
+        } else {
             progressDialog.setMessage("please,wait while Registration..");
             progressDialog.setTitle("Registration");
             progressDialog.setCanceledOnTouchOutside(false);

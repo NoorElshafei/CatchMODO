@@ -55,6 +55,7 @@ public class StartActivity extends AppCompatActivity {
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
         Glide.with(StartActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+
         getImageProfile();
 
 

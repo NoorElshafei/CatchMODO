@@ -1,49 +1,44 @@
 package com.bbi.catchmodo.ui.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.app.Activity;
-import android.content.Context;
+import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private long millisUntilFinished1 = 60000;
 
-
+    private CountDownTimer moveCountdown;
     //frame
     private ConstraintLayout gameFrame;
     /*  ConstraintLayout character;*/
@@ -66,14 +61,14 @@ public class MainActivity extends AppCompatActivity {
     //Score
     private TextView timerLabel, scoreText;
     private int score;
-    ImageView tabToStart;
+    private ImageView tabToStart;
     private boolean check_play_pause = true;
     private boolean gameStatus = true;
 
-
     //Class
     private Timer timer;
-    private Handler handler = new Handler();
+    private Handler handler;
+    private Runnable mStatusChecker;
     private SoundPlayer soundPlayer;
 
     //Status
@@ -98,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
     boolean mLevel;
     private ConstraintLayout right, left;
     private ImageView cloud1, cloud2, cloud3, cloud4;
-    private int screenWidth;
+    private int screenWidth, yBonus = 0;
     private float cloud1X, cloud1Y;
     private float cloud2X, cloud2Y;
     private float cloud3X, cloud3Y;
     private float cloud4X, cloud4Y;
     private TableLayout instructions;
     private ConstraintLayout constraint_start;
-    private boolean flag_start_game=false;
+    private boolean flag_start_game = false;
 
-    int n;
+    private int n;
 
 
     @Override
@@ -158,26 +153,22 @@ public class MainActivity extends AppCompatActivity {
         cloud3Y = 40;
         cloud4Y = 500;
 
+        handler = new Handler();
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStartGame();
-                play.setVisibility(View.INVISIBLE);
-                pause.setVisibility(View.VISIBLE);
-                check_play_pause = true;
 
-            }
+        play.setOnClickListener(v -> {
+            onStartGame();
+            play.setVisibility(View.INVISIBLE);
+            pause.setVisibility(View.VISIBLE);
+            check_play_pause = true;
+
         });
-        pause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPauseGame();
-                play.setVisibility(View.VISIBLE);
-                pause.setVisibility(View.INVISIBLE);
-                check_play_pause = false;
+        pause.setOnClickListener(v -> {
+            onPauseGame();
+            play.setVisibility(View.VISIBLE);
+            pause.setVisibility(View.INVISIBLE);
+            check_play_pause = false;
 
-            }
         });
         pause.setVisibility(View.INVISIBLE);
         play.setVisibility(View.INVISIBLE);
@@ -208,12 +199,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     action_flg_right = false;
                     action_flg_left = false;
-
-
                 }
             }
             return false;
         });
+
     }
 
     public void changePos() {
@@ -246,7 +236,10 @@ public class MainActivity extends AppCompatActivity {
         cloud4.setX(cloud4X);
         cloud4.setY(cloud4Y);
 
-
+        //exception case for android 12
+        if (getAndroidVersion().equals("12")) {
+            yBonus = 40;
+        }
         //Add timerCount
         timeCount += 20;
 
@@ -270,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 float speedCenterX = speedX + stop_time.getWidth() / 2;
                 float speedCenterY = speedY + stop_time.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + 185)) {
+                if (hitCheck(speedCenterX, speedCenterY + (185 - yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     speed1.setVisibility(View.VISIBLE);
@@ -280,6 +273,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (speedY > frameHeight)
                     speed_flg = false;
+
+            /*    AdditiveAnimator.animate(speed).setDuration(0)
+                        .x(speedX)
+                        .y(speedY)
+                        .start();*/
                 speed.setX(speedX);
                 speed.setY(speedY);
             }
@@ -299,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
                 float timeCenterY = timeY + stop_time.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + 165)) {
+                if (hitCheck(timeCenterX, timeCenterY + (165 - yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -328,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
         float orangeCenterY = orangeY + orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (185 - yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -351,8 +349,6 @@ public class MainActivity extends AppCompatActivity {
                 orange.setImageResource(R.drawable.nuts5);
 
             }
-   /*         orange.setX(orangeX);
-            orange.setY(orangeY);*/
 
         }
         //HIDE
@@ -381,6 +377,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+      /*  AdditiveAnimator.animate(orange).setDuration(0)
+                .x(orangeX)
+                .y(orangeY)
+                .start();*/
         orange.setX(orangeX);
         orange.setY(orangeY);
 
@@ -396,23 +396,28 @@ public class MainActivity extends AppCompatActivity {
             float pinkCenterX = pinkX + pink.getWidth() / 2;
             float pinkCenterY = pinkY + pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + 165)) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (165 - yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
             }
             if (pinkY > frameHeight) pink_flg = false;
+
+           /* AdditiveAnimator.animate(pink).setDuration(0)
+                    .x(pinkX)
+                    .y(pinkY)
+                    .start();*/
             pink.setX(pinkX);
             pink.setY(pinkY);
         }
-//black
 
-        blackY += 20;
+        //black
+        blackY +=20;
         float blackCenterX = blackX + black.getWidth() / 2;
         float blackCenterY = blackY + black.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + 165)) {
+        if (hitCheck(blackCenterX, blackCenterY + (165 - yBonus))) {
             blackY = frameHeight + 100;
 
             soundPlayer.playHitBlackSound();
@@ -423,6 +428,10 @@ public class MainActivity extends AppCompatActivity {
             blackY = -100;
             blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
         }
+      /*  AdditiveAnimator.animate(black).setDuration(0)
+                .x(blackX)
+                .y(blackY)
+                .start();*/
         black.setX(blackX);
         black.setY(blackY);
 
@@ -491,7 +500,10 @@ public class MainActivity extends AppCompatActivity {
         timerLabel.setVisibility(View.INVISIBLE);
         //stop timer
         countDownTimer.cancel();
-        timer.cancel();
+        handler.removeCallbacks(mStatusChecker);
+
+
+        // timer.cancel();
         // timer = null;
         if (timer != null) {
             timer.cancel();
@@ -530,7 +542,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void startGame(View view) {
-flag_start_game=true;
+        flag_start_game = true;
         new Handler().postDelayed(() -> {
             right_arrow.setVisibility(View.INVISIBLE);
             left_arrow.setVisibility(View.INVISIBLE);
@@ -591,25 +603,92 @@ flag_start_game=true;
         score = 0;
         scoreText.setText("");
 
-        timer = new Timer();
+
+        playMove();
+    }
+
+    private void playMove() {
+
+    /*  // Create the Handler object (on the main thread by default)
+        Handler handler = new Handler();
+        // Define the code block to be executed
+        private Runnable runnableCode = new Runnable() {
+            @Override
+            public void run() {
+                // Do something here on the main thread
+                //Log.d("Handlers", "Called on main thread");
+                // Repeat this the same runnable code block again another 2 seconds
+                handler.postDelayed(runnableCode, 2000);
+            }
+        };
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode);*/
+
+
+      /*  moveCountdown=  new CountDownTimer(600000, 1) {
+
+            public void onTick(long millisUntilFinished) {
+               // if (start_flg) {
+                    changePos();
+                //}
+            }
+
+            public void onFinish() {
+
+            }
+        };
+        moveCountdown.start();*/
+
+
+     /*   timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (start_flg) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            changePos();
-
-                        }
-                    });
-                }
+                //if (start_flg) {
+                    handler.post(() -> changePos());
+               // }
             }
-        }, 10, 15);
+        }, 10, 15);*/
+        mStatusChecker = new Runnable() {
+            @Override
+            public void run() {
+                // if (start_flg) {
+
+
+                changePos();
+                handler.postDelayed(this,10);
+
+                // }
+            }
+        };
+        mStatusChecker.run();
+     /*   try {
+            // code runs in a thread
+            runOnUiThread(mStatusChecker);
+        } catch (final Exception ex) {
+            Log.i("---", "Exception in thread");
+        }*/
+
+
+
+      /*  black.setX((float) Math.floor(Math.random() * (frameWidth - black.getWidth())));
+        black.setY(-300);
+        AdditiveAnimator.animate(black).setDuration(2000)
+                .x(black.getX())
+                .y(frameHeight)
+                .start();
+*/
+
 
 
     }
+
+    private void stopMove() {
+        handler.removeCallbacks(mStatusChecker);
+       // timer.cancel();
+        //moveCountdown.cancel();
+    }
+
 
     public void setTimer() {
 
@@ -664,7 +743,8 @@ flag_start_game=true;
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
-        start_flg = false;
+        stopMove();
+
         if (countDownTimer != null) {
             countDownTimer.cancel();
             play.setVisibility(View.VISIBLE);
@@ -674,8 +754,9 @@ flag_start_game=true;
     }
 
     public void onStartGame() {
-        start_flg = true;
-        if(mediaPlayer!=null){
+        //start_flg = true;
+        playMove();
+        if (mediaPlayer != null) {
             mediaPlayer.start();
         }
 
@@ -697,14 +778,14 @@ flag_start_game=true;
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-               Intent intent=new Intent(MainActivity.this,StartActivity.class);
-               intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
-               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         dialog.setNegativeButton("Cancel", (dialog, which) -> {
             dialog.cancel();
-            if(flag_start_game){
+            if (flag_start_game) {
                 play.setVisibility(View.INVISIBLE);
                 pause.setVisibility(View.VISIBLE);
             }
@@ -753,6 +834,11 @@ flag_start_game=true;
 
     }
 
+    public String getAndroidVersion() {
+        String release = Build.VERSION.RELEASE;
+        //int sdkVersion = Build.VERSION.SDK_INT;
+        return release;
+    }
 
 }
 

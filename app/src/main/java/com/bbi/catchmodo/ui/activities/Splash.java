@@ -6,11 +6,13 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,7 +65,10 @@ public class Splash extends AppCompatActivity {
 
         }, 3000);
 
-        getReleaseHashKey();
+        //getReleaseHashKey();
+
+
+
     }
 
     private void checkAppUpdate() {
@@ -77,7 +82,7 @@ public class Splash extends AppCompatActivity {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     // This example applies an immediate update. To apply a flexible update
                     // instead, pass in AppUpdateType.FLEXIBLE
-                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
                 new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.update_app))
                         .setMessage(getString(R.string.you_should_update_app))
@@ -88,7 +93,7 @@ public class Splash extends AppCompatActivity {
                                         // Pass the intent that is returned by 'getAppUpdateInfo()'.
                                         appUpdateInfo,
                                         // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                                        AppUpdateType.FLEXIBLE,
+                                        AppUpdateType.IMMEDIATE,
                                         // The current activity making the update request.
                                         this,
                                         // Include a request code to later monitor this update request.
@@ -104,6 +109,7 @@ public class Splash extends AppCompatActivity {
                         }).show();
             } else {
                 nextCheck();
+                Log.d("sadsadsadas11", "onActivityCreated: " );
             }
         }).addOnFailureListener(command -> {
             Log.d("sadsadsadas", "onActivityCreated: " + command.getMessage());
