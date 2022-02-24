@@ -640,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
         moveCountdown.start();*/
 
 
-     /*   timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -648,20 +648,20 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(() -> changePos());
                // }
             }
-        }, 10, 15);*/
-        mStatusChecker = new Runnable() {
+        }, 10, 15);
+      /*  mStatusChecker = new Runnable() {
             @Override
             public void run() {
                 // if (start_flg) {
 
 
                 changePos();
-                handler.postDelayed(this,10);
+                handler.postDelayed(this,15);
 
                 // }
             }
         };
-        mStatusChecker.run();
+        mStatusChecker.run();*/
      /*   try {
             // code runs in a thread
             runOnUiThread(mStatusChecker);
@@ -684,8 +684,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stopMove() {
-        handler.removeCallbacks(mStatusChecker);
-       // timer.cancel();
+       // handler.removeCallbacks(mStatusChecker);
+        timer.cancel();
         //moveCountdown.cancel();
     }
 
@@ -834,7 +834,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String getAndroidVersion() {
+    private String getAndroidVersion() {
         String release = Build.VERSION.RELEASE;
         //int sdkVersion = Build.VERSION.SDK_INT;
         return release;

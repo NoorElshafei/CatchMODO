@@ -15,7 +15,6 @@ import androidx.databinding.DataBindingUtil;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
-import com.bbi.catchmodo.data.model.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

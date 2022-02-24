@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -94,6 +95,7 @@ public class TopUser extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(TopUser.this,error.getMessage(),Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -122,8 +124,11 @@ public class TopUser extends AppCompatActivity {
                 }
 
                 adapter = new TopUserAdapter(TopUser.this, topUser);
+                binding.recycle.setLayoutManager(new LinearLayoutManager(TopUser.this, LinearLayoutManager.VERTICAL, false));
 
                 binding.recycle.setAdapter(adapter);
+
+
 
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
                     binding.name.setText(userModel.getUser_name() + '(' + "You" + ')');
@@ -140,7 +145,7 @@ public class TopUser extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(TopUser.this,error.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
 
