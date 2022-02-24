@@ -183,7 +183,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/left"
-        android:layout_width="@dimen/_155sdp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/right"
@@ -196,7 +196,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/right"
-        android:layout_width="@dimen/_155sdp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
 

@@ -22,6 +22,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CatchMODO">
         <activity
+            android:name=".ui.activities.room.RoomActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.room.TopScoreRoomActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.room.StartRoomActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.room.ResultRoomActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.room.MainRoomActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.ProfileActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
@@ -114,8 +129,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

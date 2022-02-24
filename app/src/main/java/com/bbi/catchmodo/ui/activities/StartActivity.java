@@ -1,5 +1,7 @@
 package com.bbi.catchmodo.ui.activities;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import androidx.databinding.DataBindingUtil;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityStartBinding;
+import com.bbi.catchmodo.ui.activities.room.RoomActivity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -55,11 +58,14 @@ public class StartActivity extends AppCompatActivity {
         getImageProfile();
 
 
+        onClick();
+    }
+
+    private void onClick() {
         binding.startBtn.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
         binding.exitBtn.setOnClickListener(view -> {
-
             finishAffinity();
             System.exit(0);
         });
@@ -69,6 +75,11 @@ public class StartActivity extends AppCompatActivity {
         });
         binding.scoreBtn.setOnClickListener(view -> {
             Intent intent = new Intent(StartActivity.this, TopUser.class);
+            startActivity(intent);
+        });
+
+        binding.roomBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(StartActivity.this, RoomActivity.class);
             startActivity(intent);
         });
     }
@@ -118,8 +129,9 @@ public class StartActivity extends AppCompatActivity {
 
                 userModel = snapshot.getValue(RegisterModel.class);
                 Log.d("amany", "onCreate: " + userModel);
+
                 Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
-                
+
             }
 
             @Override

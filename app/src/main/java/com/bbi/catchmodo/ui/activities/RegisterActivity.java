@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.model.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
@@ -259,11 +260,14 @@ public class RegisterActivity extends AppCompatActivity {
         String userid = firebaseUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         RegisterModel registerModel = new RegisterModel(userid, name, email, phone, "0", imageUrl);
+
         userSharedPreference.add(registerModel);
         userSharedPreference.setHighScore(0);
 
+
         reference.setValue(registerModel).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                userSharedPreference.add(registerModel);
                 if (type.equals("form"))
                     sendToNextPage("form");
                 else if (type.equals("google"))
