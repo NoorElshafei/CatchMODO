@@ -19,36 +19,36 @@
 
     <ImageView
         android:id="@+id/cloud1"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_70sdp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cloud" />
 
     <ImageView
         android:id="@+id/cloud2"
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cloud" />
 
     <ImageView
         android:id="@+id/cloud3"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_45sdp"
-        android:layout_marginTop="@dimen/_38sdp"
-        android:layout_marginEnd="@dimen/_60sdp"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cloud" />
 
     <ImageView
         android:id="@+id/cloud4"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_93sdp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="110dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cloud" />
@@ -57,17 +57,17 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/scoreLevel"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_33sdp"
-            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/score"
            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -78,22 +78,22 @@
             android:id="@+id/score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginStart="5dp"
             android:fontFamily="@font/soft_marshmallow"
             android:text="0"
-            android:visibility="invisible"
             android:textColor="@color/white"
-            android:textSize="@dimen/_25ssp"
+            android:textSize="35dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/scoreLevel"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/pause"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
-        android:visibility="invisible"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -101,9 +101,9 @@
 
         <ImageView
             android:id="@+id/play"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginEnd="@dimen/_15sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +117,7 @@
         android:id="@+id/constraint_timer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_38sdp"
+        android:layout_marginTop="55dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -130,10 +130,10 @@
             android:layout_gravity="center"
             android:fontFamily="@font/soft_marshmallow"
             android:gravity="center"
-            android:paddingEnd="@dimen/_8sdp"
+            android:paddingEnd="10dp"
             android:text="Timer 1:00 "
             android:textColor="@color/white"
-            android:textSize="@dimen/_20ssp"
+            android:textSize="26sp"
             android:textStyle="italic"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,9 +142,9 @@
 
         <ImageView
             android:id="@+id/speed1"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="20dp"
             android:src="@drawable/speed"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -152,9 +152,9 @@
 
         <ImageView
             android:id="@+id/time2"
-            android:layout_width="@dimen/_28sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="20dp"
             android:src="@drawable/slow"
             android:visibility="invisible"
             app:layout_constraintStart_toEndOf="@+id/speed1"
@@ -165,9 +165,9 @@
 
     <ImageView
         android:id="@+id/startLabel"
-        android:layout_width="@dimen/_185sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_63sdp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/tab_to_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -175,15 +175,15 @@
 
     <ImageView
         android:id="@+id/move"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/hero2" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/left"
-        android:layout_width="@dimen/_155sdp"
+        android:layout_width="200dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/right"
@@ -196,7 +196,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/right"
-        android:layout_width="@dimen/_155sdp"
+        android:layout_width="200dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
 
@@ -218,8 +218,8 @@
 
         <ImageView
             android:id="@+id/balck"
-            android:layout_width="@dimen/_45sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
             android:src="@drawable/bomb"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,17 +227,17 @@
 
         <ImageView
             android:id="@+id/orange"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/circle"
-          android:visibility="invisible"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/pink"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/point"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -245,8 +245,8 @@
 
         <ImageView
             android:id="@+id/speed"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/speed"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -254,8 +254,8 @@
 
         <ImageView
             android:id="@+id/stop_time"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/slow"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
@@ -263,11 +263,11 @@
 
         <ImageView
             android:id="@+id/left_image"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="@dimen/_38sdp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -275,10 +275,10 @@
 
         <ImageView
             android:id="@+id/right_image"
-            android:layout_width="@dimen/_38sdp"
-            android:layout_height="@dimen/_38sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_8sdp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -290,7 +290,7 @@
         android:id="@+id/instructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startLabel"
@@ -299,8 +299,8 @@
         <TableRow android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_35sdp"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
                 android:src="@drawable/bomb"
                 tools:ignore="ContentDescription" />
 
@@ -308,20 +308,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/soft_marshmallow"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="10dp"
                 android:text="Game Over"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/point"
                 tools:ignore="ContentDescription" />
 
@@ -329,20 +329,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/soft_marshmallow"
-                android:paddingLeft="@dimen/_8ssp"
+                android:paddingLeft="10dp"
                 android:text="30 points"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_26sdp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/speed"
                 tools:ignore="ContentDescription" />
 
@@ -350,20 +350,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/soft_marshmallow"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="10dp"
                 android:text="Speed Up"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_26sdp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:src="@drawable/slow"
 
                 tools:ignore="ContentDescription" />
@@ -372,20 +372,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/soft_marshmallow"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="10dp"
                 android:text="Stop Time for 10s"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
 
         <TableRow
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="20dp"
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/moodo"
                 tools:ignore="ContentDescription" />
 
@@ -393,10 +393,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/soft_marshmallow"
-                android:paddingLeft="@dimen/_8sdp"
+                android:paddingLeft="10dp"
                 android:text="10 Points"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_15ssp"
+                android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
 

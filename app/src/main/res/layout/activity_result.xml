@@ -38,10 +38,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_280sdp"
-        android:layout_marginStart="@dimen/_48sdp"
-        android:layout_marginTop="@dimen/_80sdp"
-        android:layout_marginEnd="@dimen/_48sdp"
+        android:layout_height="360dp"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="65dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,14 +49,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_280sdp">
+            android:layout_height="365dp">
 
 
             <ImageView
                 android:id="@+id/game_over_text"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_55sdp"
-                android:layout_marginTop="@dimen/_55sdp"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="70dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,11 +66,11 @@
                 android:id="@+id/scoreLabel1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="YourScore"
                 android:textColor="#3b160a"
-                android:textSize="@dimen/_25ssp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/game_over_text" />
@@ -79,11 +79,11 @@
                 android:id="@+id/scoreLabel3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="5000"
                 android:textColor="#ffab00"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scoreLabel1" />
@@ -94,7 +94,7 @@
                 android:id="@+id/linearLayout9"
                 android:layout_width="200dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="10dp"
                 android:background="#C5C5C5"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,11 +107,11 @@
                 android:id="@+id/highScoreLabel1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="High Score"
                 android:textColor="#3b160a"
-                android:textSize="@dimen/_25ssp"
+                android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
@@ -121,11 +121,11 @@
                 android:id="@+id/highScoreLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="6000"
                 android:textColor="#7e8900"
-                android:textSize="@dimen/_20ssp"
+                android:textSize="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/highScoreLabel1" />
@@ -136,8 +136,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/back_card"
-        android:layout_width="@dimen/_85sdp"
-        android:layout_height="@dimen/_85sdp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="55dp"
         app:cardElevation="10dp"
@@ -150,9 +150,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        app:cardCornerRadius="@dimen/_40sdp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="50dp"
         app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/back_card"
         app:layout_constraintEnd_toEndOf="@+id/back_card"
@@ -171,9 +171,9 @@
 
     <ImageView
         android:id="@+id/button"
-        android:layout_width="@dimen/_135sdp"
-        android:layout_height="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_19sdp"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="25dp"
         android:gravity="center"
         android:onClick="tryAgain"
         android:src="@drawable/try_again_btn"
@@ -183,9 +183,10 @@
 
     <ImageView
         android:id="@+id/button2"
-        android:layout_width="@dimen/_135sdp"
-        android:layout_height="@dimen/_55sdp"
-        android:layout_marginTop="@dimen/_9sdp"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+
         android:onClick="topScore"
         android:src="@drawable/top_score_btn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -194,10 +195,9 @@
 
     <ImageView
         android:id="@+id/moodo_logo"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_38sdp"
-        android:layout_marginTop="@dimen/_28sdp"
-        android:layout_marginBottom="@dimen/_22sdp"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -207,8 +207,9 @@
 
     <ImageView
         android:id="@+id/exit_btn"
-        android:layout_width="@dimen/_38sdp"
-        android:layout_height="@dimen/_38sdp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
         android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="@+id/cardView"

@@ -1,5 +1,6 @@
 package com.bbi.catchmodo.ui.activities;
 
+import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
@@ -30,11 +33,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private long millisUntilFinished1 = 60000;
 
-
+    private CountDownTimer moveCountdown;
     //frame
     private ConstraintLayout gameFrame;
     /*  ConstraintLayout character;*/
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     boolean mLevel;
     private ConstraintLayout right, left;
     private ImageView cloud1, cloud2, cloud3, cloud4;
-    private int screenWidth,yBonus=0;
+    private int screenWidth, yBonus = 0;
     private float cloud1X, cloud1Y;
     private float cloud2X, cloud2Y;
     private float cloud3X, cloud3Y;
@@ -232,17 +236,17 @@ public class MainActivity extends AppCompatActivity {
         cloud4.setX(cloud4X);
         cloud4.setY(cloud4Y);
 
-
-        if(getAndroidVersion().equals("12")){
-            yBonus=40;
+        //exception case for android 12
+        if (getAndroidVersion().equals("12")) {
+            yBonus = 40;
         }
         //Add timerCount
         timeCount += 20;
 
         if (mLevel) {
-            orangeY += 7;
-            pinkY +=7;
-            blackY += 7;
+            orangeY += 5;
+            pinkY += 5;
+            blackY += 5;
         }
 
 
@@ -259,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 float speedCenterX = speedX + stop_time.getWidth() / 2;
                 float speedCenterY = speedY + stop_time.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + (185-yBonus))) {
+                if (hitCheck(speedCenterX, speedCenterY + (185 - yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     speed1.setVisibility(View.VISIBLE);
@@ -270,6 +274,10 @@ public class MainActivity extends AppCompatActivity {
                 if (speedY > frameHeight)
                     speed_flg = false;
 
+            /*    AdditiveAnimator.animate(speed).setDuration(0)
+                        .x(speedX)
+                        .y(speedY)
+                        .start();*/
                 speed.setX(speedX);
                 speed.setY(speedY);
             }
@@ -285,11 +293,11 @@ public class MainActivity extends AppCompatActivity {
                 timeX = (float) Math.floor(Math.random() * (frameWidth - stop_time.getWidth()));
             }
             if (time_stop_flg) {
-                timeY += 30;
+                timeY += 35;
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
                 float timeCenterY = timeY + stop_time.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + (165-yBonus))) {
+                if (hitCheck(timeCenterX, timeCenterY + (165 - yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -311,14 +319,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Orange
-        orangeY += 14;
+        orangeY += 20;
 
         //why this code
         float orangeCenterX = orangeX + orange.getWidth() / 2;
         float orangeCenterY = orangeY + orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + (185-yBonus))) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (185 - yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -369,6 +377,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+      /*  AdditiveAnimator.animate(orange).setDuration(0)
+                .x(orangeX)
+                .y(orangeY)
+                .start();*/
         orange.setX(orangeX);
         orange.setY(orangeY);
 
@@ -380,27 +392,32 @@ public class MainActivity extends AppCompatActivity {
             pinkX = (float) Math.floor(Math.random() * (frameWidth - pink.getWidth()));
         }
         if (pink_flg) {
-            pinkY += 17;
+            pinkY += 35;
             float pinkCenterX = pinkX + pink.getWidth() / 2;
             float pinkCenterY = pinkY + pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + (165-yBonus))) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (165 - yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
             }
             if (pinkY > frameHeight) pink_flg = false;
+
+           /* AdditiveAnimator.animate(pink).setDuration(0)
+                    .x(pinkX)
+                    .y(pinkY)
+                    .start();*/
             pink.setX(pinkX);
             pink.setY(pinkY);
         }
 
         //black
-        blackY += 14;
+        blackY +=20;
         float blackCenterX = blackX + black.getWidth() / 2;
         float blackCenterY = blackY + black.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + (165-yBonus))) {
+        if (hitCheck(blackCenterX, blackCenterY + (165 - yBonus))) {
             blackY = frameHeight + 100;
 
             soundPlayer.playHitBlackSound();
@@ -411,6 +428,10 @@ public class MainActivity extends AppCompatActivity {
             blackY = -100;
             blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
         }
+      /*  AdditiveAnimator.animate(black).setDuration(0)
+                .x(blackX)
+                .y(blackY)
+                .start();*/
         black.setX(blackX);
         black.setY(blackY);
 
@@ -419,17 +440,17 @@ public class MainActivity extends AppCompatActivity {
 
         if (action_flg_right) {
             //touching
-            characterX += 12;
+            characterX += 14;
 
             if (mLevel) {
-                characterX += 8;
+                characterX += 5;
             }
         }
         if (action_flg_left) {
-            characterX -= 12;
+            characterX -= 14;
 
             if (mLevel) {
-                characterX -= 8;
+                characterX -= 5;
             }
         }
 
@@ -585,7 +606,7 @@ public class MainActivity extends AppCompatActivity {
         playMove();
     }
 
-    private void playMove(){
+    private void playMove() {
 
     /*  // Create the Handler object (on the main thread by default)
         Handler handler = new Handler();
@@ -603,39 +624,68 @@ public class MainActivity extends AppCompatActivity {
         handler.post(runnableCode);*/
 
 
-       /* new CountDownTimer(600000, 15) {
+      /*  moveCountdown=  new CountDownTimer(600000, 1) {
 
             public void onTick(long millisUntilFinished) {
-                if (start_flg) {
+               // if (start_flg) {
                     changePos();
-                }
+                //}
             }
 
             public void onFinish() {
 
             }
-        }.start();
-*/
+        };
+        moveCountdown.start();*/
 
+
+     /*   timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //if (start_flg) {
+                    handler.post(() -> changePos());
+               // }
+            }
+        }, 10, 15);*/
         mStatusChecker = new Runnable() {
             @Override
             public void run() {
-               // if (start_flg) {
-                    changePos();
-                    handler.post(this);
-               // }
+                // if (start_flg) {
+
+
+                changePos();
+                handler.postDelayed(this,10);
+
+                // }
             }
         };
-        try {
+        mStatusChecker.run();
+     /*   try {
             // code runs in a thread
             runOnUiThread(mStatusChecker);
         } catch (final Exception ex) {
-            Log.i("---","Exception in thread");
-        }
+            Log.i("---", "Exception in thread");
+        }*/
+
+
+
+      /*  black.setX((float) Math.floor(Math.random() * (frameWidth - black.getWidth())));
+        black.setY(-300);
+        AdditiveAnimator.animate(black).setDuration(2000)
+                .x(black.getX())
+                .y(frameHeight)
+                .start();
+*/
+
+
+
     }
 
-    private void stopMove(){
+    private void stopMove() {
         handler.removeCallbacks(mStatusChecker);
+       // timer.cancel();
+        //moveCountdown.cancel();
     }
 
 
@@ -782,6 +832,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     public String getAndroidVersion() {
         String release = Build.VERSION.RELEASE;
         //int sdkVersion = Build.VERSION.SDK_INT;
