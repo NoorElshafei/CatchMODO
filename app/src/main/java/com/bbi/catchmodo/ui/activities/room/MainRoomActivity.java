@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -79,7 +80,7 @@ public class MainRoomActivity extends AppCompatActivity {
 
     private int timeCount, timeCount2, timeCount3;
 
-    private int screenWidth;
+    private int screenWidth, yBonus = 0;;
 
 
     //timer time
@@ -200,7 +201,10 @@ public class MainRoomActivity extends AppCompatActivity {
         float cloud4Y = 500;
         binding.cloud4.setY(cloud4Y);
 
-
+        //exception case for android 12
+        if (getAndroidVersion().equals("12")) {
+            yBonus = 40;
+        }
         //Add timerCount
         timeCount += 20;
 
@@ -224,7 +228,7 @@ public class MainRoomActivity extends AppCompatActivity {
                 float speedCenterX = speedX + binding.stopTime.getWidth() / 2;
                 float speedCenterY = speedY + binding.stopTime.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + 185)) {
+                if (hitCheck(speedCenterX, speedCenterY + (185- yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     binding.speed1.setVisibility(View.VISIBLE);
@@ -253,7 +257,7 @@ public class MainRoomActivity extends AppCompatActivity {
                 float timeCenterX = timeX + binding.stopTime.getWidth() / 2;
                 float timeCenterY = timeY + binding.stopTime.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + 165)) {
+                if (hitCheck(timeCenterX, timeCenterY + (165- yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -282,7 +286,7 @@ public class MainRoomActivity extends AppCompatActivity {
         float orangeCenterY = orangeY + binding.orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + 185)) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (185- yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -349,7 +353,7 @@ public class MainRoomActivity extends AppCompatActivity {
             float pinkCenterX = pinkX + binding.pink.getWidth() / 2;
             float pinkCenterY = pinkY + binding.pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + 165)) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (165- yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
@@ -365,7 +369,7 @@ public class MainRoomActivity extends AppCompatActivity {
         float blackCenterY = blackY + binding.balck.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + 165)) {
+        if (hitCheck(blackCenterX, blackCenterY + (165- yBonus))) {
             blackY = frameHeight + 100;
 
             soundPlayer.playHitBlackSound();
@@ -695,5 +699,9 @@ public class MainRoomActivity extends AppCompatActivity {
 
     }
 
-
+    private String getAndroidVersion() {
+        String release = Build.VERSION.RELEASE;
+        //int sdkVersion = Build.VERSION.SDK_INT;
+        return release;
+    }
 }

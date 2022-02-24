@@ -53,8 +53,8 @@
             android:id="@+id/fly1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/fly_nuts1" />
@@ -63,7 +63,7 @@
             android:id="@+id/fly2"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
@@ -83,20 +83,19 @@
             android:id="@+id/fly4"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="280dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="60dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/background9"
+            app:layout_constraintTop_toBottomOf="@+id/fly5"
             app:srcCompat="@drawable/fly_nuts3" />
 
         <ImageView
             android:id="@+id/fly5"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginEnd="75dp"
+            android:layout_marginEnd="70dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sticker_gif"
             app:srcCompat="@drawable/fly_nuts4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

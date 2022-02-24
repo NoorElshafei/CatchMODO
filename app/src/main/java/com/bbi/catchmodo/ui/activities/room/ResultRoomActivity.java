@@ -13,7 +13,6 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.UserRoomModel;
 import com.bbi.catchmodo.databinding.ActivityResultRoomBinding;
-import com.bbi.catchmodo.ui.activities.StartActivity;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,14 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ResultRoomActivity extends AppCompatActivity {
-    private AlertDialog.Builder dialog;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
-    private DatabaseReference reference;
     private String game = "";
     private UserSharedPreference userSharedPreference;
     private ActivityResultRoomBinding binding;
@@ -42,14 +34,10 @@ public class ResultRoomActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_result_room);
 
 
-        userSharedPreference = new UserSharedPreference(this);
         game = getIntent().getExtras().getString("GAME");
 
         score = getIntent().getIntExtra("SCORE", 0);
         binding.scoreLabel3.setText(score + "");
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
 
         // High Score
         checkHighScore();
@@ -64,7 +52,7 @@ public class ResultRoomActivity extends AppCompatActivity {
 
 
         binding.exitBtn.setOnClickListener(view -> {
-           onBackPressed();
+            onBackPressed();
 
         });
     }
@@ -72,8 +60,8 @@ public class ResultRoomActivity extends AppCompatActivity {
     private void checkHighScore() {
 
 
-        UserSharedPreference userSharedPreference = new UserSharedPreference(this);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        userSharedPreference = new UserSharedPreference(this);
+        db = FirebaseFirestore.getInstance();
         String userId = userSharedPreference.getUserDetails().getId();
         String RoomId = userSharedPreference.getRoomId();
 
@@ -88,11 +76,11 @@ public class ResultRoomActivity extends AppCompatActivity {
 
                     Log.d("nooor", "DocumentSnapshot data: " + userRoomModel.getScore());
                 }
-                long highScore =userRoomModel.getScore();
+                long highScore = userRoomModel.getScore();
                 //TODO Tomorrow
                 if (score > highScore) {
                     // Update HighScore
-                   userRoomModel.setScore(score);
+                    userRoomModel.setScore(score);
                     db.collection("rooms")
                             .document(userSharedPreference.getRoomId()).collection("users")
                             .document(userRoomModel.getId()).set(userRoomModel);
