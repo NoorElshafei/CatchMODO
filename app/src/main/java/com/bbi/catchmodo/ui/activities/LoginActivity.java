@@ -15,6 +15,7 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
+import com.bbi.catchmodo.util.Language;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -60,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         userSharedPreference = new UserSharedPreference(this);
@@ -110,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });

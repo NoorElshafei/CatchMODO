@@ -18,6 +18,7 @@ public class UserSharedPreference {
     public static String USER_IMAGE_URL = "image_url";
     public static String USER_PHONE = "phone";
     public static String HIGH_SCORE = "highScore";
+    public static String USER_LANG = "USER_LANGUAGE";
 
 
     public UserSharedPreference(Context context) {
@@ -102,6 +103,16 @@ public class UserSharedPreference {
     public void removeData() {
         sharedPreferences.edit().clear().apply();
     }
+    public void saveLanguage(String lang) {
+        SharedPreferences.Editor shardEditor = sharedPreferences.edit();
+        shardEditor.putString(USER_LANG, lang);
+        shardEditor.apply();
 
+    }
+
+    public String getLanguage() {
+        return sharedPreferences.getString(USER_LANG, "ar");
+
+    }
 
 }

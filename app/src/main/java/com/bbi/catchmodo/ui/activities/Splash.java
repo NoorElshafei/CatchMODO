@@ -131,7 +131,7 @@ public class Splash extends AppCompatActivity {
 
     private void displayGif(Integer drawable, ImageView imageView) {
 
-        Glide.with(getApplicationContext())
+        Glide.with(this)
                 .asGif()
                 .load(drawable) // Replace with a valid url
                 .addListener(new RequestListener<GifDrawable>() {

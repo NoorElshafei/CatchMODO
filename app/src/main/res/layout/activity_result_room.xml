@@ -4,6 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data></data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_final"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#BF000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,30 +43,11 @@
             android:orientation="vertical"
             tools:context=".ui.activities.room.ResultRoomActivity">
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/background_final"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#BF000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:layout_height="360dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="65dp"
                 android:layout_marginTop="100dp"
                 android:layout_marginEnd="65dp"
@@ -54,7 +58,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="365dp">
+                    android:layout_height="match_parent">
 
 
                     <ImageView
@@ -127,10 +131,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="30dp"
                         android:fontFamily="@font/soft_marshmallow"
                         android:text=""
                         android:textColor="#7e8900"
                         android:textSize="25dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/highScoreLabel1" />
@@ -202,11 +208,13 @@
                 android:id="@+id/moodo_logo"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/moodo_logo" />
 
 
@@ -226,4 +234,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
-<androidx.constraintlayout.widget.ConstraintLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".ui.activities.ResultActivity">
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
@@ -34,11 +27,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.activities.ResultActivity">
+
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="360dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="65dp"
@@ -49,7 +55,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="365dp">
+            android:layout_height="match_parent">
 
 
             <ImageView
@@ -83,7 +89,7 @@
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="5000"
                 android:textColor="#ffab00"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scoreLabel1" />
@@ -122,10 +128,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
                 android:fontFamily="@font/soft_marshmallow"
                 android:text="6000"
                 android:textColor="#7e8900"
-                android:textSize="25dp"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/highScoreLabel1" />
@@ -164,6 +172,7 @@
             android:id="@+id/profile_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:src="@drawable/sad_moodo" />
 
     </androidx.cardview.widget.CardView>
@@ -197,11 +206,13 @@
         android:id="@+id/moodo_logo"
         android:layout_width="120dp"
         android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/moodo_logo" />
 
 
@@ -228,3 +239,4 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

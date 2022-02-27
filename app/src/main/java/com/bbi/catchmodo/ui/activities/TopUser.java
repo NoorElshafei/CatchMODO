@@ -18,6 +18,7 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityTopUserBinding;
 import com.bbi.catchmodo.ui.adapters.TopUserAdapter;
+import com.bbi.catchmodo.util.Language;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,6 +64,7 @@ public class TopUser extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
 
         //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
         topUser = new ArrayList();
@@ -133,7 +135,7 @@ public class TopUser extends AppCompatActivity {
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
                     binding.name.setText(userModel.getUser_name() + '(' + "You" + ')');
                     binding.score.setText(userModel.getScore());
-                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.moodo_icon).into(binding.image);
+                    Glide.with(TopUser.this).load(userModel.getImage_url()).placeholder(R.drawable.moodo_icon).into(binding.image);
                     binding.constraint1.setVisibility(View.VISIBLE);
 
                 } else {

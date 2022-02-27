@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.ui.fragments.EditNameFragment;
+import com.bbi.catchmodo.util.Language;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.Continuation;
@@ -59,6 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone3);
@@ -75,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         userid = firebaseUser.getUid();
         firebaseAuth=FirebaseAuth.getInstance();
+        Language.changeBackDependsLanguage(back,getApplicationContext());
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
                     email.setText(userModel.getEmail());
                     phone.setText(userModel.getPhone());
                     score.setText(userModel.getScore());
-                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(profile);
+                    Glide.with(ProfileActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(profile);
 
 
 
@@ -131,7 +134,7 @@ public class ProfileActivity extends AppCompatActivity {
             imageUri = data.getData();
 
             if (uploadTask != null && uploadTask.isInProgress()) {
-                Toast.makeText(getApplicationContext(), " upload in progress", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, " upload in progress", Toast.LENGTH_SHORT).show();
 
             } else {
                 uploadImage();
@@ -167,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                     reference.setValue(downloadUri.toString());
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, "Failed:" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 progressDialog.dismiss();
 
@@ -176,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(getApplicationContext(), "No image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProfileActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
     private String getFileExtension(Uri uri) {

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.model.UsersModel;
+import com.bbi.catchmodo.util.Language;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,7 @@ public class SignUpByGoogle extends AppCompatActivity {
         back = findViewById(R.id.back);
         skip=findViewById(R.id.skip);
         progressDialog = new ProgressDialog(this);
+        Language.changeBackDependsLanguage(back,getApplicationContext());
         continueBtn.setOnClickListener(v -> {
 
             if (!phoneNumber.getText().toString().equals("")) {
