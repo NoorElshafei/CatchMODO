@@ -1,6 +1,5 @@
 package com.bbi.catchmodo.ui.activities;
 
-import android.animation.Animator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,8 +20,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.dynamicanimation.animation.DynamicAnimation;
-import androidx.dynamicanimation.animation.SpringAnimation;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
@@ -412,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //black
-        blackY +=20;
+        blackY += 20;
         float blackCenterX = blackX + black.getWidth() / 2;
         float blackCenterY = blackY + black.getHeight();
 
@@ -645,10 +641,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 //if (start_flg) {
-                    handler.post(() -> changePos());
-               // }
+                handler.post(() -> changePos());
+                // }
             }
         }, 10, 15);
+
       /*  mStatusChecker = new Runnable() {
             @Override
             public void run() {
@@ -662,6 +659,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mStatusChecker.run();*/
+
      /*   try {
             // code runs in a thread
             runOnUiThread(mStatusChecker);
@@ -680,11 +678,10 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-
     }
 
     private void stopMove() {
-       // handler.removeCallbacks(mStatusChecker);
+        // handler.removeCallbacks(mStatusChecker);
         timer.cancel();
         //moveCountdown.cancel();
     }
