@@ -9,6 +9,7 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RoomModel;
 import com.bbi.catchmodo.databinding.ActivityRoomBinding;
 import com.bbi.catchmodo.ui.adapters.RoomsAdapter;
+import com.bbi.catchmodo.util.Language;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
@@ -27,7 +28,7 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_room);
-
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
         declaration();
         retrieveLeads();
         onClick();

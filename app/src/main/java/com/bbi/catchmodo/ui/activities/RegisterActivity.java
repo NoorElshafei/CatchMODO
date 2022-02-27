@@ -16,6 +16,7 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityRegisterBinding;
+import com.bbi.catchmodo.util.Language;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -65,6 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
         progressDialog = new ProgressDialog(this);
         Log.d(TAG, "onSuccess: " + image_url);
 

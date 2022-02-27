@@ -636,7 +636,7 @@ public class MainActivity extends AppCompatActivity {
         moveCountdown.start();*/
 
 
-        timer = new Timer();
+      /*  timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -644,9 +644,9 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(() -> changePos());
                 // }
             }
-        }, 10, 15);
+        }, 10, 15);*/
 
-      /*  mStatusChecker = new Runnable() {
+        mStatusChecker = new Runnable() {
             @Override
             public void run() {
                 // if (start_flg) {
@@ -658,7 +658,7 @@ public class MainActivity extends AppCompatActivity {
                 // }
             }
         };
-        mStatusChecker.run();*/
+        mStatusChecker.run();
 
      /*   try {
             // code runs in a thread
@@ -681,8 +681,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stopMove() {
-        // handler.removeCallbacks(mStatusChecker);
-        timer.cancel();
+         handler.removeCallbacks(mStatusChecker);
+        //timer.cancel();
         //moveCountdown.cancel();
     }
 

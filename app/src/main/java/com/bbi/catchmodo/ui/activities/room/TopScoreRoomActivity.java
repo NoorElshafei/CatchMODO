@@ -14,6 +14,7 @@ import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.UserRoomModel;
 import com.bbi.catchmodo.databinding.ActivityTopScoreRoomBinding;
 import com.bbi.catchmodo.ui.adapters.TopScoreRoomAdapter;
+import com.bbi.catchmodo.util.Language;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -31,7 +32,7 @@ public class TopScoreRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_top_score_room);
-
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
         sharedPreference = new UserSharedPreference(this);
         declaration();
         getTopUser();

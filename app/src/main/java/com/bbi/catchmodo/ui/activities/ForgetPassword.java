@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.databinding.ActivityForgetPasswordBinding;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
+import com.bbi.catchmodo.util.Language;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgetPassword extends AppCompatActivity {
@@ -20,7 +21,7 @@ public class ForgetPassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forget_password);
-
+        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
         firebaseAuth = FirebaseAuth.getInstance();
         binding.btnSendEmail.setOnClickListener(view -> {
             sendEmail();

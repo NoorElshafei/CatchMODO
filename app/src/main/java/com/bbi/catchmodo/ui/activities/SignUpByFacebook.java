@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
+import com.bbi.catchmodo.util.Language;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,7 @@ public class SignUpByFacebook extends AppCompatActivity {
         phoneNumber = findViewById(R.id.editText5);
         back=findViewById(R.id.back);
         progressDialog = new ProgressDialog(this);
+        Language.changeBackDependsLanguage(back,getApplicationContext());
         mAuth = FirebaseAuth.getInstance();
         skip=findViewById(R.id.skip);
         continueBtn.setOnClickListener(v -> {
