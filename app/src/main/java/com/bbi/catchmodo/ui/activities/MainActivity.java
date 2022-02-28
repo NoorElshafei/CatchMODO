@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,13 +59,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView timerLabel, scoreText;
     private int score;
     private ImageView tabToStart;
-    private boolean check_play_pause = true;
+    private boolean check_play_pause = true, checkSpeed = true;
     private boolean gameStatus = true;
 
     //Class
     private Timer timer;
-    private Handler handler;
-    private Runnable mStatusChecker;
+    private Handler handler, tenSecondHandler, speedHandler;
+    private Runnable mStatusChecker, stopTenRunnable, tenSecondSpeedRunnable;
     private SoundPlayer soundPlayer;
 
     //Status
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private MediaPlayer mediaPlayer;
 
-    private boolean timerCheck = false;
+    // private boolean timerCheck = false;
     private boolean stopTimeIcon = true;
     private boolean stopSpeedIcon = true;
     private AlertDialog.Builder dialog;
@@ -99,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean flag_start_game = false;
 
     private int n;
+    private int tenSecond = 10, tenSecondSpeed = 10;
+    private boolean isTenSecondFinished = false;
+    boolean isTenSecondFinishedSpeed = false;
 
 
     @Override
@@ -156,14 +160,13 @@ public class MainActivity extends AppCompatActivity {
             onStartGame();
             play.setVisibility(View.INVISIBLE);
             pause.setVisibility(View.VISIBLE);
-            check_play_pause = true;
+
 
         });
         pause.setOnClickListener(v -> {
             onPauseGame();
             play.setVisibility(View.VISIBLE);
             pause.setVisibility(View.INVISIBLE);
-            check_play_pause = false;
 
         });
         pause.setVisibility(View.INVISIBLE);
@@ -490,9 +493,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void gameOver(String game) {
+        if (tenSecondHandler != null)
+            tenSecondHandler.removeCallbacks(stopTenRunnable);
+        if (speedHandler != null)
+            speedHandler.removeCallbacks(tenSecondSpeedRunnable);
+
         gameStatus = false;
 
         check_play_pause = false;
+        checkSpeed = false;
         timerLabel.setVisibility(View.INVISIBLE);
         //stop timer
         countDownTimer.cancel();
@@ -543,7 +552,7 @@ public class MainActivity extends AppCompatActivity {
             right_arrow.setVisibility(View.INVISIBLE);
             left_arrow.setVisibility(View.INVISIBLE);
         }, 5000);
-        timerCheck = true;
+        //timerCheck = true;
         millisUntilFinished1 = 60000;
         setTimer();
         pause.setVisibility(View.VISIBLE);
@@ -636,7 +645,7 @@ public class MainActivity extends AppCompatActivity {
         moveCountdown.start();*/
 
 
-      /*  timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -644,9 +653,9 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(() -> changePos());
                 // }
             }
-        }, 10, 15);*/
+        }, 10, 15);
 
-        mStatusChecker = new Runnable() {
+    /*    mStatusChecker = new Runnable() {
             @Override
             public void run() {
                 // if (start_flg) {
@@ -658,7 +667,7 @@ public class MainActivity extends AppCompatActivity {
                 // }
             }
         };
-        mStatusChecker.run();
+        mStatusChecker.run();*/
 
      /*   try {
             // code runs in a thread
@@ -681,8 +690,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stopMove() {
-         handler.removeCallbacks(mStatusChecker);
-        //timer.cancel();
+        //handler.removeCallbacks(mStatusChecker);
+        timer.cancel();
         //moveCountdown.cancel();
     }
 
@@ -737,6 +746,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPauseGame() {
         check_play_pause = false;
+        checkSpeed = false;
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
@@ -752,13 +762,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void onStartGame() {
         //start_flg = true;
+        check_play_pause = true;
+        checkSpeed = true;
         playMove();
         if (mediaPlayer != null) {
             mediaPlayer.start();
         }
 
 
-        if (timerCheck)
+        if (isTenSecondFinished)
             setTimer();
 
 
@@ -782,6 +794,8 @@ public class MainActivity extends AppCompatActivity {
         });
         dialog.setNegativeButton("Cancel", (dialog, which) -> {
             dialog.cancel();
+
+            // question 1
             if (flag_start_game) {
                 play.setVisibility(View.INVISIBLE);
                 pause.setVisibility(View.VISIBLE);
@@ -802,22 +816,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void stopTimerFor10s() {
+        tenSecond = 10;
+        isTenSecondFinished = false;
         stopTimeIcon = false;
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        tenSecondHandler = new Handler();
 
-        new Handler().postDelayed(() -> {
-            stopTimeIcon = true;
-            if (check_play_pause) {
-                if (timerCheck)
-                    setTimer();
+        stopTenRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sdsddssd", "check play pause: " + check_play_pause + "    ten second: " + tenSecond);
+                if (check_play_pause) {
+                    if (tenSecond == 0) {
+                        stopTimeIcon = true;
+
+                        setTimer();
+                        tenSecond = 10;
+                        isTenSecondFinished = true;
+                        tenSecondHandler.removeCallbacks(stopTenRunnable);
+                        time1.setVisibility(View.INVISIBLE);
+
+
+                    } else {
+                        tenSecond--;
+                        tenSecondHandler.postDelayed(this, 1000);
+                    }
+                } else {
+                    tenSecondHandler.postDelayed(this, 1000);
+                }
+
             }
-            time1.setVisibility(View.INVISIBLE);
-        }, 10000);
+        };
+        stopTenRunnable.run();
+
     }
 
     public void speedUp() {
+
+        tenSecondSpeed = 10;
+        isTenSecondFinishedSpeed = false;
+        mLevel = true;
+        stopSpeedIcon = false;
+
+        speedHandler = new Handler();
+
+        tenSecondSpeedRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sdsddssd", "check play pause: " + checkSpeed + "    ten second: " + tenSecondSpeed);
+                if (checkSpeed) {
+                    if (tenSecondSpeed == 0) {
+                        tenSecondSpeed = 10;
+                        isTenSecondFinishedSpeed = true;
+                        stopSpeedIcon = true;
+                        mLevel = false;
+                        speedHandler.removeCallbacks(tenSecondSpeedRunnable);
+                        speed1.setVisibility(View.INVISIBLE);
+
+                    } else {
+                        tenSecondSpeed--;
+                        speedHandler.postDelayed(this, 1000);
+                    }
+                } else {
+                    speedHandler.postDelayed(this, 1000);
+                }
+
+            }
+        };
+        tenSecondSpeedRunnable.run();
+
+/*
         mLevel = true;
 
         stopSpeedIcon = false;
@@ -827,8 +897,7 @@ public class MainActivity extends AppCompatActivity {
             mLevel = false;
             speed1.setVisibility(View.INVISIBLE);
         }, 10000);
-
-
+*/
     }
 
     private String getAndroidVersion() {
