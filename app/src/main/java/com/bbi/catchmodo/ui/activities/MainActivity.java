@@ -24,6 +24,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
+import com.bbi.catchmodo.util.Language;
 
 import java.util.Random;
 import java.util.Timer;
@@ -137,7 +138,10 @@ public class MainActivity extends AppCompatActivity {
         time1 = findViewById(R.id.time2);
         instructions = findViewById(R.id.instructions);
         constraint_start = findViewById(R.id.constraint_start);
+        // error in photo
 
+        Language.changeBackDependsLanguage(left_arrow,getApplicationContext());
+       Language.changeBackDependsLanguage(right_arrow,getApplicationContext());
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();

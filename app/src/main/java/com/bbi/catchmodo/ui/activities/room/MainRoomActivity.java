@@ -24,6 +24,7 @@ import com.bbi.catchmodo.SoundPlayer;
 import com.bbi.catchmodo.databinding.ActivityMainRoomBinding;
 import com.bbi.catchmodo.ui.activities.ResultActivity;
 import com.bbi.catchmodo.ui.activities.StartActivity;
+import com.bbi.catchmodo.util.Language;
 
 import java.util.Random;
 import java.util.Timer;
@@ -100,7 +101,10 @@ public class MainRoomActivity extends AppCompatActivity {
 
         handler = new Handler();
         soundPlayer = new SoundPlayer(this);
+        // error in photo
 
+        Language.changeBackDependsLanguage(binding.rightImage,getApplicationContext());
+        Language.changeBackDependsLanguage(binding.leftImage,getApplicationContext());
 
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
