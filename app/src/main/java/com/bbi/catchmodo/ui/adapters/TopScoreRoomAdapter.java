@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.model.UserRoomModel;
+import com.bbi.catchmodo.util.ContextCustomize;
 import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -51,7 +52,7 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull UserRoomModel model) {
 
-        holder.score.setText(model.getScore()+"");
+        holder.score.setText(model.getScore() + "");
 
         reference.child(model.getUser_id()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -59,7 +60,8 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
 
                 userModel = snapshot.getValue(RegisterModel.class);
                 holder.name.setText(userModel.getUser_name());
-                Glide.with(context).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(holder.imageView);
+                if (ContextCustomize.isValidContextForGlide(context))
+                    Glide.with(context).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(holder.imageView);
 
             }
 
@@ -72,8 +74,6 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
 
 
     }
-
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
