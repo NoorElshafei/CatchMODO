@@ -1,6 +1,7 @@
 package com.bbi.catchmodo.ui.activities;
 
 
+import static com.bbi.catchmodo.util.ContextCustomize.isValidContextForGlide;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,16 +46,19 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start);
 
-        displayGif(R.drawable.sticker_gif, binding.stickerGif);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         userid = firebaseUser.getUid();
 
-        Glide.with(StartActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);
-        Glide.with(StartActivity.this).load(R.drawable.fly_nuts2).into(binding.fly2);
-        Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
-        Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
-        Glide.with(StartActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+
+        if (isValidContextForGlide(StartActivity.this)) {
+            displayGif(R.drawable.sticker_gif, binding.stickerGif);
+            Glide.with(StartActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);
+            Glide.with(StartActivity.this).load(R.drawable.fly_nuts2).into(binding.fly2);
+            Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
+            Glide.with(StartActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
+            Glide.with(StartActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+        }
 
         getImageProfile();
 
@@ -67,8 +71,7 @@ public class StartActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         });
         binding.exitBtn.setOnClickListener(view -> {
-            finishAffinity();
-            System.exit(0);
+            finish();
         });
         binding.profileBtn.setOnClickListener(view -> {
             Intent intent = new Intent(StartActivity.this, ProfileActivity.class);
@@ -86,6 +89,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void displayGif(Integer drawable, ImageView imageView) {
+
         Glide.with(this)
                 .asGif()
                 .load(drawable) // Replace with a valid url
@@ -113,13 +117,12 @@ public class StartActivity extends AppCompatActivity {
         dialog.setCancelable(false);
         dialog.setPositiveButton("Exit", (dialog, which) -> {
 
-            finishAffinity();
-            System.exit(0);
+            finish();
+            //System.exit(0);
         });
         dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         AlertDialog dialog2 = dialog.create();
         dialog2.show();
-
     }
 
     private void getImageProfile() {
@@ -130,9 +133,9 @@ public class StartActivity extends AppCompatActivity {
 
                 userModel = snapshot.getValue(RegisterModel.class);
                 Log.d("amany", "onCreate: " + userModel);
-
-                Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
-
+                if (isValidContextForGlide(StartActivity.this)) {
+                    Glide.with(StartActivity.this).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(binding.profilePhoto);
+                }
             }
 
             @Override

@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int n;
     private int tenSecond = 10, tenSecondSpeed = 10;
-    private boolean isTenSecondFinished = false;
+    private boolean isTenSecondFinished = true;
     boolean isTenSecondFinishedSpeed = false;
 
 
@@ -695,7 +695,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void stopMove() {
         //handler.removeCallbacks(mStatusChecker);
-        timer.cancel();
+        if (timer != null)
+            timer.cancel();
         //moveCountdown.cancel();
     }
 
@@ -812,12 +813,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void exitAppCLICK(View view) {
-
-        finishAffinity();
-        System.exit(0);
-
-    }
 
     public void stopTimerFor10s() {
         tenSecond = 10;

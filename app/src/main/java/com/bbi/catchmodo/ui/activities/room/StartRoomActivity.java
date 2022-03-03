@@ -98,12 +98,15 @@ public class StartRoomActivity extends AppCompatActivity {
         dialog.setTitle("Exit From Room");
         dialog.setMessage("You Are sure Exit ?");
         dialog.setCancelable(false);
+
         dialog.setPositiveButton("Exit", (dialog, which) -> {
 
             Intent intent = new Intent(StartRoomActivity.this, StartActivity.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
         });
+
         dialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         AlertDialog dialog2 = dialog.create();
         dialog2.show();
