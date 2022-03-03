@@ -113,8 +113,6 @@ public class MainRoomActivity extends AppCompatActivity {
         soundPlayer = new SoundPlayer(this);
         // error in photo
 
-        Language.changeBackDependsLanguage(binding.rightImage,getApplicationContext());
-        Language.changeBackDependsLanguage(binding.leftImage,getApplicationContext());
 
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();

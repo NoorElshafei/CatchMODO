@@ -73,7 +73,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/profile_frame2"
 
@@ -86,8 +86,8 @@
                 app:cardCornerRadius="25dp"
                 app:cardElevation="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/profile_btn"
-                app:layout_constraintEnd_toEndOf="@+id/profile_btn"
-                app:layout_constraintStart_toStartOf="@+id/profile_btn"
+                app:layout_constraintRight_toRightOf="@+id/profile_btn"
+                app:layout_constraintLeft_toLeftOf="@+id/profile_btn"
                 app:layout_constraintTop_toTopOf="@+id/profile_btn">
 
 
