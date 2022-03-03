@@ -17,11 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class ResultActivity extends AppCompatActivity {
     private AlertDialog.Builder dialog;
     FirebaseAuth firebaseAuth;
@@ -77,7 +72,9 @@ public class ResultActivity extends AppCompatActivity {
 
 
         exit.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), StartActivity.class));
+            Intent intent = new Intent(this, StartActivity.class);
+            intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             finish();
         });
     }
@@ -89,18 +86,12 @@ public class ResultActivity extends AppCompatActivity {
 
     public void topScore(View view) {
         startActivity(new Intent(getApplicationContext(), TopUser.class));
-
     }
 
 
     public void exitAppCLICK(View view) {
-
         finishAffinity();
         System.exit(0);
-
-
-       
-
     }
 
     @Override

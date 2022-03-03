@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,8 +23,6 @@ import androidx.databinding.DataBindingUtil;
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
 import com.bbi.catchmodo.databinding.ActivityMainRoomBinding;
-import com.bbi.catchmodo.ui.activities.ResultActivity;
-import com.bbi.catchmodo.ui.activities.StartActivity;
 
 import java.util.Random;
 import java.util.Timer;
@@ -56,8 +55,9 @@ public class MainRoomActivity extends AppCompatActivity {
 
     //Class
     private Timer timer;
-    private Handler handler;
+    private Handler handler, tenSecondHandler, speedHandler;
     private SoundPlayer soundPlayer;
+    private Runnable stopTenRunnable, tenSecondSpeedRunnable;
 
     //Status
     private boolean start_flg = false;
@@ -66,6 +66,7 @@ public class MainRoomActivity extends AppCompatActivity {
     private boolean pink_flg = false;
     private boolean speed_flg = false;
     private boolean time_stop_flg = false;
+    private boolean checkSpeed = true;
 
     private boolean timerCheck = false;
     private boolean stopTimeIcon = true;
@@ -80,7 +81,8 @@ public class MainRoomActivity extends AppCompatActivity {
 
     private int timeCount, timeCount2, timeCount3;
 
-    private int screenWidth, yBonus = 0;;
+    private int screenWidth, yBonus = 0;
+    ;
 
 
     //timer time
@@ -91,6 +93,10 @@ public class MainRoomActivity extends AppCompatActivity {
     private AlertDialog.Builder dialog;
 
     private ActivityMainRoomBinding binding;
+
+    private int tenSecond = 10, tenSecondSpeed = 10;
+    private boolean isTenSecondFinished = true;
+    boolean isTenSecondFinishedSpeed = false;
 
 
     @Override
@@ -228,7 +234,7 @@ public class MainRoomActivity extends AppCompatActivity {
                 float speedCenterX = speedX + binding.stopTime.getWidth() / 2;
                 float speedCenterY = speedY + binding.stopTime.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + (185- yBonus))) {
+                if (hitCheck(speedCenterX, speedCenterY + (185 - yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     binding.speed1.setVisibility(View.VISIBLE);
@@ -257,7 +263,7 @@ public class MainRoomActivity extends AppCompatActivity {
                 float timeCenterX = timeX + binding.stopTime.getWidth() / 2;
                 float timeCenterY = timeY + binding.stopTime.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + (165- yBonus))) {
+                if (hitCheck(timeCenterX, timeCenterY + (165 - yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -286,7 +292,7 @@ public class MainRoomActivity extends AppCompatActivity {
         float orangeCenterY = orangeY + binding.orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + (185- yBonus))) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (185 - yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -353,7 +359,7 @@ public class MainRoomActivity extends AppCompatActivity {
             float pinkCenterX = pinkX + binding.pink.getWidth() / 2;
             float pinkCenterY = pinkY + binding.pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + (165- yBonus))) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (165 - yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
@@ -369,7 +375,7 @@ public class MainRoomActivity extends AppCompatActivity {
         float blackCenterY = blackY + binding.balck.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + (165- yBonus))) {
+        if (hitCheck(blackCenterX, blackCenterY + (165 - yBonus))) {
             blackY = frameHeight + 100;
 
             soundPlayer.playHitBlackSound();
@@ -537,24 +543,93 @@ public class MainRoomActivity extends AppCompatActivity {
         score = 0;
         binding.scoreText.setText("");
 
+      playMove();
+
+
+    }
+
+    private void playMove() {
+
+    /*  // Create the Handler object (on the main thread by default)
+        Handler handler = new Handler();
+        // Define the code block to be executed
+        private Runnable runnableCode = new Runnable() {
+            @Override
+            public void run() {
+                // Do something here on the main thread
+                //Log.d("Handlers", "Called on main thread");
+                // Repeat this the same runnable code block again another 2 seconds
+                handler.postDelayed(runnableCode, 2000);
+            }
+        };
+        // Start the initial runnable task by posting through the handler
+        handler.post(runnableCode);*/
+
+
+      /*  moveCountdown=  new CountDownTimer(600000, 1) {
+
+            public void onTick(long millisUntilFinished) {
+               // if (start_flg) {
+                    changePos();
+                //}
+            }
+
+            public void onFinish() {
+
+            }
+        };
+        moveCountdown.start();*/
+
+
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (start_flg) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            changePos();
-
-                        }
-                    });
-                }
+                //if (start_flg) {
+                handler.post(() -> changePos());
+                // }
             }
         }, 10, 15);
 
+    /*    mStatusChecker = new Runnable() {
+            @Override
+            public void run() {
+                // if (start_flg) {
 
+
+                changePos();
+                handler.postDelayed(this,15);
+
+                // }
+            }
+        };
+        mStatusChecker.run();*/
+
+     /*   try {
+            // code runs in a thread
+            runOnUiThread(mStatusChecker);
+        } catch (final Exception ex) {
+            Log.i("---", "Exception in thread");
+        }*/
+
+
+
+      /*  black.setX((float) Math.floor(Math.random() * (frameWidth - black.getWidth())));
+        black.setY(-300);
+        AdditiveAnimator.animate(black).setDuration(2000)
+                .x(black.getX())
+                .y(frameHeight)
+                .start();
+*/
+
+
+    }
+
+    private void stopMove() {
+        //handler.removeCallbacks(mStatusChecker);
+        if (timer != null)
+            timer.cancel();
+        //moveCountdown.cancel();
     }
 
     public void setTimer() {
@@ -607,10 +682,12 @@ public class MainRoomActivity extends AppCompatActivity {
 
     public void onPauseGame() {
         check_play_pause = false;
+        checkSpeed = false;
         if (mediaPlayer != null) {
             mediaPlayer.pause();
         }
-        start_flg = false;
+        stopMove();
+        //start_flg = false;
         if (countDownTimer != null) {
             countDownTimer.cancel();
             binding.play.setVisibility(View.VISIBLE);
@@ -620,13 +697,15 @@ public class MainRoomActivity extends AppCompatActivity {
     }
 
     public void onStartGame() {
-        start_flg = true;
+        //start_flg = true;
+
+        playMove();
         if (mediaPlayer != null) {
             mediaPlayer.start();
         }
 
 
-        if (timerCheck)
+        if (isTenSecondFinished)
             setTimer();
 
 
@@ -654,7 +733,6 @@ public class MainRoomActivity extends AppCompatActivity {
                 binding.play.setVisibility(View.INVISIBLE);
                 binding.pause.setVisibility(View.VISIBLE);
             }
-
             onStartGame();
         });
         AlertDialog dialog2 = dialog.create();
@@ -662,42 +740,82 @@ public class MainRoomActivity extends AppCompatActivity {
 
     }
 
-    public void exitAppCLICK(View view) {
-
-        finishAffinity();
-        System.exit(0);
-
-    }
 
     public void stopTimerFor10s() {
+        tenSecond = 10;
+        isTenSecondFinished = false;
         stopTimeIcon = false;
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
+        tenSecondHandler = new Handler();
 
-        new Handler().postDelayed(() -> {
-            stopTimeIcon = true;
-            if (check_play_pause) {
-                if (timerCheck)
-                    setTimer();
+        stopTenRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sdsddssd", "check play pause: " + check_play_pause + "    ten second: " + tenSecond);
+                if (check_play_pause) {
+                    if (tenSecond == 0) {
+                        stopTimeIcon = true;
+
+                        setTimer();
+                        tenSecond = 10;
+                        isTenSecondFinished = true;
+                        tenSecondHandler.removeCallbacks(stopTenRunnable);
+                        binding.time2.setVisibility(View.INVISIBLE);
+
+
+                    } else {
+                        tenSecond--;
+                        tenSecondHandler.postDelayed(this, 1000);
+                    }
+                } else {
+                    tenSecondHandler.postDelayed(this, 1000);
+                }
+
             }
-            binding.time2.setVisibility(View.INVISIBLE);
-        }, 10000);
+        };
+        stopTenRunnable.run();
+
     }
 
     public void speedUp() {
-        mLevel = true;
 
+        tenSecondSpeed = 10;
+        isTenSecondFinishedSpeed = false;
+        mLevel = true;
         stopSpeedIcon = false;
-        new Handler().postDelayed(() -> {
-            // yourMethod();
-            stopSpeedIcon = true;
-            mLevel = false;
-            binding.speed1.setVisibility(View.INVISIBLE);
-        }, 10000);
+
+        speedHandler = new Handler();
+
+        tenSecondSpeedRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sdsddssd", "check play pause: " + checkSpeed + "    ten second: " + tenSecondSpeed);
+                if (checkSpeed) {
+                    if (tenSecondSpeed == 0) {
+                        tenSecondSpeed = 10;
+                        isTenSecondFinishedSpeed = true;
+                        stopSpeedIcon = true;
+                        mLevel = false;
+                        speedHandler.removeCallbacks(tenSecondSpeedRunnable);
+                        binding.speed1.setVisibility(View.INVISIBLE);
+
+                    } else {
+                        tenSecondSpeed--;
+                        speedHandler.postDelayed(this, 1000);
+                    }
+                } else {
+                    speedHandler.postDelayed(this, 1000);
+                }
+
+            }
+        };
+        tenSecondSpeedRunnable.run();
 
 
     }
+
 
     private String getAndroidVersion() {
         String release = Build.VERSION.RELEASE;
