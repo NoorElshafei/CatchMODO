@@ -13,6 +13,7 @@ import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.databinding.ActivityStartRoomBinding;
 import com.bbi.catchmodo.ui.activities.StartActivity;
+import com.bbi.catchmodo.util.ContextCustomize;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -32,14 +33,14 @@ public class StartRoomActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start_room);
 
-        displayGif(R.drawable.sticker_gif, binding.stickerGif);
-
-        Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);
-        Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts2).into(binding.fly2);
-        Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
-        Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
-        Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
-
+        if (ContextCustomize.isValidContextForGlide(StartRoomActivity.this)) {
+            displayGif(R.drawable.sticker_gif, binding.stickerGif);
+            Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);
+            Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts2).into(binding.fly2);
+            Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts3).into(binding.fly3);
+            Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts3).into(binding.fly4);
+            Glide.with(StartRoomActivity.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+        }
         declaration();
         onClick();
         setUI();

@@ -738,8 +738,9 @@ public class MainRoomActivity extends AppCompatActivity {
             if (flag_start_game) {
                 binding.play.setVisibility(View.INVISIBLE);
                 binding.pause.setVisibility(View.VISIBLE);
+                onStartGame();
             }
-            onStartGame();
+
         });
         AlertDialog dialog2 = dialog.create();
         dialog2.show();
