@@ -3,21 +3,19 @@ package com.bbi.catchmodo.ui.activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityTopUserBinding;
 import com.bbi.catchmodo.ui.adapters.TopUserAdapter;
+import com.bbi.catchmodo.util.ContextCustomize;
 import com.bbi.catchmodo.util.Language;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,7 +62,7 @@ public class TopUser extends AppCompatActivity {
         progressDialog.setMessage("Loading....");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
+        Language.changeBackDependsLanguage(binding.back, getApplicationContext());
 
         //   Glide.with(TopUser.this).load(R.drawable.logo_gif).into(binding.logo);
         topUser = new ArrayList();
@@ -76,7 +74,6 @@ public class TopUser extends AppCompatActivity {
 
         getMyData();
         getTopUser();
-
 
 
         binding.constraint1.setVisibility(View.INVISIBLE);
@@ -97,7 +94,7 @@ public class TopUser extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(TopUser.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(TopUser.this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -131,11 +128,12 @@ public class TopUser extends AppCompatActivity {
                 binding.recycle.setAdapter(adapter);
 
 
-
                 if (!TopTenStrings.contains(firebaseUser.getUid())) {
                     binding.name.setText(userModel.getUser_name() + '(' + "You" + ')');
                     binding.score.setText(userModel.getScore());
-                    Glide.with(TopUser.this).load(userModel.getImage_url()).placeholder(R.drawable.moodo_icon).into(binding.image);
+                    if (ContextCustomize.isValidContextForGlide(TopUser.this)) {
+                        Glide.with(TopUser.this).load(userModel.getImage_url()).placeholder(R.drawable.moodo_icon).into(binding.image);
+                    }
                     binding.constraint1.setVisibility(View.VISIBLE);
 
                 } else {
@@ -147,7 +145,7 @@ public class TopUser extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(TopUser.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(TopUser.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

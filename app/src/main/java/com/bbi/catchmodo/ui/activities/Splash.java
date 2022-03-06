@@ -6,13 +6,11 @@ import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.databinding.ActivitySplashBinding;
+import com.bbi.catchmodo.util.ContextCustomize;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -53,20 +52,21 @@ public class Splash extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        displayGif(R.drawable.sticker_gif, binding.stickerGif);
-        displayGif(R.drawable.logo2, binding.mLogoGif);
-        Glide.with(Splash.this).load(R.drawable.fly_nuts1).into(binding.fly1);
-        Glide.with(Splash.this).load(R.drawable.fly_nuts2).into(binding.fly2);
-        Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly3);
-        Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly4);
-        Glide.with(Splash.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+        if (ContextCustomize.isValidContextForGlide(Splash.this)) {
+            displayGif(R.drawable.sticker_gif, binding.stickerGif);
+            displayGif(R.drawable.logo2, binding.mLogoGif);
+            Glide.with(Splash.this).load(R.drawable.fly_nuts1).into(binding.fly1);
+            Glide.with(Splash.this).load(R.drawable.fly_nuts2).into(binding.fly2);
+            Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly3);
+            Glide.with(Splash.this).load(R.drawable.fly_nuts3).into(binding.fly4);
+            Glide.with(Splash.this).load(R.drawable.fly_nuts4).into(binding.fly5);
+        }
         new Handler().postDelayed(() -> {
             checkAppUpdate();
 
         }, 3000);
 
         //getReleaseHashKey();
-
 
 
     }
@@ -109,7 +109,7 @@ public class Splash extends AppCompatActivity {
                         }).show();
             } else {
                 nextCheck();
-                Log.d("sadsadsadas11", "onActivityCreated: " );
+                Log.d("sadsadsadas11", "onActivityCreated: ");
             }
         }).addOnFailureListener(command -> {
             Log.d("sadsadsadas", "onActivityCreated: " + command.getMessage());
