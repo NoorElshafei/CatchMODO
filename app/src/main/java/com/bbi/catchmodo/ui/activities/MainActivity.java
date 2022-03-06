@@ -140,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
         constraint_start = findViewById(R.id.constraint_start);
         // error in photo
 
-        Language.changeBackDependsLanguage(left_arrow,getApplicationContext());
-       Language.changeBackDependsLanguage(right_arrow,getApplicationContext());
+
         // Screen Size for clouds
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();

@@ -40,6 +40,9 @@ public class ForgetPassword extends AppCompatActivity {
             firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Toast.makeText(ForgetPassword.this, "please check your Email", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent( ForgetPassword.this,LoginActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
 
                 } else {
                     String error = task.getException().getMessage();
