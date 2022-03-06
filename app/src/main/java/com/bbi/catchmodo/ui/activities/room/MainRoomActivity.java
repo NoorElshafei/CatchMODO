@@ -706,7 +706,8 @@ public class MainRoomActivity extends AppCompatActivity {
 
     public void onStartGame() {
         //start_flg = true;
-
+        check_play_pause = true;
+        checkSpeed = true;
         playMove();
         if (mediaPlayer != null) {
             mediaPlayer.start();
@@ -715,7 +716,6 @@ public class MainRoomActivity extends AppCompatActivity {
 
         if (isTenSecondFinished)
             setTimer();
-
 
     }
 
