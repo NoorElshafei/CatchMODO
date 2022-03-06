@@ -115,7 +115,7 @@ public class TopUser extends AppCompatActivity {
                 }
                 topUser.clear();
                 Collections.sort(allUser, (lhs, rhs) -> Integer.parseInt(rhs.getScore()) - Integer.parseInt(lhs.getScore()));
-                for (i = 0; i <= 9; i++) {
+                for (i = 0; i < allUser.size() && i <= 9; i++) {
 
                     topUser.add(allUser.get(i));
 

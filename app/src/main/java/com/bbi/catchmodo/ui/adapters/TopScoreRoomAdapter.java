@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -59,9 +58,14 @@ public class TopScoreRoomAdapter extends FirestoreRecyclerAdapter<UserRoomModel,
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 userModel = snapshot.getValue(RegisterModel.class);
-                holder.name.setText(userModel.getUser_name());
-                if (ContextCustomize.isValidContextForGlide(context))
-                    Glide.with(context).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(holder.imageView);
+
+                if (userModel != null) {
+                    holder.name.setText(userModel.getUser_name());
+
+                    if (ContextCustomize.isValidContextForGlide(context))
+                        Glide.with(context).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(holder.imageView);
+
+                }
 
             }
 
