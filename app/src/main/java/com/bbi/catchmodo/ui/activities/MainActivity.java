@@ -803,9 +803,10 @@ public class MainActivity extends AppCompatActivity {
             if (flag_start_game) {
                 play.setVisibility(View.INVISIBLE);
                 pause.setVisibility(View.VISIBLE);
+                onStartGame();
             }
 
-            onStartGame();
+
         });
         AlertDialog dialog2 = dialog.create();
         dialog2.show();

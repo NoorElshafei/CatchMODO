@@ -51,7 +51,7 @@ public class StartRoomActivity extends AppCompatActivity {
     }
 
     private void setUI() {
-        binding.roomNameText.setText("Room: " +userSharedPreference.getRoomName());
+        binding.roomNameText.setText("Room: " + userSharedPreference.getRoomName());
     }
 
 
