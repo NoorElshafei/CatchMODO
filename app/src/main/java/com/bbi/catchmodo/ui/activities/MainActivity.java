@@ -24,7 +24,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
-import com.bbi.catchmodo.util.Language;
 
 import java.util.Random;
 import java.util.Timer;
@@ -163,8 +162,6 @@ public class MainActivity extends AppCompatActivity {
             onStartGame();
             play.setVisibility(View.INVISIBLE);
             pause.setVisibility(View.VISIBLE);
-
-
         });
         pause.setOnClickListener(v -> {
             onPauseGame();
@@ -276,10 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 if (speedY > frameHeight)
                     speed_flg = false;
 
-            /*    AdditiveAnimator.animate(speed).setDuration(0)
-                        .x(speedX)
-                        .y(speedY)
-                        .start();*/
+
                 speed.setX(speedX);
                 speed.setY(speedY);
             }
@@ -334,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
             soundPlayer.playHitOrangeSound();
             if (n == 0) {
                 orange.setImageResource(R.drawable.circle);
-
             } else if (n == 1) {
                 orange.setImageResource(R.drawable.nuts1);
 
@@ -349,7 +342,6 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 orange.setImageResource(R.drawable.nuts5);
-
             }
 
         }
@@ -379,10 +371,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-      /*  AdditiveAnimator.animate(orange).setDuration(0)
-                .x(orangeX)
-                .y(orangeY)
-                .start();*/
+
         orange.setX(orangeX);
         orange.setY(orangeY);
 
@@ -405,10 +394,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (pinkY > frameHeight) pink_flg = false;
 
-           /* AdditiveAnimator.animate(pink).setDuration(0)
-                    .x(pinkX)
-                    .y(pinkY)
-                    .start();*/
+
             pink.setX(pinkX);
             pink.setY(pinkY);
         }
@@ -430,10 +416,7 @@ public class MainActivity extends AppCompatActivity {
             blackY = -100;
             blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
         }
-      /*  AdditiveAnimator.animate(black).setDuration(0)
-                .x(blackX)
-                .y(blackY)
-                .start();*/
+
         black.setX(blackX);
         black.setY(blackY);
 
@@ -468,18 +451,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         character.setX(characterX);
-/*
-        //Check box position
 
-        if (boxX < 0) {
-            boxX = 0;
-
-        }
-        if (frameWidth - boxSize < boxX) {
-            boxX = frameWidth - boxX;
-
-        }
-        box.setX(boxX);*/
 
         scoreText.setText(score + "");
     }
@@ -716,12 +688,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (e == 10) {
                     //for change color"red"in last 10s
-
                     timerLabel.setTextColor(Color.parseColor("#FF0000"));
-
                 }
-
-
             }
 
             public void onFinish() {
@@ -731,7 +699,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         countDownTimer.start();
-
 
     }
 
