@@ -88,6 +88,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-analytics'
 
     // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
@@ -96,5 +97,9 @@ dependencies {
 
     // flex box
     implementation 'com.google.android:flexbox:0.3.2'
+
+    //ads
+    implementation 'com.google.android.gms:play-services-ads:20.6.0'
+
 
 }

@@ -15,6 +15,67 @@
       },
       "oauth_client": [
         {
+          "client_id": "898536207310-2k0ksk5ki5sngtn5tnd0jom2hb8mg7pj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbi.catchmodo",
+            "certificate_hash": "a07ecc44981769d44bf45ba3113d807523128fcf"
+          }
+        },
+        {
+          "client_id": "898536207310-gltbgpkf3sdad95bjehpli590bc548g4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbi.catchmodo",
+            "certificate_hash": "149620c0b686b7b1e40600d6318c82dab6ed59c7"
+          }
+        },
+        {
+          "client_id": "898536207310-lkcle1oi3ko405lcoib4ceeq0efpgrc2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbi.catchmodo",
+            "certificate_hash": "80e8315595b6b61c42765a24f24820cc4221210b"
+          }
+        },
+        {
+          "client_id": "898536207310-of11lrg6bfahls8179unrahpnqr6b6rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bbi.catchmodo",
+            "certificate_hash": "5dc5e35ed615c45ebd192b2cc9460c2a1a1e0d2e"
+          }
+        },
+        {
+          "client_id": "898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3B_alrRd1a29qdjCS7rykFQavzZMjU1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898536207310:android:268bea993c1646a4dcf19f",
+        "android_client_info": {
+          "package_name": "com.bbi.moodoadmin"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "898536207310-rbdkac0kdppab1lr6u5585svpg55gno1.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,21 +1,19 @@
 package com.bbi.catchmodo.ui.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.data.model.RegisterModel;
@@ -37,23 +35,22 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.List;
-
 public class ProfileActivity extends AppCompatActivity {
     private TextView name, email, phone, score;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    String userid;
-    ProgressDialog progressDialog;
-    ImageView profile,edit_name,back,change_photo;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private String userid;
+    private ProgressDialog progressDialog;
+    private ImageView profile, edit_name, back, change_photo;
     private ImageView logOut;
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
     private static final int IMAGE_REQUEST = 1;
     public static final int PICK_IMAGE = 1;
     private StorageTask uploadTask;
-     private RegisterModel userModel;
+    private RegisterModel userModel;
     private Uri imageUri;
-    StorageReference storageReference;
+    private StorageReference storageReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,30 +62,27 @@ public class ProfileActivity extends AppCompatActivity {
         score = findViewById(R.id.score);
         profile = findViewById(R.id.profile_photo);
         logOut = findViewById(R.id.logOut);
-        edit_name=findViewById(R.id.edit_name);
-        back=findViewById(R.id.back);
-        change_photo=findViewById(R.id.camera);
+        edit_name = findViewById(R.id.edit_name);
+        back = findViewById(R.id.back);
+        change_photo = findViewById(R.id.camera);
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading......");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         userid = firebaseUser.getUid();
-        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 progressDialog.dismiss();
                 userModel = snapshot.getValue(RegisterModel.class);
-                    name.setText(userModel.getUser_name());
-                    email.setText(userModel.getEmail());
-                    phone.setText(userModel.getPhone());
-                    score.setText(userModel.getScore());
-                    Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(profile);
-
-
-
+                name.setText(userModel.getUser_name());
+                email.setText(userModel.getEmail());
+                phone.setText(userModel.getPhone());
+                score.setText(userModel.getScore());
+                Glide.with(getApplicationContext()).load(userModel.getImage_url()).placeholder(R.drawable.fun_moodo).into(profile);
 
             }
 
@@ -118,10 +112,11 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
-   private void showEditDialog() {
+
+    private void showEditDialog() {
         FragmentManager fm = getSupportFragmentManager();
         EditNameFragment editFragment = EditNameFragment.newInstance();
-      editFragment.show(fm, "fragment_edit_name");
+        editFragment.show(fm, "fragment_edit_name");
     }
 
     @Override
@@ -179,6 +174,7 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "No image selected", Toast.LENGTH_SHORT).show();
         }
     }
+
     private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getApplicationContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
