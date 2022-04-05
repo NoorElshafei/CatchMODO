@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                progressDialog.setMessage("please,waiting while SignUp ..");
+                progressDialog.setMessage("Please wait while SigningUp..");
                 progressDialog.setCanceledOnTouchOutside(false);
                 image_url = "https://graph.facebook.com/" + loginResult.getAccessToken().getUserId() + "/picture?type=large";
                 signUpWithGoogleAndFacebook(loginResult.getAccessToken().getToken(), image_url, "facebook");
@@ -155,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
             // binding.password.setError("please,Enter the password correctly");
             Toast.makeText(this, "please,Enter the password correctly", Toast.LENGTH_LONG).show();
         } else {
-            progressDialog.setMessage("please,wait while Registration..");
+            progressDialog.setMessage("Please wait while SigningUp...0");
             progressDialog.setTitle("Registration");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();

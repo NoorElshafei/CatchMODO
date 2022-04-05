@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(LoginActivity.this, "please,Enter your Password", Toast.LENGTH_SHORT).show();
         } else {
-            progressDialog.setMessage("please,wait while Login..");
+            progressDialog.setMessage("Please wait while logging in");
             progressDialog.setTitle("Login");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void firebaseAuthWithGoogleAndFacebook(String idToken, String platform) {
-        progressDialog.setMessage("please,waiting  while SignIn.");
+        progressDialog.setMessage("Please wait while logging in");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         AuthCredential credential;
@@ -247,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(LoginActivity.this, "please sign up to continue", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "please signup to continue", Toast.LENGTH_LONG).show();
                     LoginManager.getInstance().logOut();
                     firebaseAuth.signOut();
                 }
