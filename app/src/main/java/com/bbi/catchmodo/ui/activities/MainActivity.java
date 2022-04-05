@@ -1,5 +1,6 @@
 package com.bbi.catchmodo.ui.activities;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,18 +18,29 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bbi.catchmodo.R;
 import com.bbi.catchmodo.SoundPlayer;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
+import com.bbi.catchmodo.util.AdDialogFragment;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -104,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean isTenSecondFinished = true;
     boolean isTenSecondFinishedSpeed = false;
 
+    private int requiredCoin = 50;
+    private int multiple = 0;
+
+    private MainActivity.OnLoadAdListener listener;
+
+    private boolean checkLoadAd = false;
+    private String typeGame;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,12 +160,17 @@ public class MainActivity extends AppCompatActivity {
         // error in photo
 
 
+        requiredCoin = 50;
+        multiple = 0;
+
         // Screen Size for clouds
+
         WindowManager windowManager = getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         screenWidth = size.x;
+
         cloud1X = -500;
         cloud2X = -300;
         cloud3X = -400;
@@ -167,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
             onPauseGame();
             play.setVisibility(View.VISIBLE);
             pause.setVisibility(View.INVISIBLE);
+
 
         });
         pause.setVisibility(View.INVISIBLE);
@@ -203,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
+        loadRewardedAd();
+        startGame();
     }
 
     public void changePos() {
@@ -406,11 +434,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (hitCheck(blackCenterX, blackCenterY + (165 - yBonus))) {
-            blackY = frameHeight + 100;
+            onPauseGame();
+            // RewardItem rewardItem = rewardedAd.getRewardItem();
+            // int rewardAmount = rewardItem.getAmount();
+            // String rewardType = rewardItem.getType();
 
-            soundPlayer.playHitBlackSound();
+            introduceVideoAd(100, "coins", "gameOver");
 
-            gameOver("gameOver");
         }
         if (blackY > frameHeight) {
             blackY = -100;
@@ -492,16 +522,18 @@ public class MainActivity extends AppCompatActivity {
         pause.setVisibility(View.INVISIBLE);
         play.setVisibility(View.INVISIBLE);
         // before showing 1 seconds
-        try {
+       /* try {
             TimeUnit.SECONDS.sleep(1);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
         intent.putExtra("SCORE", score);
+        long coins = score / 10;
+        intent.putExtra("COINS", coins);
         intent.putExtra("GAME", game);
         startActivity(intent);
         finish();
@@ -686,16 +718,18 @@ public class MainActivity extends AppCompatActivity {
                 timerLabel.setText(String.format("Timer " + "%d:%02d", min, sec));
                 int e = (int) millisUntilFinished / 1000;
 
-                if (e == 10) {
+                if (e < 10) {
                     //for change color"red"in last 10s
                     timerLabel.setTextColor(Color.parseColor("#FF0000"));
+                } else {
+                    timerLabel.setTextColor(Color.parseColor("#FFFFFF"));
                 }
             }
 
             public void onFinish() {
-                timerLabel.setVisibility(View.GONE);
-                if (gameStatus)
-                    gameOver("timeOut");
+                onPauseGame();
+
+                introduceVideoAd(100, "coins", "timeout");
             }
         };
         countDownTimer.start();
@@ -729,6 +763,8 @@ public class MainActivity extends AppCompatActivity {
             pause.setVisibility(View.INVISIBLE);
         }
 
+        gamePaused = true;
+
     }
 
     public void onStartGame() {
@@ -744,6 +780,10 @@ public class MainActivity extends AppCompatActivity {
         if (isTenSecondFinished)
             setTimer();
 
+        if (!gameOver && gamePaused) {
+            gamePaused = false;
+
+        }
 
     }
 
@@ -799,6 +839,7 @@ public class MainActivity extends AppCompatActivity {
                         stopTimeIcon = true;
 
                         setTimer();
+
                         tenSecond = 10;
                         isTenSecondFinished = true;
                         tenSecondHandler.removeCallbacks(stopTenRunnable);
@@ -853,23 +894,201 @@ public class MainActivity extends AppCompatActivity {
         };
         tenSecondSpeedRunnable.run();
 
-/*
-        mLevel = true;
 
-        stopSpeedIcon = false;
-        new Handler().postDelayed(() -> {
-            // yourMethod();
-            stopSpeedIcon = true;
-            mLevel = false;
-            speed1.setVisibility(View.INVISIBLE);
-        }, 10000);
-*/
     }
 
     private String getAndroidVersion() {
         String release = Build.VERSION.RELEASE;
         //int sdkVersion = Build.VERSION.SDK_INT;
         return release;
+    }
+
+
+    private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+    private static final String TAG = "MyActivity";
+    private boolean gameOver;
+    private boolean gamePaused;
+    private RewardedAd rewardedAd;
+    boolean isLoading;
+
+
+    private void loadRewardedAd() {
+        if (rewardedAd == null) {
+            isLoading = true;
+            AdRequest adRequest = new AdRequest.Builder().build();
+            RewardedAd.load(
+                    this,
+                    AD_UNIT_ID,
+                    adRequest,
+                    new RewardedAdLoadCallback() {
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            // Handle the error.
+                            Log.d(TAG, loadAdError.getMessage());
+                            rewardedAd = null;
+                            MainActivity.this.isLoading = false;
+                            Toast.makeText(MainActivity.this, "onAdFailedToLoad", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                            MainActivity.this.rewardedAd = rewardedAd;
+                            Log.d(TAG, "onAdLoaded");
+                            MainActivity.this.isLoading = false;
+                            Toast.makeText(MainActivity.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
+                            checkLoadAd = true;
+                            listener.onLoadFinished();
+                        }
+                    });
+        }
+    }
+
+   /* private void addCoins(int coins) {
+        coinCount += coins;
+        //coinCountText.setText("Coins: " + coinCount);
+    }*/
+
+    private void startGame() {
+        // Hide the retry button, load the ad, and start the timer.
+        // TODO tomorrow
+        if (rewardedAd != null && !isLoading) {
+            loadRewardedAd();
+        }
+        gamePaused = false;
+        gameOver = false;
+    }
+
+
+    private void introduceVideoAd(int rewardAmount, String rewardType, String type) {
+        typeGame = type;
+
+        if (rewardType.equals("coins"))
+            requiredCoin *= 2;
+
+
+        AdDialogFragment dialog = AdDialogFragment.newInstance(rewardAmount, rewardType, requiredCoin, checkLoadAd, type);
+        dialog.setAdDialogInteractionListener(
+                new AdDialogFragment.AdDialogInteractionListener() {
+                    @Override
+                    public void onShowAd() {
+                        Log.d(TAG, "The rewarded interstitial ad is starting.");
+
+                        showRewardedVideo();
+                    }
+
+                    @Override
+                    public void onCancelAd(String type) {
+                        if (type.equals("gameOver")) {
+                            Log.d(TAG, "The rewarded interstitial ad was skipped before it starts.");
+                            blackY = frameHeight + 100;
+
+                            soundPlayer.playHitBlackSound();
+
+                            gameOver("gameOver");
+                        } else {
+                            timerLabel.setVisibility(View.GONE);
+                            if (gameStatus)
+                                gameOver("timeOut");
+                        }
+                    }
+
+                    @Override
+                    public void onUserPayCoin(String type) {
+                        Log.d(TAG, "the user pay coin ");
+                        blackY = -100;
+                        blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
+                        if (type.equals("timeout")) {
+                            millisUntilFinished1 = 15000;
+                            //startGame();
+                        }
+                    }
+                });
+        dialog.show(getSupportFragmentManager(), "AdDialogFragment");
+    }
+
+    private void showRewardedVideo() {
+
+        if (rewardedAd == null) {
+            Log.d("TAG", "The rewarded ad wasn't ready yet.");
+            return;
+        }
+        // showVideoButton.setVisibility(View.INVISIBLE);
+
+        rewardedAd.setFullScreenContentCallback(
+                new FullScreenContentCallback() {
+                    @Override
+                    public void onAdShowedFullScreenContent() {
+                        // Called when ad is shown.
+                        Log.d(TAG, "onAdShowedFullScreenContent");
+                        Toast.makeText(MainActivity.this, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                    @Override
+                    public void onAdFailedToShowFullScreenContent(AdError adError) {
+                        // Called when ad fails to show.
+                        Log.d(TAG, "onAdFailedToShowFullScreenContent");
+                        // Don't forget to set the ad reference to null so you
+                        // don't show the ad a second time.
+                        rewardedAd = null;
+
+                        Toast.makeText(
+                                MainActivity.this, "onAdFailedToShowFullScreenContent", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+
+                    @Override
+                    public void onAdDismissedFullScreenContent() {
+                        // Called when ad is dismissed.
+                        // Don't forget to set the ad reference to null so you
+                        // don't show the ad a second time.
+
+                        UserSharedPreference userSharedPreference = new UserSharedPreference(MainActivity.this);
+                        userSharedPreference.setCoins(userSharedPreference.getCoins() + 100);
+
+
+                        introduceVideoAd(100, "coins1", typeGame);
+
+                        rewardedAd = null;
+
+                        MainActivity.this.loadRewardedAd();
+
+                    }
+                });
+        Activity activityContext = MainActivity.this;
+        rewardedAd.show(
+                activityContext,
+                new OnUserEarnedRewardListener() {
+                    @Override
+                    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                        // Handle the reward.
+                        Log.d("TAG", "The user earned the reward.");
+                       /* int rewardAmount = rewardItem.getAmount();
+                        String rewardType = rewardItem.getType();
+                        //addCoins(rewardItem.getAmount()); */
+
+
+                       /* blackY = -100;
+                        blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));*/
+
+                        checkLoadAd = false;
+                        Toast.makeText(MainActivity.this, "The user earned the reward.", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+    }
+
+    public interface OnLoadAdListener {
+
+
+        void onLoadFinished();
+
+
+    }
+
+    public void setAdDialogInteractionListener(MainActivity.OnLoadAdListener listener) {
+        this.listener = listener;
     }
 
 }

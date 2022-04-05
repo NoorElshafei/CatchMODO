@@ -19,48 +19,44 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ResultActivity extends AppCompatActivity {
     private AlertDialog.Builder dialog;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
     private String game = "";
+    private TextView highScoreLabel;
     private UserSharedPreference userSharedPreference;
+    private TextView scoreLabel;
+    private ImageView exit;
+    private ImageView gameOver;
+    private ImageView moodo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        TextView scoreLabel = findViewById(R.id.scoreLabel3);
-        TextView highScoreLabel = findViewById(R.id.highScoreLabel);
-        ImageView exit = findViewById(R.id.exit_btn);
-        ImageView gameOver = findViewById(R.id.game_over_text);
-        ImageView moodo = findViewById(R.id.profile_photo);
+        scoreLabel = findViewById(R.id.scoreLabel3);
+        highScoreLabel = findViewById(R.id.highScoreLabel);
+        exit = findViewById(R.id.exit_btn);
+        gameOver = findViewById(R.id.game_over_text);
+        moodo = findViewById(R.id.profile_photo);
         userSharedPreference = new UserSharedPreference(this);
         game = getIntent().getExtras().getString("GAME");
-
-        int score = getIntent().getIntExtra("SCORE", 0);
-        scoreLabel.setText(score + "");
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        // High Score
-        ;
-        int highScore = userSharedPreference.getHighScore();
+        reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(firebaseUser.getUid());
 
-        if (score > highScore) {
-            // Update HighScore
-            userSharedPreference.setHighScore(score);
+        int score = getIntent().getIntExtra("SCORE", 0);
+        scoreLabel.setText(score + "");
 
-            highScoreLabel.setText(score + "");
-            //   highScoreLabel.setText(getString(R.string.high_score, score));
-            reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(firebaseUser.getUid()).child("score");
-            reference.setValue(score + "");
+        long coins = getIntent().getLongExtra("COINS", 0);
 
-        } else {
-            highScoreLabel.setText(highScore + "");
-            //  highScoreLabel.setText(getString(R.string.high_score, highScore));
 
-        }
+
+        storeCoins(coins);
+
+        checkScore(score);
 
 
         if (game.equals("timeOut")) {
@@ -70,13 +66,33 @@ public class ResultActivity extends AppCompatActivity {
             Glide.with(ResultActivity.this).load(R.drawable.game_over).into(gameOver);
         }
 
-
         exit.setOnClickListener(view -> {
             Intent intent = new Intent(this, StartActivity.class);
             intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         });
+    }
+
+    private void checkScore(int score) {
+        // High Score
+
+        int highScore = userSharedPreference.getHighScore();
+
+        if (score > highScore) {
+            userSharedPreference.setHighScore(score);
+
+            highScoreLabel.setText(score + "");
+            reference.child("score").setValue(score + "");
+        } else {
+            highScoreLabel.setText(highScore + "");
+        }
+    }
+
+    private void storeCoins(long coins) {
+        userSharedPreference.setCoins(userSharedPreference.getCoins()+coins);
+        reference.child("coins").setValue(userSharedPreference.getCoins());
+
     }
 
     public void tryAgain(View view) {
