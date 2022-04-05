@@ -19,6 +19,7 @@ public class UserSharedPreference {
     public static String USER_PHONE = "phone";
     public static String HIGH_SCORE = "highScore";
     public static String USER_LANG = "USER_LANGUAGE";
+    public static String USER_COINS = "USER_COINS";
 
 
     public UserSharedPreference(Context context) {
@@ -34,6 +35,7 @@ public class UserSharedPreference {
         editor.putString(USER_SCORE, userModel.getScore());
         editor.putString(USER_IMAGE_URL, userModel.getImage_url());
         editor.putString(USER_PHONE, userModel.getPhone());
+        editor.putLong(USER_COINS, userModel.getCoins());
         editor.apply();
 
 
@@ -47,7 +49,9 @@ public class UserSharedPreference {
                 sharedPreferences.getString(USER_NAME, ""),
                 sharedPreferences.getString(USER_SCORE, ""),
                 sharedPreferences.getString(USER_IMAGE_URL, ""),
-                sharedPreferences.getString(USER_PHONE, ""));
+                sharedPreferences.getString(USER_PHONE, ""),
+                sharedPreferences.getLong(USER_COINS, 0)
+                );
 
         return userModel;
     }
@@ -60,6 +64,20 @@ public class UserSharedPreference {
 
     public int getHighScore() {
         return sharedPreferences.getInt(HIGH_SCORE, getUserScore());
+    }
+
+    public void setCoins(long coins) {
+        editor.putLong(USER_COINS, coins);
+        editor.apply();
+
+    }
+
+    public long getCoins() {
+        return sharedPreferences.getLong(USER_COINS, getUserCoins());
+    }
+
+    private long getUserCoins() {
+        return sharedPreferences.getLong(USER_COINS, 0);
     }
 
 

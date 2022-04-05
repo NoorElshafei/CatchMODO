@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityStartBinding;
 import com.bbi.catchmodo.ui.activities.room.RoomActivity;
@@ -50,7 +51,7 @@ public class StartActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         userid = firebaseUser.getUid();
 
-
+        binding.coins.setText("Coins: "+new UserSharedPreference(this).getUserDetails().getCoins());
         if (isValidContextForGlide(StartActivity.this)) {
             displayGif(R.drawable.sticker_gif, binding.stickerGif);
             Glide.with(StartActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);

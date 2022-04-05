@@ -255,7 +255,7 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         String userid = firebaseUser.getUid();
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
-        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, "0", imageUrl);
+        RegisterModel registerModel = new RegisterModel(userid, name, email, phone, "0", imageUrl,0);
 
         userSharedPreference.add(registerModel);
         userSharedPreference.setHighScore(0);

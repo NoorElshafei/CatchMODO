@@ -18,27 +18,30 @@ public class RegisterModel implements Parcelable {
     private String score;
     @SerializedName("image_url")
     private String image_url;
+    @SerializedName("coins")
+    private long coins;
     public RegisterModel() {
     }
 
-    public RegisterModel(String id, String user_name, String email, String phone, String score,String image_url) {
+    public RegisterModel(String id, String user_name, String email, String phone, String score, String image_url, long coins) {
         this.id = id;
         this.user_name = user_name;
         this.email = email;
         this.phone = phone;
-        this.score=score;
-        this.image_url=image_url;
-
+        this.score = score;
+        this.image_url = image_url;
+        this.coins = coins;
     }
+
 
     protected RegisterModel(Parcel in) {
         id = in.readString();
         user_name = in.readString();
         email = in.readString();
         phone = in.readString();
-        score=in.readString();
-        image_url=in.readString();
-
+        score = in.readString();
+        image_url = in.readString();
+        coins = in.readLong();
     }
 
     public static final Creator<RegisterModel> CREATOR = new Creator<RegisterModel>() {
@@ -101,6 +104,14 @@ public class RegisterModel implements Parcelable {
         this.image_url = image_url;
     }
 
+    public long getCoins() {
+        return coins;
+    }
+
+    public void setCoins(long coins) {
+        this.coins = coins;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -114,8 +125,6 @@ public class RegisterModel implements Parcelable {
         parcel.writeString(phone);
         parcel.writeString(score);
         parcel.writeString(image_url);
-
+        parcel.writeLong(coins);
     }
-
-
 }
