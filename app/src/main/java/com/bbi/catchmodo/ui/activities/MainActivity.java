@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     private int tenSecond = 10, tenSecondSpeed = 10;
     private boolean isTenSecondFinished = true;
     boolean isTenSecondFinishedSpeed = false;
+    private int black_num,orange_num,speed_num,time_num,pink_num;
+
 
     private int requiredCoin = 50;
     private int multiple = 0;
@@ -197,7 +199,22 @@ public class MainActivity extends AppCompatActivity {
         });
         pause.setVisibility(View.INVISIBLE);
         play.setVisibility(View.INVISIBLE);
+        if (getAndroidSDK_INT() > 26) {
+            black_num = 165;
+            speed_num=185;
+            time_num=165;
+            orange_num=185;
+            pink_num=165;
 
+
+
+        } else {
+            black_num = 130;
+            speed_num=165;
+            time_num=145;
+            orange_num=165;
+            pink_num=145;
+        }
 
         right.setOnTouchListener((v, event) -> {
             if (start_flg) {
@@ -290,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                 float speedCenterX = speedX + stop_time.getWidth() / 2;
                 float speedCenterY = speedY + stop_time.getHeight();
 
-                if (hitCheck(speedCenterX, speedCenterY + (185 - yBonus))) {
+                if (hitCheck(speedCenterX, speedCenterY + (speed_num - yBonus))) {
                     speedY = frameHeight + 30;
                     //speed up
                     speed1.setVisibility(View.VISIBLE);
@@ -321,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
                 float timeCenterX = timeX + stop_time.getWidth() / 2;
                 float timeCenterY = timeY + stop_time.getHeight();
 
-                if (hitCheck(timeCenterX, timeCenterY + (165 - yBonus))) {
+                if (hitCheck(timeCenterX, timeCenterY + (time_num - yBonus))) {
                     timeY = frameHeight + 30;
                     //stop timer for 10s
                     stopTimerFor10s();
@@ -350,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         float orangeCenterY = orangeY + orange.getHeight();
 
         //EAT
-        if (hitCheck(orangeCenterX, orangeCenterY + (185 - yBonus))) {
+        if (hitCheck(orangeCenterX, orangeCenterY + (orange_num - yBonus))) {
             orangeY = frameHeight + 100;
             score += 10;
             soundPlayer.playHitOrangeSound();
@@ -415,7 +432,7 @@ public class MainActivity extends AppCompatActivity {
             float pinkCenterX = pinkX + pink.getWidth() / 2;
             float pinkCenterY = pinkY + pink.getHeight();
 
-            if (hitCheck(pinkCenterX, pinkCenterY + (165 - yBonus))) {
+            if (hitCheck(pinkCenterX, pinkCenterY + (pink_num - yBonus))) {
                 pinkY = frameHeight + 30;
                 score += 30;
                 soundPlayer.playHitPinkSound();
@@ -433,7 +450,8 @@ public class MainActivity extends AppCompatActivity {
         float blackCenterY = blackY + black.getHeight();
 
 
-        if (hitCheck(blackCenterX, blackCenterY + (165 - yBonus))) {
+
+        if (hitCheck(blackCenterX, blackCenterY + (black_num - yBonus))) {
             onPauseGame();
             // RewardItem rewardItem = rewardedAd.getRewardItem();
             // int rewardAmount = rewardItem.getAmount();
@@ -903,6 +921,13 @@ public class MainActivity extends AppCompatActivity {
         return release;
     }
 
+    private int getAndroidSDK_INT() {
+        //String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        return sdkVersion;
+    }
+
+
 
     private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
     private static final String TAG = "MyActivity";
@@ -1090,6 +1115,7 @@ public class MainActivity extends AppCompatActivity {
     public void setAdDialogInteractionListener(MainActivity.OnLoadAdListener listener) {
         this.listener = listener;
     }
+
 
 }
 
