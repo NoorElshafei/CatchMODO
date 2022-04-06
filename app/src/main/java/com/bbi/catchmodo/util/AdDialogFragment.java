@@ -76,7 +76,8 @@ public class AdDialogFragment extends DialogFragment {
 
     /**
      * Creates an instance of the AdDialogFragment and sets reward information for its title.
-     *  @param rewardAmount Number of coins rewarded by watching an ad.
+     *
+     * @param rewardAmount Number of coins rewarded by watching an ad.
      * @param rewardType   The unit of the reward amount. For example: coins, tokens, life, etc.
      * @param type
      */
@@ -129,7 +130,7 @@ public class AdDialogFragment extends DialogFragment {
 
         checkLoadAd = getArguments().getBoolean(CHECK_LOAD_AD);
 
-        gameType= getArguments().getString(GAME_TYPE);
+        gameType = getArguments().getString(GAME_TYPE);
 
 
         binding.noThanks.setOnClickListener(view1 -> {
@@ -170,7 +171,6 @@ public class AdDialogFragment extends DialogFragment {
         setUI();
 
 
-
         ((MainActivity) getActivity()).setAdDialogInteractionListener(new MainActivity.OnLoadAdListener() {
             @Override
             public void onLoadFinished() {
@@ -181,7 +181,7 @@ public class AdDialogFragment extends DialogFragment {
     }
 
     private void setUI() {
-        binding.continueText.setText("Continue with " + requiredCoin + "coins");
+        binding.payCoinConstraint.setText("Continue with " + requiredCoin + "coins");
         binding.youHaveText.setText("You have " + userSharedPreference.getCoins() + "coins");
 
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();

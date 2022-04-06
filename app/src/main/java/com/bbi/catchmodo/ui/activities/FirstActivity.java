@@ -68,9 +68,6 @@ public class FirstActivity extends AppCompatActivity {
                 Toast.makeText(FirstActivity.this, "Please,fill all Information", Toast.LENGTH_SHORT).show();
             }
 
-
         });
-
-
     }
 }

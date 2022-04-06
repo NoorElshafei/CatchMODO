@@ -36,7 +36,6 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
                     android:fontFamily="@font/soft_marshmallow"
-
                     android:gravity="start"
                     android:text="Watch an ad for 100 more coins"
                     android:textColor="#3b160a"
@@ -47,57 +46,57 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/you_have_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/soft_marshmallow"
+                    android:text="You have 1000  coins"
+                    android:textColor="#3b160a"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView26"
+                    app:layout_constraintStart_toStartOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+                <Button
                     android:id="@+id/pay_coin_constraint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
                     android:background="#BCB9B9"
-                    app:layout_constraintEnd_toStartOf="@+id/watch_ad"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    android:fontFamily="@font/soft_marshmallow"
+                    android:text="continue with 100  coins"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26">
+                    app:layout_constraintTop_toBottomOf="@+id/watch_ad" />
 
-                    <TextView
-                        android:id="@+id/continue_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="continue with 100 coins"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/you_have_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="you have 1000 coins"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/continue_text" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
+                <Button
                     android:id="@+id/watch_ad"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/soft_marshmallow"
                     android:text="watch Ad"
-                    app:layout_constraintEnd_toStartOf="@+id/no_thanks"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/pay_coin_constraint"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                    app:layout_constraintStart_toEndOf="@+id/no_thanks"
+                    app:layout_constraintTop_toBottomOf="@+id/you_have_text" />
 
-                <TextView
+                <Button
                     android:id="@+id/no_thanks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/soft_marshmallow"
                     android:text="No, thanks"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/watch_ad"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/watch_ad"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/you_have_text" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

@@ -25,7 +25,7 @@ public class ResultActivity extends AppCompatActivity {
     private String game = "";
     private TextView highScoreLabel;
     private UserSharedPreference userSharedPreference;
-    private TextView scoreLabel;
+    private TextView scoreLabel,coinsText;
     private ImageView exit;
     private ImageView gameOver;
     private ImageView moodo;
@@ -39,6 +39,7 @@ public class ResultActivity extends AppCompatActivity {
         exit = findViewById(R.id.exit_btn);
         gameOver = findViewById(R.id.game_over_text);
         moodo = findViewById(R.id.profile_photo);
+        coinsText = findViewById(R.id.coins_text);
         userSharedPreference = new UserSharedPreference(this);
         game = getIntent().getExtras().getString("GAME");
 
@@ -52,7 +53,7 @@ public class ResultActivity extends AppCompatActivity {
 
         long coins = getIntent().getLongExtra("COINS", 0);
 
-
+        coinsText.setText(coins+"");
 
         storeCoins(coins);
 
