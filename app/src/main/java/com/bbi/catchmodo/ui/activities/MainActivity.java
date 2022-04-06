@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private int requiredCoin = 50;
-    private int multiple = 0;
 
     private MainActivity.OnLoadAdListener listener;
 
@@ -132,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         soundPlayer = new SoundPlayer(this);
+
 
         gameFrame = findViewById(R.id.gameFrame);
         tabToStart = findViewById(R.id.startLabel);
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         requiredCoin = 50;
-        multiple = 0;
+
 
         // Screen Size for clouds
 
@@ -201,19 +201,19 @@ public class MainActivity extends AppCompatActivity {
         play.setVisibility(View.INVISIBLE);
         if (getAndroidSDK_INT() > 26) {
             black_num = 165;
-            speed_num=185;
-            time_num=165;
-            orange_num=185;
-            pink_num=165;
+            speed_num = 185;
+            time_num = 165;
+            orange_num = 185;
+            pink_num = 165;
 
 
 
         } else {
             black_num = 130;
-            speed_num=165;
-            time_num=145;
-            orange_num=165;
-            pink_num=145;
+            speed_num = 165;
+            time_num = 145;
+            orange_num = 165;
+            pink_num = 145;
         }
 
         right.setOnTouchListener((v, event) -> {
@@ -516,6 +516,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void gameOver(String game) {
+
+        requiredCoin = 50;
+
         if (tenSecondHandler != null)
             tenSecondHandler.removeCallbacks(stopTenRunnable);
         if (speedHandler != null)
