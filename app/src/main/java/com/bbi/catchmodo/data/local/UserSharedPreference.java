@@ -4,10 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.bbi.catchmodo.data.model.RegisterModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class UserSharedPreference {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private DatabaseReference reference;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+
 
     Context context;
     public static String SHARED_NAME = "user";
@@ -23,9 +31,17 @@ public class UserSharedPreference {
 
 
     public UserSharedPreference(Context context) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseUser != null) {
+            firebaseUser = firebaseAuth.getCurrentUser();
+            reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(firebaseUser.getUid());
+        }
+
         this.context = context;
         sharedPreferences = context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+
     }
 
     public void add(RegisterModel userModel) {
@@ -37,7 +53,6 @@ public class UserSharedPreference {
         editor.putString(USER_PHONE, userModel.getPhone());
         editor.putLong(USER_COINS, userModel.getCoins());
         editor.apply();
-
 
     }
 
@@ -51,7 +66,7 @@ public class UserSharedPreference {
                 sharedPreferences.getString(USER_IMAGE_URL, ""),
                 sharedPreferences.getString(USER_PHONE, ""),
                 sharedPreferences.getLong(USER_COINS, 0)
-                );
+        );
 
         return userModel;
     }
@@ -67,6 +82,9 @@ public class UserSharedPreference {
     }
 
     public void setCoins(long coins) {
+        if (reference != null) {
+            reference.child("coins").setValue(coins);
+        }
         editor.putLong(USER_COINS, coins);
         editor.apply();
 
@@ -77,6 +95,7 @@ public class UserSharedPreference {
     }
 
     private long getUserCoins() {
+
         return sharedPreferences.getLong(USER_COINS, 0);
     }
 
@@ -121,6 +140,7 @@ public class UserSharedPreference {
     public void removeData() {
         sharedPreferences.edit().clear().apply();
     }
+
     public void saveLanguage(String lang) {
         SharedPreferences.Editor shardEditor = sharedPreferences.edit();
         shardEditor.putString(USER_LANG, lang);

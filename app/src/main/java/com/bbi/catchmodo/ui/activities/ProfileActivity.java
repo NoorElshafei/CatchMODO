@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.bbi.catchmodo.R;
+import com.bbi.catchmodo.data.local.UserSharedPreference;
 import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.ui.fragments.EditNameFragment;
 import com.bbi.catchmodo.util.Language;
@@ -39,20 +40,22 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView name, email, phone, score;
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    String userid;
-    ProgressDialog progressDialog;
-    ImageView profile, edit_name, back, change_photo;
+    private TextView name, email, phone, score, coins;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private String userid;
+    private ProgressDialog progressDialog;
+    private ImageView profile, edit_name, back, change_photo;
     private ImageView logOut;
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
     private static final int IMAGE_REQUEST = 1;
     public static final int PICK_IMAGE = 1;
     private StorageTask uploadTask;
     private RegisterModel userModel;
     private Uri imageUri;
-    StorageReference storageReference;
+    private StorageReference storageReference;
+    private UserSharedPreference userSharedPreference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         phone = findViewById(R.id.phone3);
         score = findViewById(R.id.score);
+        coins = findViewById(R.id.coins);
         profile = findViewById(R.id.profile_photo);
         logOut = findViewById(R.id.logOut);
         edit_name = findViewById(R.id.edit_name);
@@ -76,6 +80,12 @@ public class ProfileActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         userid = firebaseUser.getUid();
         firebaseAuth = FirebaseAuth.getInstance();
+
+        userSharedPreference = new UserSharedPreference(this);
+
+        coins.setText(userSharedPreference.getCoins() + "");
+
+
         Language.changeBackDependsLanguage(back, getApplicationContext());
         reference = FirebaseDatabase.getInstance().getReference("UserRegister").child(userid);
         reference.addValueEventListener(new ValueEventListener() {

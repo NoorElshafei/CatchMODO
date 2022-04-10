@@ -142,7 +142,7 @@ public class AdDialogFragment extends DialogFragment {
             if (!checkLoadAd) {
                 Toast.makeText(getContext(), "Please wait for load Ad ", Toast.LENGTH_SHORT).show();
             } else {
-                getDialog().dismiss();
+                //getDialog().dismiss();
                 if (listener != null) {
                     Log.d(TAG, "onFinish: Calling onShowAd().");
                     listener.onShowAd();
@@ -176,6 +176,11 @@ public class AdDialogFragment extends DialogFragment {
             public void onLoadFinished() {
                 checkLoadAd = true;
             }
+
+            @Override
+            public void onAdFinished() {
+                binding.youHaveText.setText("You have " + userSharedPreference.getCoins() + "coins");
+            }
         });
 
     }
@@ -191,7 +196,9 @@ public class AdDialogFragment extends DialogFragment {
 
     }
 
-  /* @NonNull
+
+
+    /* @NonNull
   @Override
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

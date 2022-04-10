@@ -1,5 +1,7 @@
 package com.bbi.catchmodo.ui.activities;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.IntentSender;

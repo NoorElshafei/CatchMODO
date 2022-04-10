@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     private int tenSecond = 10, tenSecondSpeed = 10;
     private boolean isTenSecondFinished = true;
     boolean isTenSecondFinishedSpeed = false;
-    private int black_num,orange_num,speed_num,time_num,pink_num;
+    private int black_num, orange_num, speed_num, time_num, pink_num;
 
 
     private int requiredCoin = 50;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private MainActivity.OnLoadAdListener listener;
 
     private boolean checkLoadAd = false;
-    private String typeGame;
+    private Boolean isBlackHit = false;
 
 
     @Override
@@ -205,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
             time_num = 165;
             orange_num = 185;
             pink_num = 165;
-
 
 
         } else {
@@ -450,14 +449,13 @@ public class MainActivity extends AppCompatActivity {
         float blackCenterY = blackY + black.getHeight();
 
 
-
         if (hitCheck(blackCenterX, blackCenterY + (black_num - yBonus))) {
             onPauseGame();
             // RewardItem rewardItem = rewardedAd.getRewardItem();
             // int rewardAmount = rewardItem.getAmount();
             // String rewardType = rewardItem.getType();
-
-            introduceVideoAd(100, "coins", "gameOver");
+            if (!isBlackHit)
+                introduceVideoAd(100, "coins", "gameOver");
 
         }
         if (blackY > frameHeight) {
@@ -931,8 +929,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    private static final String AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+    private static final String AD_UNIT_ID = "ca-app-pub-4846845351841719/3928732025";//ca-app-pub-3940256099942544/5224354917
     private static final String TAG = "MyActivity";
     private boolean gameOver;
     private boolean gamePaused;
@@ -955,7 +952,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, loadAdError.getMessage());
                             rewardedAd = null;
                             MainActivity.this.isLoading = false;
-                            Toast.makeText(MainActivity.this, "onAdFailedToLoad", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "onAdFailedToLoad: " + loadAdError.getMessage()
+                                    + "\n cause: " + loadAdError.getCause(), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -989,7 +987,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void introduceVideoAd(int rewardAmount, String rewardType, String type) {
-        typeGame = type;
+        isBlackHit = true;
 
         if (rewardType.equals("coins"))
             requiredCoin *= 2;
@@ -1023,6 +1021,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onUserPayCoin(String type) {
+                        isBlackHit = false;
                         Log.d(TAG, "the user pay coin ");
                         blackY = -100;
                         blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));
@@ -1062,7 +1061,7 @@ public class MainActivity extends AppCompatActivity {
                         rewardedAd = null;
 
                         Toast.makeText(
-                                MainActivity.this, "onAdFailedToShowFullScreenContent", Toast.LENGTH_SHORT)
+                                MainActivity.this, "onAdFailedToShowFullScreenContent: ", Toast.LENGTH_SHORT)
                                 .show();
                     }
 
@@ -1072,15 +1071,12 @@ public class MainActivity extends AppCompatActivity {
                         // Don't forget to set the ad reference to null so you
                         // don't show the ad a second time.
 
-                        UserSharedPreference userSharedPreference = new UserSharedPreference(MainActivity.this);
-                        userSharedPreference.setCoins(userSharedPreference.getCoins() + 100);
-
-
-                        introduceVideoAd(100, "coins1", typeGame);
 
                         rewardedAd = null;
 
                         MainActivity.this.loadRewardedAd();
+
+                        // introduceVideoAd(100, "coins1", typeGame);
 
                     }
                 });
@@ -1100,9 +1096,12 @@ public class MainActivity extends AppCompatActivity {
                        /* blackY = -100;
                         blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));*/
 
+                        UserSharedPreference userSharedPreference = new UserSharedPreference(MainActivity.this);
+                        userSharedPreference.setCoins(userSharedPreference.getCoins() + 100);
                         checkLoadAd = false;
                         Toast.makeText(MainActivity.this, "The user earned the reward.", Toast.LENGTH_SHORT)
                                 .show();
+                        listener.onAdFinished();
                     }
                 });
     }
@@ -1111,6 +1110,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         void onLoadFinished();
+
+        void onAdFinished();
 
 
     }
