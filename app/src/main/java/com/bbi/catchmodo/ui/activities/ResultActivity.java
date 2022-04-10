@@ -92,7 +92,7 @@ public class ResultActivity extends AppCompatActivity {
 
     private void storeCoins(long coins) {
         userSharedPreference.setCoins(userSharedPreference.getCoins()+coins);
-        reference.child("coins").setValue(userSharedPreference.getCoins());
+        //reference.child("coins").setValue(userSharedPreference.getCoins());
 
     }
 

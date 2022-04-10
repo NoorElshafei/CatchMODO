@@ -401,6 +401,26 @@
                 android:textSize="18sp"
                 tools:ignore="RtlHardcoded,RtlSymmetry" />
         </TableRow>
+ <TableRow
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:src="@drawable/coins"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/soft_marshmallow"
+                android:paddingLeft="10dp"
+                android:text="1 Coin for 10 Points"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+        </TableRow>
 
     </TableLayout>
 
