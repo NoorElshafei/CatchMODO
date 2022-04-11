@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="You have 1000  coins"
+                    android:text="You have 1000\tCoins"
                     android:textColor="#3b160a"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/textView26"
@@ -67,7 +67,8 @@
                     android:layout_marginBottom="5dp"
                     android:background="#BCB9B9"
                     android:fontFamily="@font/soft_marshmallow"
-                    android:text="continue with 100  coins"
+
+                    android:text="continue with 100 Coins"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +82,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/soft_marshmallow"
                     android:text="watch Ad"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/no_thanks"

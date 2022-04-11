@@ -940,7 +940,9 @@ public class MainActivity extends AppCompatActivity {
     private void loadRewardedAd() {
         if (rewardedAd == null) {
             isLoading = true;
+
             AdRequest adRequest = new AdRequest.Builder().build();
+
             RewardedAd.load(
                     this,
                     AD_UNIT_ID,
@@ -952,8 +954,8 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, loadAdError.getMessage());
                             rewardedAd = null;
                             MainActivity.this.isLoading = false;
-                            Toast.makeText(MainActivity.this, "onAdFailedToLoad: " + loadAdError.getMessage()
-                                    + "\n cause: " + loadAdError.getCause(), Toast.LENGTH_SHORT).show();
+                          /*  Toast.makeText(MainActivity.this, "onAdFailedToLoad: " + loadAdError.getMessage()
+                                    + "\n cause: " + loadAdError.getCause(), Toast.LENGTH_SHORT).show();*/
 
                         }
 
@@ -962,7 +964,7 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this.rewardedAd = rewardedAd;
                             Log.d(TAG, "onAdLoaded");
                             MainActivity.this.isLoading = false;
-                            Toast.makeText(MainActivity.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "onAdLoaded", Toast.LENGTH_SHORT).show();
                             checkLoadAd = true;
                             listener.onLoadFinished();
                         }
@@ -1038,6 +1040,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (rewardedAd == null) {
             Log.d("TAG", "The rewarded ad wasn't ready yet.");
+            Toast.makeText(this, "Please wait for load Ad ", Toast.LENGTH_SHORT).show();
             return;
         }
         // showVideoButton.setVisibility(View.INVISIBLE);
@@ -1048,8 +1051,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onAdShowedFullScreenContent() {
                         // Called when ad is shown.
                         Log.d(TAG, "onAdShowedFullScreenContent");
-                        Toast.makeText(MainActivity.this, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
-                                .show();
+                      /*  Toast.makeText(MainActivity.this, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT)
+                                .show();*/
                     }
 
                     @Override
@@ -1060,9 +1063,9 @@ public class MainActivity extends AppCompatActivity {
                         // don't show the ad a second time.
                         rewardedAd = null;
 
-                        Toast.makeText(
+                        /*Toast.makeText(
                                 MainActivity.this, "onAdFailedToShowFullScreenContent: ", Toast.LENGTH_SHORT)
-                                .show();
+                                .show();*/
                     }
 
                     @Override
@@ -1088,18 +1091,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                         // Handle the reward.
                         Log.d("TAG", "The user earned the reward.");
-                       /* int rewardAmount = rewardItem.getAmount();
-                        String rewardType = rewardItem.getType();
-                        //addCoins(rewardItem.getAmount()); */
-
-
-                       /* blackY = -100;
-                        blackX = (float) Math.floor(Math.random() * (frameWidth - black.getWidth()));*/
 
                         UserSharedPreference userSharedPreference = new UserSharedPreference(MainActivity.this);
                         userSharedPreference.setCoins(userSharedPreference.getCoins() + 100);
                         checkLoadAd = false;
-                        Toast.makeText(MainActivity.this, "The user earned the reward.", Toast.LENGTH_SHORT)
+                        Toast.makeText(MainActivity.this, "You earned 100 Coins", Toast.LENGTH_SHORT)
                                 .show();
                         listener.onAdFinished();
                     }

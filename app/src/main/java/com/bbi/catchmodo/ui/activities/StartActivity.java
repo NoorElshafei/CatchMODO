@@ -51,7 +51,7 @@ public class StartActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         userid = firebaseUser.getUid();
 
-        binding.coins.setText("Coins: "+new UserSharedPreference(this).getUserDetails().getCoins());
+        //binding.coins.setText("Coins: "+new UserSharedPreference(this).getUserDetails().getCoins());
         if (isValidContextForGlide(StartActivity.this)) {
             displayGif(R.drawable.sticker_gif, binding.stickerGif);
             Glide.with(StartActivity.this).load(R.drawable.fly_nuts1).into(binding.fly1);

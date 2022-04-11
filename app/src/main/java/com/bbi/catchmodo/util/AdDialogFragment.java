@@ -132,6 +132,10 @@ public class AdDialogFragment extends DialogFragment {
 
         gameType = getArguments().getString(GAME_TYPE);
 
+        if (!checkLoadAd) {
+            binding.watchAd.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.grey));
+        }
+
 
         binding.noThanks.setOnClickListener(view1 -> {
             getDialog().cancel();
@@ -146,10 +150,9 @@ public class AdDialogFragment extends DialogFragment {
                 if (listener != null) {
                     Log.d(TAG, "onFinish: Calling onShowAd().");
                     listener.onShowAd();
+                    // }
                 }
             }
-
-
         });
 
         binding.payCoinConstraint.setOnClickListener(view1 -> {
@@ -175,19 +178,21 @@ public class AdDialogFragment extends DialogFragment {
             @Override
             public void onLoadFinished() {
                 checkLoadAd = true;
+                binding.watchAd.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.yellow));
             }
 
             @Override
             public void onAdFinished() {
                 binding.youHaveText.setText("You have " + userSharedPreference.getCoins() + "coins");
+                binding.watchAd.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.grey));
             }
         });
 
     }
 
     private void setUI() {
-        binding.payCoinConstraint.setText("Continue with " + requiredCoin + "coins");
-        binding.youHaveText.setText("You have " + userSharedPreference.getCoins() + "coins");
+        binding.payCoinConstraint.setText("Continue with \"" + requiredCoin + "\" coins");
+        binding.youHaveText.setText("You have \"" + userSharedPreference.getCoins() + "\" coins");
 
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
