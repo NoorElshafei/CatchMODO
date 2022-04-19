@@ -12,11 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.bbi.catchmodo.R;
-import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.data.local.UserSharedPreference;
+import com.bbi.catchmodo.data.model.RegisterModel;
 import com.bbi.catchmodo.databinding.ActivityLoginBinding;
 import com.bbi.catchmodo.util.Language;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -28,10 +27,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -61,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        Language.changeBackDependsLanguage(binding.back,getApplicationContext());
+        Language.changeBackDependsLanguage(binding.back, getApplicationContext());
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         userSharedPreference = new UserSharedPreference(this);
@@ -92,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.password.setSelection(binding.password.length());
 
         });
+
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.login_button);
@@ -101,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                firebaseAuthWithGoogleAndFacebook(loginResult.getAccessToken().getToken(),"facebook");
+                firebaseAuthWithGoogleAndFacebook(loginResult.getAccessToken().getToken(), "facebook");
 
             }
 
@@ -134,6 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login() {
         String email = binding.email.getText().toString();
         String password = binding.password.getText().toString();
+
         if (!email.matches(email_pattern)) {
 
             Toast.makeText(LoginActivity.this, "please,Enter your Email", Toast.LENGTH_SHORT).show();
@@ -141,12 +140,11 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(LoginActivity.this, "please,Enter your Password", Toast.LENGTH_SHORT).show();
         } else {
+
             progressDialog.setMessage("Please wait while logging in");
             progressDialog.setTitle("Login");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
-
-
 
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -156,14 +154,13 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Log.d(TAG, "onComplete1: " + task.getException().getMessage());
                     Toast.makeText(LoginActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
                 }
-
+                
             });
+
         }
 
     }
-
 
 
     private void signIn() {
@@ -181,15 +178,13 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogleAndFacebook(account.getIdToken(),"google");
+                firebaseAuthWithGoogleAndFacebook(account.getIdToken(), "google");
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
             }
         }
     }
-
-
 
 
     private void firebaseAuthWithGoogleAndFacebook(String idToken, String platform) {
@@ -215,9 +210,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
-
 
 
     private void nextPage() {
